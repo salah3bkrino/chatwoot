@@ -1,0 +1,137 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: docker/Dockerfile
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Deploy to Hostinger VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Prepare directory
+            mkdir -p /opt/chatwoot
+            cd /opt/chatwoot
+
+            # Create/Update .env file
+            echo "FRONTEND_URL=https://${{ secrets.CHATWOOT_DOMAIN }}" > .env
+            echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+            echo "REDIS_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+            echo "SECRET_KEY_BASE=${{ secrets.SECRET_KEY_BASE }}" >> .env
+            echo "RAILS_ENV=production" >> .env
+            echo "NODE_ENV=production" >> .env
+            echo "GITHUB_REPOSITORY=${{ env.IMAGE_NAME }}" >> .env
+            
+            # Login to GHCR on VPS to pull image
+            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            # Create docker-compose.yaml content
+            cat <<EOF > docker-compose.yaml
+            version: '3'
+
+            services:
+              base: &base
+                image: ghcr.io/${{ env.IMAGE_NAME }}:latest
+                env_file: .env
+                volumes:
+                  - storage_data:/app/storage
+
+              rails:
+                <<: *base
+                depends_on:
+                  - postgres
+                  - redis
+                ports:
+                  - '3000:3000'
+                environment:
+                  - NODE_ENV=production
+                  - RAILS_ENV=production
+                  - INSTALLATION_ENV=docker
+                entrypoint: docker/entrypoints/rails.sh
+                command: ['bundle', 'exec', 'rails', 's', '-p', '3000', '-b', '0.0.0.0']
+                restart: always
+
+              sidekiq:
+                <<: *base
+                depends_on:
+                  - postgres
+                  - redis
+                environment:
+                  - NODE_ENV=production
+                  - RAILS_ENV=production
+                  - INSTALLATION_ENV=docker
+                command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
+                restart: always
+
+              postgres:
+                image: pgvector/pgvector:pg16
+                restart: always
+                ports:
+                  - '5432:5432'
+                volumes:
+                  - postgres_data:/var/lib/postgresql/data
+                environment:
+                  - POSTGRES_DB=chatwoot
+                  - POSTGRES_USER=postgres
+                  - POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+
+              redis:
+                image: redis:alpine
+                restart: always
+                command: ["sh", "-c", "redis-server --requirepass \"$REDIS_PASSWORD\""]
+                env_file: .env
+                volumes:
+                  - redis_data:/data
+                ports:
+                  - '6379:6379'
+
+            volumes:
+              storage_data:
+              postgres_data:
+              redis_data:
+            EOF
+
+            # Pull and Restart
+            docker compose pull
+            docker compose up -d
+            docker system prune -f
