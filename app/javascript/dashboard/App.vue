@@ -13,6 +13,7 @@ import { setColorTheme } from './helper/themeHelper';
 import { isOnOnboardingView } from 'v3/helpers/RouteHelper';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { useFontSize } from 'dashboard/composables/useFontSize';
+import { useAccentColor } from 'dashboard/composables/useAccentColor';
 import {
   registerSubscription,
   verifyServiceWorkerExistence,
@@ -37,6 +38,8 @@ export default {
     const { accountId } = useAccount();
     // Use the font size composable (it automatically sets up the watcher)
     const { currentFontSize } = useFontSize();
+    // Use the accent color composable (it automatically sets up the watcher)
+    const { currentAccentColor } = useAccentColor();
     const { uiSettings } = useUISettings();
 
     return {
@@ -44,6 +47,7 @@ export default {
       store,
       currentAccountId: accountId,
       currentFontSize,
+      currentAccentColor,
       uiSettings,
     };
   },

@@ -52,6 +52,12 @@
             "EXTRA_LARGE": "Extra Large"
           }
         },
+        "ACCENT_COLOR": {
+          "TITLE": "Accent color",
+          "NOTE": "Choose a personal accent color for buttons, links, and interactive elements.",
+          "UPDATE_SUCCESS": "Your accent color has been updated successfully",
+          "UPDATE_ERROR": "There was an error updating the accent color, please try again"
+        },
         "LANGUAGE": {
           "TITLE": "Preferred Language",
           "NOTE": "Choose the language you want to use.",

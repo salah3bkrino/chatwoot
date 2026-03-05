@@ -3,12 +3,14 @@ import { mapGetters } from 'vuex';
 import { useAlert } from 'dashboard/composables';
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import { useFontSize } from 'dashboard/composables/useFontSize';
+import { useAccentColor } from 'dashboard/composables/useAccentColor';
 import { useBranding } from 'shared/composables/useBranding';
 import { clearCookiesOnLogout } from 'dashboard/store/utils/api.js';
 import { copyTextToClipboard } from 'shared/helpers/clipboard';
 import { parseAPIErrorResponse } from 'dashboard/store/utils/api';
 import { parseBoolean } from '@chatwoot/utils';
 import UserProfilePicture from './UserProfilePicture.vue';
+import AccentColor from './AccentColor.vue';
 import UserBasicDetails from './UserBasicDetails.vue';
 import MessageSignature from './MessageSignature.vue';
 import FontSize from './FontSize.vue';
@@ -28,6 +30,7 @@ import {
 
 export default {
   components: {
+    AccentColor,
     MessageSignature,
     FormSection,
     FontSize,
@@ -45,11 +48,15 @@ export default {
   setup() {
     const { isEditorHotKeyEnabled, updateUISettings } = useUISettings();
     const { currentFontSize, updateFontSize } = useFontSize();
+    const { currentAccentColor, updateAccentColor, accentColorPresets } = useAccentColor();
     const { replaceInstallationName } = useBranding();
 
     return {
       currentFontSize,
       updateFontSize,
+      currentAccentColor,
+      updateAccentColor,
+      accentColorPresets,
       isEditorHotKeyEnabled,
       updateUISettings,
       replaceInstallationName,
@@ -237,6 +244,10 @@ export default {
           $t('PROFILE_SETTINGS.FORM.INTERFACE_SECTION.FONT_SIZE.NOTE')
         "
         @change="updateFontSize"
+      />
+      <AccentColor
+        :label="$t('PROFILE_SETTINGS.FORM.INTERFACE_SECTION.ACCENT_COLOR.TITLE')"
+        :description="$t('PROFILE_SETTINGS.FORM.INTERFACE_SECTION.ACCENT_COLOR.NOTE')"
       />
       <UserLanguageSelect
         :label="$t('PROFILE_SETTINGS.FORM.INTERFACE_SECTION.LANGUAGE.TITLE')"
