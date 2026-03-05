@@ -56,11 +56,19 @@ jobs:
             # Create/Update .env file
             echo "FRONTEND_URL=https://${{ secrets.CHATWOOT_DOMAIN }}" > .env
             echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+            echo "POSTGRES_USER=postgres" >> .env
+            echo "POSTGRES_HOST=postgres" >> .env
+            echo "POSTGRES_DB=chatwoot" >> .env
+            echo "DB_USERNAME=postgres" >> .env
+            echo "DB_HOST=postgres" >> .env
+            echo "DB_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
             echo "REDIS_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+            echo "REDIS_URL=redis://:${{ secrets.POSTGRES_PASSWORD }}@redis:6379" >> .env
             echo "SECRET_KEY_BASE=${{ secrets.SECRET_KEY_BASE }}" >> .env
             echo "RAILS_ENV=production" >> .env
             echo "NODE_ENV=production" >> .env
             echo "GITHUB_REPOSITORY=${{ env.IMAGE_NAME }}" >> .env
+
             
             # Login to GHCR on VPS to pull image
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
