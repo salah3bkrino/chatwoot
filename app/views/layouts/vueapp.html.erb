@@ -6,10 +6,22 @@
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0"/>
     <% if @global_config['DISPLAY_MANIFEST'] %>
-      <meta name="msapplication-TileColor" content="#1f93ff">
+      <meta name="msapplication-TileColor" content="#6C63FF">
       <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-      <meta name="theme-color" content="#1f93ff">
-      <meta name="description" content="<%= @global_config['INSTALLATION_NAME'] %> is a customer support solution that helps companies engage customers over Messenger, Twitter, Telegram, WeChat, Whatsapp. Simply connect your channels and converse with your customers from a single place. Easily add new agents to your system and have them own and resolve conversations with customers. <%= @global_config['INSTALLATION_NAME'] %> also gives you real-time reports to measure your team's performance, canned responses to easily respond to frequently asked questions and private notes for agents to collaborate among themselves.">
+      <meta name="theme-color" content="#6C63FF">
+      <meta name="description" content="<%= @global_config['INSTALLATION_NAME'] %> — A powerful customer engagement platform for modern teams. Manage all customer conversations across email, chat, and social media from a single, intuitive dashboard.">
+      <!-- Open Graph / Social Sharing -->
+      <meta property="og:type" content="website">
+      <meta property="og:url" content="<%= ENV.fetch('FRONTEND_URL', '') %>">
+      <meta property="og:title" content="<%= @global_config['INSTALLATION_NAME'] %> — Customer Engagement Platform">
+      <meta property="og:description" content="Manage all customer conversations across email, chat, and social media from a single, intuitive dashboard.">
+      <meta property="og:image" content="<%= ENV.fetch('FRONTEND_URL', '') %>/android-icon-192x192.png">
+      <meta property="og:site_name" content="<%= @global_config['INSTALLATION_NAME'] %>">
+      <!-- Twitter Card -->
+      <meta name="twitter:card" content="summary">
+      <meta name="twitter:title" content="<%= @global_config['INSTALLATION_NAME'] %> — Customer Engagement Platform">
+      <meta name="twitter:description" content="Manage all customer conversations across email, chat, and social media from a single, intuitive dashboard.">
+      <meta name="twitter:image" content="<%= ENV.fetch('FRONTEND_URL', '') %>/android-icon-192x192.png">
       <% if ENV['IOS_APP_IDENTIFIER'].present? %>
         <meta name="apple-itunes-app" content='app-id=<%= ENV['IOS_APP_IDENTIFIER'] %>'>
       <% end %>

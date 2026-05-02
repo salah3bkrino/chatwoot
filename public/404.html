@@ -3,17 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Page not found</title>
+  <title>Page Not Found | Automation Service</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #6C63FF;
+      --primary-light: #8b85ff;
+      --primary-dark: #4f46e5;
+    }
     body {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Tahoma, Arial, sans-serif;
-      background: rgba(39, 129, 246, 0.05);
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 50%, #f8f9ff 100%);
       color: rgb(28, 32, 36);
       padding: 2rem 1.5rem;
       -webkit-font-smoothing: antialiased;
@@ -23,31 +29,61 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      max-width: 28rem;
+      max-width: 30rem;
+      text-align: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      margin-bottom: 3rem;
+      text-decoration: none;
+    }
+    .brand-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: var(--primary);
+      border-radius: 0.625rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 14px rgba(108,99,255,0.35);
+    }
+    .brand-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #1e1b4b;
     }
     .error-number {
-      font-size: 8rem;
-      font-weight: 700;
+      font-size: 9rem;
+      font-weight: 800;
       line-height: 1;
       letter-spacing: -0.04em;
-      background: linear-gradient(180deg, rgb(39, 129, 246) 0%, rgb(155, 195, 252) 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, #a78bfa 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       margin-bottom: 1.5rem;
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
     }
     h1 {
-      font-size: 1.5rem;
-      font-weight: 600;
+      font-size: 1.625rem;
+      font-weight: 700;
       line-height: 1.3;
-      text-align: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+      color: #1e1b4b;
     }
     .description {
-      font-size: 0.9375rem;
-      color: rgb(96, 100, 108);
-      line-height: 1.6;
-      text-align: center;
+      font-size: 1rem;
+      color: rgb(100, 100, 130);
+      line-height: 1.7;
       margin-bottom: 2.5rem;
     }
     .btn {
@@ -55,54 +91,62 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      background: rgb(39, 129, 246);
+      background: var(--primary);
       color: #fff;
       font-size: 0.9375rem;
-      font-weight: 500;
-      padding: 0.75rem 2rem;
-      border-radius: 0.625rem;
+      font-weight: 600;
+      padding: 0.8rem 2.25rem;
+      border-radius: 0.75rem;
       text-decoration: none;
-      transition: background 0.15s ease;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(108,99,255,0.35);
     }
-    .btn:hover { background: rgb(16, 115, 233); }
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(108,99,255,0.45);
+    }
+    .btn:active { transform: translateY(0); }
     .btn svg { width: 1.125rem; height: 1.125rem; }
     .divider {
       width: 3rem;
       height: 2px;
-      background: rgb(224, 225, 230);
+      background: linear-gradient(90deg, var(--primary), transparent);
       border-radius: 1px;
       margin: 2.5rem 0;
     }
     .help {
-      font-size: 0.8125rem;
-      color: rgb(139, 141, 152);
-      text-align: center;
-      line-height: 1.5;
+      font-size: 0.875rem;
+      color: rgb(139, 141, 170);
+      line-height: 1.6;
     }
-    @media (prefers-color-scheme: dark) {
-      body { background: rgb(17, 17, 19); color: rgb(237, 238, 240); }
-      .error-number { background: linear-gradient(180deg, rgb(126, 182, 255) 0%, rgb(40, 89, 156) 100%); -webkit-background-clip: text; background-clip: text; }
-      .description { color: rgb(176, 180, 186); }
-      .divider { background: rgb(46, 49, 53); }
-      .help { color: rgb(105, 110, 119); }
+    .help a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
     }
+    .help a:hover { text-decoration: underline; }
     @media (max-width: 480px) {
-      .error-number { font-size: 5rem; }
-      h1 { font-size: 1.25rem; }
+      .error-number { font-size: 6rem; }
+      h1 { font-size: 1.35rem; }
     }
   </style>
 </head>
 <body>
   <div class="page">
+    <a href="/" class="brand">
+      <div class="brand-icon">A</div>
+      <span class="brand-name">Automation Service</span>
+    </a>
     <div class="error-number">404</div>
-    <h1>Page not found</h1>
-    <p class="description">The page you're looking for doesn't exist or has been moved.</p>
+    <h1>Page Not Found</h1>
+    <p class="description">The page you're looking for doesn't exist or has been moved.<br>Let's get you back on track.</p>
     <a href="/" class="btn">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
-      Back to home
+      Back to Home
     </a>
     <div class="divider"></div>
-    <p class="help">If you think this is a mistake, please reach out to support.</p>
+    <p class="help">Think this is a mistake? <a href="mailto:support@automationservice.cloud">Contact support</a></p>
   </div>
 </body>
 </html>
