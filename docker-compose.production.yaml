@@ -21,17 +21,6 @@ services:
     entrypoint: docker/entrypoints/rails.sh
     command: ['bundle', 'exec', 'rails', 's', '-p', '3000', '-b', '0.0.0.0']
     restart: always
-    labels:
-      ## Traefik Rate Limiting — protects against brute-force & DDoS
-      - "traefik.enable=true"
-      - "traefik.http.middlewares.chatwoot-ratelimit.ratelimit.average=100"
-      - "traefik.http.middlewares.chatwoot-ratelimit.ratelimit.burst=50"
-      - "traefik.http.middlewares.chatwoot-ratelimit.ratelimit.period=1m"
-      ## Stricter limit for auth endpoints
-      - "traefik.http.middlewares.chatwoot-auth-ratelimit.ratelimit.average=10"
-      - "traefik.http.middlewares.chatwoot-auth-ratelimit.ratelimit.burst=5"
-      - "traefik.http.middlewares.chatwoot-auth-ratelimit.ratelimit.period=1m"
-      - "traefik.http.routers.chatwoot.middlewares=chatwoot-ratelimit"
 
   sidekiq:
     <<: *base
