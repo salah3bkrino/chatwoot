@@ -1,8 +1,8 @@
 class Workflow < ApplicationRecord
   belongs_to :account
 
-  validates :name, presence: true
-  validates :trigger_event, presence: true
+  validates :name, presence: true, uniqueness: { scope: :account_id }
+  validates :trigger_event, presence: true, inclusion: { in: %w[message_created conversation_created conversation_updated conversation_opened conversation_resolved] }
   validate :validate_nodes_structure
   validate :validate_edges_structure
 

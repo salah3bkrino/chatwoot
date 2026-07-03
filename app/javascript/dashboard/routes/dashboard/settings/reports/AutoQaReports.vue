@@ -15,7 +15,7 @@ const fetchAutoQaRecords = async () => {
     const response = await AutoQaAPI.get();
     records.value = response.data;
   } catch (error) {
-    useAlert(t('AUTO_QA.LOADING'));
+    useAlert(t('AUTO_QA.FETCH_ERROR', 'Failed to fetch Auto QA reports.'));
   } finally {
     isLoading.value = false;
   }
@@ -84,7 +84,7 @@ onMounted(() => {
             :key="record.id"
             class="border-b dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50"
           >
-            <td class="p-4">#{{ record.display_id }}</td>
+            <td class="p-4">&num;{{ record.display_id }}</td>
             <td class="p-4">
               {{
                 record.assignee

@@ -1,3 +1,4 @@
+/* global axios */
 import ApiClient from './ApiClient';
 
 class AiAnalyticsAPI extends ApiClient {
@@ -6,7 +7,7 @@ class AiAnalyticsAPI extends ApiClient {
   }
 
   query(queryText) {
-    return this.axios.post(this.url, { query: queryText });
+    return axios.post(this.url, { query: queryText });
   }
 }
 

@@ -258,3 +258,7 @@
   display_name: Auto QA
   enabled: false
   premium: true
+- name: ai_analytics
+  display_name: AI Analytics
+  enabled: false
+  premium: true

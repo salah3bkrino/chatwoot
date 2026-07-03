@@ -12,9 +12,8 @@ class Captain::Llm::ResolutionEvaluationService < Llm::BaseAiService
     return if @content.blank?
     
     # Check if AI was involved in this conversation
-    # A simple heuristic: if a Captain Assistant bot is the assignee, or if there's any outgoing message by an agent_bot.
-    bot_messages = @conversation.messages.outgoing.where(sender_type: 'AgentBot')
-    return unless bot_messages.any? || @conversation.assignee_id.nil?
+    bot_messages = @conversation.messages.outgoing.where(sender_type: %w[AgentBot Captain::Assistant])
+    return unless bot_messages.any?
 
     evaluate_resolution
   end
@@ -26,12 +25,12 @@ class Captain::Llm::ResolutionEvaluationService < Llm::BaseAiService
     return if result.blank?
 
     confidence = result['confidence'].to_f
-    resolved_by_ai = result['resolved_by_ai'] == true
+    resolved_by_ai = [true, 'true', 1].include?(result['resolved_by_ai'])
 
     @conversation.update!(
       resolved_by_ai: resolved_by_ai,
       ai_resolution_confidence: confidence,
-      ai_resolved_at: Time.current
+      ai_resolved_at: resolved_by_ai ? Time.current : nil
     )
   end
 

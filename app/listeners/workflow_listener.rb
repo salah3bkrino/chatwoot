@@ -40,6 +40,8 @@ class WorkflowListener < BaseListener
     return if performed_by_automation?(event)
 
     conversation = event.data[:conversation]
+    return unless conversation
+
     account = conversation.account
     return unless account
 

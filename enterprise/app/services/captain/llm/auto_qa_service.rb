@@ -11,7 +11,7 @@ class Captain::Llm::AutoQaService < Llm::BaseAiService
   def perform
     return if @content.blank?
     # Ensure it's handled by human, or at least has agent responses
-    agent_messages = @conversation.messages.outgoing.where.not(sender_type: 'AgentBot')
+    agent_messages = @conversation.messages.outgoing.where.not(sender_type: %w[AgentBot Captain::Assistant])
     return unless agent_messages.any?
 
     evaluate_qa
@@ -22,6 +22,8 @@ class Captain::Llm::AutoQaService < Llm::BaseAiService
   def evaluate_qa
     result = generate_qa_evaluation
     return if result.blank?
+
+    return unless result.key?('score')
 
     score = result['score'].to_f
     feedback = result['feedback']

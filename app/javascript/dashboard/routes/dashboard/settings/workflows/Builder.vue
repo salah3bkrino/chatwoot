@@ -26,7 +26,10 @@ const nodes = ref([
   {
     id: '1',
     type: 'input',
-    label: 'Trigger: Message Created',
+    label: t(
+      'WORKFLOWS.BUILDER.NODE_LABELS.TRIGGER',
+      'Trigger: Message Created'
+    ),
     position: { x: 250, y: 5 },
     data: { type: 'trigger' },
   },
@@ -36,6 +39,16 @@ const edges = ref([]);
 onMounted(async () => {
   if (route.params.workflowId) {
     isEditing.value = true;
+    const allWorkflows = store.getters['workflows/getWorkflows'];
+    const workflow = allWorkflows.find(
+      w => w.id === parseInt(route.params.workflowId, 10)
+    );
+    if (workflow) {
+      workflowName.value = workflow.name;
+      triggerEvent.value = workflow.trigger_event;
+      nodes.value = workflow.nodes || [];
+      edges.value = workflow.edges || [];
+    }
   }
 });
 
@@ -69,9 +82,9 @@ const saveWorkflow = async () => {
 
 const addNode = type => {
   const labelMap = {
-    condition: 'Condition',
-    action: 'Send Message',
-    ai_prompt: 'AI Prompt',
+    condition: t('WORKFLOWS.BUILDER.NODE_LABELS.CONDITION', 'Condition'),
+    action: t('WORKFLOWS.BUILDER.NODE_LABELS.ACTION', 'Send Message'),
+    ai_prompt: t('WORKFLOWS.BUILDER.NODE_LABELS.AI_PROMPT', 'AI Prompt'),
   };
   addNodes([
     {

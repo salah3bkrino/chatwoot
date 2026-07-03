@@ -70,7 +70,7 @@ const deleteWorkflow = async id => {
       >
         {{ $t('WORKFLOWS.EMPTY') }}
       </div>
-      <div v-else class="flex flex-col gap-2">
+      <div v-else-if="records.length" class="flex flex-col gap-2">
         <div
           v-for="workflow in records"
           :key="workflow.id"
@@ -86,7 +86,9 @@ const deleteWorkflow = async id => {
             <span
               class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400"
             >
-              {{ $t('WORKFLOWS.TRIGGER_LABEL') }}: {{ workflow.trigger_event }}
+              {{
+                $t('WORKFLOWS.TRIGGER_LABEL') + ': ' + workflow.trigger_event
+              }}
             </span>
           </div>
           <div class="flex gap-2">

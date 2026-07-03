@@ -9,6 +9,7 @@ class Captain::Llm::AiAnalyticsService < Llm::BaseAiService
 
   def process
     return 'Please provide a question.' if @query.blank?
+    return 'Query too long. Please keep it under 1000 characters.' if @query.length > 1000
 
     generate_analytics_response
   end
@@ -43,14 +44,14 @@ class Captain::Llm::AiAnalyticsService < Llm::BaseAiService
   end
 
   def system_prompt
-    metrics = fetch_account_metrics
+    @metrics ||= fetch_account_metrics
     <<~PROMPT
       You are an AI Analytics assistant for a customer support team.
       You are provided with the following metrics for the account in the last 7 days:
-      - Total conversations: #{metrics[:total_conversations_last_7_days]}
-      - Currently open: #{metrics[:open_conversations]}
-      - Unassigned: #{metrics[:unassigned_conversations]}
-      - Average CSAT (out of 5): #{metrics[:avg_csat]}
+      - Total conversations: #{@metrics[:total_conversations_last_7_days]}
+      - Currently open: #{@metrics[:open_conversations]}
+      - Unassigned: #{@metrics[:unassigned_conversations]}
+      - Average CSAT (out of 5): #{@metrics[:avg_csat]}
 
       The manager asks a question. Give a professional, concise, and analytical response based on the metrics. Do not invent metrics that are not provided.
     PROMPT

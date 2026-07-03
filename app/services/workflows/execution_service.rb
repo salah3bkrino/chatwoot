@@ -1,3 +1,5 @@
+require 'set'
+
 class Workflows::ExecutionService
   pattr_initialize [:workflow!, :event_name!, :event_data!]
 
@@ -10,7 +12,11 @@ class Workflows::ExecutionService
     trigger_node = workflow.nodes.find { |n| n['type'] == 'trigger' }
     return unless trigger_node
 
-    execute_node(trigger_node)
+    begin
+      execute_node(trigger_node)
+    rescue StandardError => e
+      Rails.logger.error("[Workflows] Execution failed for workflow #{workflow.id}: #{e.message}")
+    end
   end
 
   private
@@ -99,9 +105,10 @@ class Workflows::ExecutionService
     Message.create!(
       conversation: conversation,
       account: conversation.account,
-      sender: workflow,
+      sender: nil,
       content: params['content'],
-      message_type: :outgoing
+      message_type: :outgoing,
+      content_attributes: { automation_rule_id: workflow.id }
     )
   end
 
