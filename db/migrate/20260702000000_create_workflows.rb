@@ -5,7 +5,7 @@ class CreateWorkflows < ActiveRecord::Migration[7.1]
       t.string :name, null: false
       t.text :description
       t.string :trigger_event, null: false
-      t.boolean :active, default: true
+      t.boolean :active, default: true, null: false
       t.jsonb :nodes, default: [], null: false
       t.jsonb :edges, default: [], null: false
 

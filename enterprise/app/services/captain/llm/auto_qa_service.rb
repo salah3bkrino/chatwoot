@@ -12,6 +12,7 @@ class Captain::Llm::AutoQaService < Llm::BaseAiService
 
   def perform
     return if @content.blank?
+
     # Ensure it's handled by human, or at least has agent responses
     agent_messages = @conversation.messages.outgoing.where.not(sender_type: %w[AgentBot Captain::Assistant])
     return unless agent_messages.any?

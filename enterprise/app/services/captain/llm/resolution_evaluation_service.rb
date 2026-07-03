@@ -12,7 +12,7 @@ class Captain::Llm::ResolutionEvaluationService < Llm::BaseAiService
 
   def perform
     return if @content.blank?
-    
+
     # Check if AI was involved in this conversation
     bot_messages = @conversation.messages.outgoing.where(sender_type: %w[AgentBot Captain::Assistant])
     return unless bot_messages.any?
@@ -68,7 +68,7 @@ class Captain::Llm::ResolutionEvaluationService < Llm::BaseAiService
     <<~PROMPT
       You are an expert customer support analyst.
       Analyze the provided conversation transcript, which has just been marked as resolved.
-      
+
       Determine if the customer's issue was successfully resolved by the AI assistant without requiring human intervention.
 
       Respond strictly in JSON format with the following keys:

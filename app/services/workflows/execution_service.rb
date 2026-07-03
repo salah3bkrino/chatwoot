@@ -1,4 +1,3 @@
-require 'set'
 
 class Workflows::ExecutionService
   pattr_initialize [:workflow!, :event_name!, :event_data!]
@@ -21,6 +20,7 @@ class Workflows::ExecutionService
 
   private
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def execute_node(node)
     return if node.nil?
     return if @visited_nodes.include?(node['id'])
@@ -82,8 +82,9 @@ class Workflows::ExecutionService
   end
 
   def execute_ai_prompt(_data)
-    Rails.logger.info("[Workflows] AI Prompt node encountered — not yet implemented for MVP")
+    Rails.logger.info('[Workflows] AI Prompt node encountered — not yet implemented for MVP')
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def fetch_target_object
     case event_name

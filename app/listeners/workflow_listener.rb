@@ -22,9 +22,9 @@ class WorkflowListener < BaseListener
 
     account = message.try(:account)
     return unless account
-    
+
     workflows = current_account_workflows('message_created', account)
-    
+
     workflows.each do |workflow|
       ::Workflows::ExecutionService.new(
         workflow: workflow,
