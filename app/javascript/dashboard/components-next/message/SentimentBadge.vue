@@ -62,7 +62,7 @@ const badgeTitle = computed(() => {
   >
     <span class="text-sm leading-none">{{ emoji }}</span>
     <span v-if="sentiment && sentiment.score !== undefined" class="opacity-80">
-      {{ Math.min(100, Math.abs(sentiment.score) * 100).toFixed(0) }}&percnt;
+      {{ `${Math.min(100, Math.abs(sentiment.score) * 100).toFixed(0)}%` }}
     </span>
   </div>
 </template>
