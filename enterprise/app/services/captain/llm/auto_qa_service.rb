@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Captain::Llm::AutoQaService < Llm::BaseAiService
   include Integrations::LlmInstrumentation
 

@@ -735,6 +735,12 @@ const menuItems = computed(() => {
           to: accountScopedRoute('automation_list'),
         },
         {
+          name: 'Settings Workflows',
+          label: t('SIDEBAR.WORKFLOWS'),
+          icon: 'i-lucide-git-branch',
+          to: accountScopedRoute('workflows_list'),
+        },
+        {
           name: 'Settings Agent Bots',
           label: t('SIDEBAR.AGENT_BOTS'),
           icon: 'i-lucide-bot',

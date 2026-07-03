@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Captain::Llm::AutoCategorizationService < Llm::BaseAiService
   include Integrations::LlmInstrumentation
 

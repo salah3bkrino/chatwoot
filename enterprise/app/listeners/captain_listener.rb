@@ -1,9 +1,8 @@
 class CaptainListener < BaseListener
-  include ::Events::Types
-
   def message_created(event)
     message = extract_message_and_account(event)[0]
     return unless message
+    return if message.activity? || message.auto_reply_email?
 
     if message.incoming?
       if message.account.feature_enabled?('sentiment_analysis')

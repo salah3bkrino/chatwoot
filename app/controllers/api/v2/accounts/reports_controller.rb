@@ -19,8 +19,13 @@ class Api::V2::Accounts::ReportsController < Api::V1::Accounts::BaseController
   end
 
   def auto_qa
-    conversations = Current.account.conversations.where.not(auto_qa_score: nil).order(auto_qa_score: :asc).limit(100)
-    render json: conversations.as_json(only: [:id, :display_id, :auto_qa_score, :auto_qa_feedback], include: { assignee: { only: [:id, :name] } })
+    conversations = Current.account.conversations
+                           .where.not(auto_qa_score: nil)
+                           .includes(:assignee)
+                           .order(auto_qa_score: :asc)
+                           .limit(100)
+    render json: conversations.as_json(only: %i[id display_id auto_qa_score auto_qa_feedback],
+                                       include: { assignee: { only: %i[id name] } })
   end
 
   def ai_analytics_query

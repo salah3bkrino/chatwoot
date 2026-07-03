@@ -108,8 +108,18 @@ class Workflows::ExecutionService
       sender: nil,
       content: params['content'],
       message_type: :outgoing,
-      content_attributes: { automation_rule_id: workflow.id }
+      content_attributes: { workflow_id: workflow.id }
     )
+
+    # Publish event with performed_by so WorkflowListener can detect and skip re-triggering
+    Rails.configuration.dispatcher.dispatch(
+      Events::Types::MESSAGE_CREATED,
+      Time.zone.now,
+      message: conversation.messages.last,
+      performed_by: workflow
+    )
+  rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.warn("[Workflows] send_message failed: #{e.message}")
   end
 
   def add_label(params)

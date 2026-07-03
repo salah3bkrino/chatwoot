@@ -39,6 +39,7 @@ const edges = ref([]);
 onMounted(async () => {
   if (route.params.workflowId) {
     isEditing.value = true;
+    await store.dispatch('workflows/get');
     const allWorkflows = store.getters['workflows/getWorkflows'];
     const workflow = allWorkflows.find(
       w => w.id === parseInt(route.params.workflowId, 10)

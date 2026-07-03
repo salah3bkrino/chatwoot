@@ -12,6 +12,7 @@ class CreateWorkflows < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :workflows, [:account_id, :trigger_event, :active]
+    add_index :workflows, %i[account_id trigger_event active]
+    add_index :workflows, %i[account_id name], unique: true
   end
 end

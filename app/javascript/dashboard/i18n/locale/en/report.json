@@ -660,7 +660,8 @@
       "ACTION": "Action",
       "UNASSIGNED": "Unassigned",
       "VIEW": "View"
-    }
+    },
+    "FETCH_ERROR": "Failed to fetch Auto QA reports."
   },
   "AI_ANALYTICS": {
     "HEADER": "AI Insights",
@@ -685,7 +686,13 @@
       "ADD_CONDITION": "Add Condition",
       "ADD_ACTION": "Add Message Action",
       "ADD_AI": "Add AI Step",
-      "SAVE": "Save Workflow"
+      "SAVE": "Save Workflow",
+      "NODE_LABELS": {
+        "TRIGGER": "Trigger",
+        "CONDITION": "Condition",
+        "ACTION": "Send Message",
+        "AI_PROMPT": "AI Prompt"
+      }
     },
     "DELETE": {
       "CONFIRM": "Are you sure you want to delete this workflow?",

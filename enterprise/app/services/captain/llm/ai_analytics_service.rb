@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Captain::Llm::AiAnalyticsService < Llm::BaseAiService
   include Integrations::LlmInstrumentation
 
@@ -22,7 +24,7 @@ class Captain::Llm::AiAnalyticsService < Llm::BaseAiService
         .with_instructions(system_prompt)
         .ask(@query)
     end
-    response.content
+    response&.content || 'Sorry, I received an empty response.'
   rescue RubyLLM::Error => e
     ChatwootExceptionTracker.new(e, account: @account).capture_exception
     'Sorry, I could not process your request at this time.'

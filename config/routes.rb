@@ -114,7 +114,7 @@ Rails.application.routes.draw do
             end
           end
           resources :canned_responses, only: [:index, :create, :update, :destroy]
-          resources :workflows
+          resources :workflows, only: %i[index show create update destroy]
           resources :automation_rules, only: [:index, :create, :show, :update, :destroy] do
             post :clone
           end
