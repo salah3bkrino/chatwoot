@@ -1,4 +1,3 @@
-
 class Workflows::ExecutionService
   pattr_initialize [:workflow!, :event_name!, :event_data!]
 
