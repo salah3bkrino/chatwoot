@@ -11,6 +11,7 @@ class Captain::Conversation::ResponseBuilderJob < ApplicationJob
     @assistant = assistant
 
     return unless conversation_pending?
+    return unless inbox_still_linked_to_assistant?
 
     Current.executed_by = @assistant
 
@@ -209,6 +210,18 @@ class Captain::Conversation::ResponseBuilderJob < ApplicationJob
       "[CAPTAIN][ResponseBuilderJob] V1 handoff requested but not executed for account=#{account.id} " \
       "conversation=#{@conversation.display_id}"
     )
+  end
+
+  def inbox_still_linked_to_assistant?
+    # Re-fetch from DB to avoid acting on a stale object captured at enqueue time.
+    # If the CaptainInbox association was removed after this job was queued, abort.
+    current_assistant = @inbox.reload.captain_assistant
+    return false if current_assistant.nil?
+    return false if current_assistant.id != @assistant.id
+
+    true
+  rescue ActiveRecord::RecordNotFound
+    false
   end
 
   def conversation_pending?
