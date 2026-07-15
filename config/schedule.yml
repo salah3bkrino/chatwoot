@@ -74,3 +74,9 @@ remove_orphan_conversations_job:
   cron: '0 */12 * * *'
   class: 'Internal::RemoveOrphanConversationsJob'
   queue: housekeeping
+
+# executed daily at 0100 UTC - Atmta: suspend expired subscription accounts
+atmta_suspend_expired_subscriptions:
+  cron: '0 1 * * *'
+  class: 'Atmta::SuspendExpiredSubscriptionsJob'
+  queue: scheduled_jobs

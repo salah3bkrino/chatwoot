@@ -131,6 +131,10 @@ Rails.application.routes.draw do
           end
           resources :campaigns, only: [:index, :create, :show, :update, :destroy]
           resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
+          resource :subscription, only: [:show], controller: 'subscriptions' do
+            post :manual_payment, on: :collection, action: :create_manual_payment
+            get :plans, on: :collection
+          end
           namespace :channels do
             resource :twilio_channel, only: [:create]
           end
@@ -691,6 +695,13 @@ Rails.application.routes.draw do
 
       resources :access_tokens, only: [:index, :show]
       resources :installation_configs, only: [:index, :new, :create, :show, :edit, :update]
+      resources :subscription_plans, only: [:index, :new, :create, :show, :edit, :update, :destroy]
+      resources :manual_payments, only: [:index] do
+        member do
+          post :approve
+          post :reject
+        end
+      end
       resources :agent_bots, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
         delete :avatar, on: :member, action: :destroy_avatar
       end

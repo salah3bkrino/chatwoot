@@ -1,6 +1,5 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
 import { useMapGetter, useStore } from 'dashboard/composables/store.js';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { useCaptain } from 'dashboard/composables/useCaptain';
@@ -12,11 +11,11 @@ import BillingCard from './components/BillingCard.vue';
 import BillingHeader from './components/BillingHeader.vue';
 import DetailItem from './components/DetailItem.vue';
 import PurchaseCreditsModal from './components/PurchaseCreditsModal.vue';
+import AtmtaSubscriptionCard from './components/AtmtaSubscriptionCard.vue';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import ButtonV4 from 'next/button/Button.vue';
 
-const router = useRouter();
 const { currentAccount, isOnChatwootCloud } = useAccount();
 const {
   captainEnabled,
@@ -85,9 +84,9 @@ const fetchAccountDetails = async () => {
 };
 
 const handleBillingPageLogic = async () => {
-  // If self-hosted, redirect to dashboard
+  // If self-hosted (Atmta), show Atmta subscription page instead of redirecting
   if (!isOnChatwootCloud.value) {
-    router.push({ name: 'home' });
+    fetchLimits();
     return;
   }
 
@@ -160,7 +159,10 @@ onMounted(handleBillingPageLogic);
       />
     </template>
     <template #body>
-      <section class="grid gap-4">
+      <!-- Atmta self-hosted subscription management -->
+      <AtmtaSubscriptionCard v-if="!isOnChatwootCloud" />
+
+      <section v-else class="grid gap-4">
         <BillingCard
           :title="$t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.TITLE')"
           :description="$t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.DESCRIPTION')"
