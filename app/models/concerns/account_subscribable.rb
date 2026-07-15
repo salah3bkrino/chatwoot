@@ -3,7 +3,7 @@ module AccountSubscribable
 
   included do
     belongs_to :subscription_plan, optional: true
-    has_many :manual_payment_requests
+    has_many :manual_payment_requests, dependent: :destroy
 
     enum :subscription_status, {
       trial: 0,
@@ -33,7 +33,7 @@ module AccountSubscribable
   end
 
   def days_until_expiry
-    return nil unless subscription_end_date.present?
+    return nil if subscription_end_date.blank?
 
     [(subscription_end_date - Time.current).to_i / 1.day, 0].max
   end

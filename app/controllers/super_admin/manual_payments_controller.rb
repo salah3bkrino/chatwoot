@@ -14,7 +14,7 @@ class SuperAdmin::ManualPaymentsController < SuperAdmin::ApplicationController
       request.approve!(current_super_admin)
       redirect_to super_admin_manual_payments_path, notice: "✅ تم تفعيل اشتراك #{request.account.name} بنجاح"
     else
-      redirect_to super_admin_manual_payments_path, alert: 'هذا الطلب تم معالجته مسبقاً'
+      redirect_to super_admin_manual_payments_path, alert: 'This request has already been processed.' # rubocop:disable Rails/I18nLocaleTexts
     end
   rescue StandardError => e
     redirect_to super_admin_manual_payments_path, alert: "خطأ: #{e.message}"

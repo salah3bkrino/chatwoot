@@ -18,8 +18,8 @@
 #
 
 class SubscriptionPlan < ApplicationRecord
-  has_many :accounts, foreign_key: :subscription_plan_id, dependent: :nullify
-  has_many :manual_payment_requests
+  has_many :accounts, dependent: :nullify, inverse_of: :subscription_plan
+  has_many :manual_payment_requests, dependent: :destroy
 
   validates :name, presence: true
   validates :slug, presence: true, uniqueness: true

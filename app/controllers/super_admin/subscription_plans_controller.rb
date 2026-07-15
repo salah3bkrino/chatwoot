@@ -1,5 +1,5 @@
 class SuperAdmin::SubscriptionPlansController < SuperAdmin::ApplicationController
-  before_action :set_plan, only: [:show, :edit, :update, :destroy]
+  before_action :set_plan, only: [:edit, :update, :destroy]
 
   def index
     @plans = SubscriptionPlan.order(:price_cents)
@@ -9,20 +9,20 @@ class SuperAdmin::SubscriptionPlansController < SuperAdmin::ApplicationControlle
     @plan = SubscriptionPlan.new
   end
 
+  def edit; end
+
   def create
     @plan = SubscriptionPlan.new(plan_params)
     if @plan.save
-      redirect_to super_admin_subscription_plans_path, notice: 'تم إنشاء الباقة بنجاح'
+      redirect_to super_admin_subscription_plans_path, notice: 'Plan created successfully.' # rubocop:disable Rails/I18nLocaleTexts
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  def edit; end
-
   def update
     if @plan.update(plan_params)
-      redirect_to super_admin_subscription_plans_path, notice: 'تم تحديث الباقة بنجاح'
+      redirect_to super_admin_subscription_plans_path, notice: 'Plan updated successfully.' # rubocop:disable Rails/I18nLocaleTexts
     else
       render :edit, status: :unprocessable_entity
     end
@@ -30,7 +30,7 @@ class SuperAdmin::SubscriptionPlansController < SuperAdmin::ApplicationControlle
 
   def destroy
     @plan.update!(active: false)
-    redirect_to super_admin_subscription_plans_path, notice: 'تم تعطيل الباقة'
+    redirect_to super_admin_subscription_plans_path, notice: 'Plan suspended successfully.' # rubocop:disable Rails/I18nLocaleTexts
   end
 
   private

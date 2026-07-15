@@ -1,7 +1,7 @@
 # db/seeds/atmta_subscription_plans.rb
 # يقوم بإنشاء باقات Atmta الأساسية إذا لم تكن موجودة
 
-puts 'Seeding Atmta subscription plans...'
+Rails.logger.info 'Seeding Atmta subscription plans...'
 
 starter = SubscriptionPlan.find_or_create_by!(slug: 'starter') do |plan|
   plan.name = 'Starter'
@@ -39,4 +39,4 @@ enterprise = SubscriptionPlan.find_or_create_by!(slug: 'enterprise') do |plan|
   }
 end
 
-puts "✅ Created/Updated plans: #{starter.name} ($#{starter.price}) and #{enterprise.name} ($#{enterprise.price})"
+Rails.logger.info "✅ Created/Updated plans: #{starter.name} ($#{starter.price}) and #{enterprise.name} ($#{enterprise.price})"
