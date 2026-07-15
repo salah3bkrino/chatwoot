@@ -1,5 +1,7 @@
-class Atmta::SuspendExpiredSubscriptionsJob < ApplicationJob
-  queue_as :default
+# rubocop:disable Style/ClassAndModuleChildren
+module Atmta
+  class SuspendExpiredSubscriptionsJob < ApplicationJob
+    queue_as :default
 
     def perform
       expired_accounts = Account.subscription_expired
@@ -21,5 +23,7 @@ class Atmta::SuspendExpiredSubscriptionsJob < ApplicationJob
       AccountMailer.subscription_expired(account, owner).deliver_later
     rescue StandardError => e
       Rails.logger.error("[Atmta] Failed to notify account ##{account.id}: #{e.message}")
+    end
   end
 end
+# rubocop:enable Style/ClassAndModuleChildren
