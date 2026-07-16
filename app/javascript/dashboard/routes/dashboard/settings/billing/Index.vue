@@ -141,13 +141,13 @@ onMounted(handleBillingPageLogic);
 
 <template>
   <SettingsLayout
-    :is-loading="uiFlags.isFetchingItem || isWaitingForBilling"
+    :is-loading="uiFlags.isFetchingItem || (isWaitingForBilling && isOnChatwootCloud) || (!hasABillingPlan && isOnChatwootCloud)"
     :loading-message="
       isWaitingForBilling
         ? $t('BILLING_SETTINGS.NO_BILLING_USER')
         : $t('ATTRIBUTES_MGMT.LOADING')
     "
-    :no-records-found="!hasABillingPlan && !isWaitingForBilling"
+    :no-records-found="!hasABillingPlan && !isWaitingForBilling && isOnChatwootCloud"
     :no-records-message="$t('BILLING_SETTINGS.NO_BILLING_USER')"
   >
     <template #header>
