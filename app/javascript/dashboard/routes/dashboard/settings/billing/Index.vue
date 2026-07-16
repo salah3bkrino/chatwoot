@@ -152,9 +152,7 @@ onMounted(handleBillingPageLogic);
         : $t('ATTRIBUTES_MGMT.LOADING')
     "
     :no-records-found="
-      !hasABillingPlan &&
-      !isWaitingForBilling &&
-      isOnChatwootCloud
+      !hasABillingPlan && !isWaitingForBilling && isOnChatwootCloud
     "
     :no-records-message="$t('BILLING_SETTINGS.NO_BILLING_USER')"
   >
