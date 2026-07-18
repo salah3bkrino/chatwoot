@@ -40,6 +40,21 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_25_093000) do
     t.index ["account_id"], name: "index_account_saml_settings_on_account_id"
   end
 
+  create_table "account_subscriptions", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "subscription_plan_id", null: false
+    t.string "status", default: "active", null: false
+    t.datetime "started_at", null: false
+    t.datetime "expires_at"
+    t.datetime "cancelled_at"
+    t.jsonb "metadata", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_subscriptions_on_account_id"
+    t.index ["status"], name: "index_account_subscriptions_on_status"
+    t.index ["subscription_plan_id"], name: "index_account_subscriptions_on_subscription_plan_id"
+  end
+
   create_table "account_users", force: :cascade do |t|
     t.bigint "account_id"
     t.bigint "user_id"
@@ -1212,6 +1227,20 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_25_093000) do
     t.index ["account_id"], name: "index_sla_policies_on_account_id"
   end
 
+  create_table "subscription_plans", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "max_agents", default: 0, null: false
+    t.integer "max_inboxes", default: 0, null: false
+    t.decimal "price", precision: 10, scale: 2, default: "0.0", null: false
+    t.string "billing_period", default: "monthly", null: false
+    t.jsonb "features", default: {}
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["active"], name: "index_subscription_plans_on_active"
+    t.index ["name"], name: "index_subscription_plans_on_name", unique: true
+  end
+
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
     t.string "taggable_type"
@@ -1346,6 +1375,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_25_093000) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "inboxes", "portals"
   add_foreign_key "workflows", "accounts"
+  add_foreign_key "account_subscriptions", "accounts"
+  add_foreign_key "account_subscriptions", "subscription_plans"
   create_trigger("accounts_after_insert_row_tr", :generated => true, :compatibility => 1).
       on("accounts").
       after(:insert).
