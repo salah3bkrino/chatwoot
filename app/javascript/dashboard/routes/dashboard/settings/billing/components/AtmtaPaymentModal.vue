@@ -1,14 +1,14 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useAccount } from 'dashboard/composables/useAccount';
 import { useAlert } from 'dashboard/composables';
+import { useMapGetter } from 'dashboard/composables/store';
 import ButtonV4 from 'next/button/Button.vue';
 import Modal from 'dashboard/components/Modal.vue';
+import atmtaSubscriptionApi from 'dashboard/api/atmtaSubscription';
 
 const emit = defineEmits(['success']);
 const { t } = useI18n();
-const { currentAccount } = useAccount();
 
 const isOpen = ref(false);
 const selectedPlan = ref(null);
@@ -107,10 +107,11 @@ const selectPlan = plan => {
   step.value = 2;
 };
 
+const accountId = useMapGetter('getCurrentAccountId');
+
 const handleStripeCheckout = () => {
-  const accountId = currentAccount.value.id;
   window.open(
-    `/api/v1/accounts/${accountId}/subscription/stripe_checkout?plan_id=${selectedPlan.value.id}&months=${months.value}`,
+    `/api/v1/accounts/${accountId.value}/subscription/stripe_checkout?plan_id=${selectedPlan.value.id}&months=${months.value}`,
     '_blank'
   );
   close();
@@ -120,27 +121,15 @@ const submitManualPayment = async () => {
   if (!senderPhone.value || !transferRef.value) return;
   isSubmitting.value = true;
   try {
-    const accountId = currentAccount.value.id;
-    const response = await fetch(
-      `/api/v1/accounts/${accountId}/subscription/manual_payment`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          api_access_token: window.chatwootConfig?.userAccessToken || '',
-        },
-        body: JSON.stringify({
-          plan_id: selectedPlan.value.id,
-          payment_method: selectedMethod.value,
-          sender_phone: senderPhone.value,
-          transfer_reference: transferRef.value,
-          amount: totalEGP.value,
-          currency: 'EGP',
-          months: months.value,
-        }),
-      }
-    );
-    if (!response.ok) throw new Error('request_failed');
+    await atmtaSubscriptionApi.createManualPayment({
+      plan_id: selectedPlan.value.id,
+      payment_method: selectedMethod.value,
+      sender_phone: senderPhone.value,
+      transfer_reference: transferRef.value,
+      amount: totalEGP.value,
+      currency: 'EGP',
+      months: months.value,
+    });
     emit('success');
     close();
     useAlert(t('ATMTA_BILLING.MODAL.SUCCESS_MSG'));

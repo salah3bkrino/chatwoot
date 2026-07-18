@@ -1,11 +1,9 @@
-# rubocop:disable Style/ClassAndModuleChildren
 module Atmta
   class SubscriptionService
     def initialize(account:)
       @account = account
     end
 
-    # تفعيل باقة لحساب (يدوي أو عبر Stripe)
     def activate!(plan:, months: 1)
       end_date = compute_end_date(months)
 
@@ -15,11 +13,9 @@ module Atmta
         subscription_end_date: end_date
       )
 
-      # تحديث الـ limits الخاصة بالحساب بناءً على الباقة
       sync_limits_from_plan!(plan)
     end
 
-    # تفعيل الفترة التجريبية للحسابات الجديدة
     def start_trial!(plan:)
       @account.update!(
         subscription_plan: plan,
@@ -30,7 +26,6 @@ module Atmta
       sync_limits_from_plan!(plan)
     end
 
-    # إيقاف الحساب عند انتهاء الاشتراك
     def suspend!
       @account.update!(
         subscription_status: :suspended,
@@ -38,7 +33,6 @@ module Atmta
       )
     end
 
-    # ترقية الباقة
     def upgrade!(new_plan:, months: 1)
       activate!(plan: new_plan, months: months)
     end
@@ -62,4 +56,3 @@ module Atmta
     end
   end
 end
-# rubocop:enable Style/ClassAndModuleChildren

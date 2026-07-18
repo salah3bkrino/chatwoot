@@ -57,4 +57,19 @@ module AccountSubscribable
   def inboxes_limit_reached?
     inboxes.count >= inboxes_limit
   end
+
+  # Returns the Atmta-plan agent cap when a plan is active, nil otherwise.
+  # Used by usage_limits to override the global ChatwootApp.max_limit.
+  def atmta_agents_limit
+    return nil unless subscription_plan.present? && subscription_active?
+
+    subscription_plan.max_agents
+  end
+
+  # Returns the Atmta-plan inbox cap when a plan is active, nil otherwise.
+  def atmta_inboxes_limit
+    return nil unless subscription_plan.present? && subscription_active?
+
+    subscription_plan.max_inboxes
+  end
 end

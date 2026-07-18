@@ -1,14 +1,13 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useAccount } from 'dashboard/composables/useAccount';
 import ButtonV4 from 'next/button/Button.vue';
 import BillingCard from './BillingCard.vue';
 import BillingMeter from './BillingMeter.vue';
 import AtmtaPaymentModal from './AtmtaPaymentModal.vue';
+import atmtaSubscriptionApi from 'dashboard/api/atmtaSubscription';
 
 const { t } = useI18n();
-const { currentAccount } = useAccount();
 const paymentModalRef = ref(null);
 const subscriptionData = ref(null);
 const isLoading = ref(false);
@@ -16,16 +15,8 @@ const isLoading = ref(false);
 const fetchSubscription = async () => {
   isLoading.value = true;
   try {
-    const accountId = currentAccount.value.id;
-    const response = await fetch(`/api/v1/accounts/${accountId}/subscription`, {
-      headers: {
-        'Content-Type': 'application/json',
-        api_access_token: window.chatwootConfig?.userAccessToken || '',
-      },
-    });
-    if (response.ok) {
-      subscriptionData.value = await response.json();
-    }
+    const { data } = await atmtaSubscriptionApi.get();
+    subscriptionData.value = data;
   } catch {
     // handle silently
   } finally {
