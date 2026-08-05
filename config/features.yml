@@ -272,6 +272,7 @@
   display_name: AI Analytics
   enabled: false
   premium: true
+  column: feature_flags_ext_1
 - name: whatsapp_manual_transfer
   display_name: WhatsApp Manual Transfer
   enabled: false
