@@ -704,14 +704,55 @@
     "BUILDER": {
       "NAME_PLACEHOLDER": "Workflow Name",
       "ADD_CONDITION": "Add Condition",
-      "ADD_ACTION": "Add Message Action",
-      "ADD_AI": "Add AI Step",
+      "ADD_REPLY": "Add Reply",
+      "ADD_LABEL": "Add Tag",
+      "ADD_ASSIGNMENT": "Add Assignment",
+      "ADD_WEBHOOK": "Add Webhook",
       "SAVE": "Save Workflow",
+      "PROPERTIES": "Step properties",
+      "TRIGGER_EVENT": "When this happens",
+      "CONDITION_ATTRIBUTE": "Check",
+      "CONDITION_OPERATOR": "Rule",
+      "CONDITION_VALUE": "Value",
+      "CONDITION_HINT": "Condition steps follow their connected path when the rule matches.",
+      "ACTION_TYPE": "Do this",
+      "MESSAGE_CONTENT": "Reply text",
+      "LABEL_NAME": "Tag name",
+      "AGENT": "Assign agent",
+      "TEAM": "Assign team",
+      "SELECT_AGENT": "Select an agent",
+      "SELECT_TEAM": "Select a team",
+      "WEBHOOK_URL": "Webhook URL",
+      "TRIGGERS": {
+        "MESSAGE_CREATED": "A message is received",
+        "CONVERSATION_CREATED": "A conversation is created",
+        "CONVERSATION_UPDATED": "A conversation changes",
+        "CONVERSATION_OPENED": "A conversation opens",
+        "CONVERSATION_RESOLVED": "A conversation resolves"
+      },
+      "CONDITIONS": {
+        "MESSAGE_CONTENT": "Message text",
+        "CONVERSATION_STATUS": "Conversation status",
+        "CONVERSATION_PRIORITY": "Conversation priority",
+        "CONTACT_EMAIL": "Contact email"
+      },
+      "OPERATORS": {
+        "CONTAINS": "contains",
+        "EQUALS": "equals",
+        "NOT_EQUALS": "does not equal",
+        "PRESENT": "is present"
+      },
+      "ACTIONS": {
+        "SEND_MESSAGE": "Send an automatic reply",
+        "ADD_LABEL": "Add a tag",
+        "ASSIGN_AGENT": "Assign an agent",
+        "ASSIGN_TEAM": "Assign a team",
+        "SEND_WEBHOOK": "Send a webhook"
+      },
       "NODE_LABELS": {
         "TRIGGER": "Trigger",
-        "CONDITION": "Condition",
-        "ACTION": "Send Message",
-        "AI_PROMPT": "AI Prompt"
+        "CONDITION": "Check a condition",
+        "ACTION": "Choose an action"
       }
     },
     "DELETE": {
@@ -721,7 +762,9 @@
     },
     "SAVE": {
       "SUCCESS": "Workflow saved successfully",
-      "ERROR": "Error saving workflow"
+      "ERROR": "Error saving workflow",
+      "NAME_REQUIRED": "Give this workflow a name before saving.",
+      "GRAPH_REQUIRED": "Connect the trigger to at least one configured step before saving."
     }
   }
 }

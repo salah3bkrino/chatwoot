@@ -2,6 +2,14 @@
 
 class Workflow < ApplicationRecord
   NODE_TYPES = %w[trigger condition action ai_prompt].freeze
+  CONDITION_ATTRIBUTES = %w[
+    message_content
+    conversation_status
+    conversation_priority
+    contact_email
+  ].freeze
+  CONDITION_OPERATORS = %w[contains equals not_equals present].freeze
+  ACTION_TYPES = %w[send_message add_label assign_agent assign_team send_webhook].freeze
 
   belongs_to :account
 
@@ -23,12 +31,16 @@ class Workflow < ApplicationRecord
     end
 
     nodes.each do |node|
-      node_type = node.dig('data', 'type') || node['type'] if node.is_a?(Hash)
+      data = node['data'] || {}
+      node_type = data['type'] || node['type'] if node.is_a?(Hash)
 
       unless node.is_a?(Hash) && node['id'].present? && NODE_TYPES.include?(node_type)
         errors.add(:nodes, 'each node must have an id and a supported type')
         break
       end
+
+      validate_condition_node(data) if node_type == 'condition'
+      validate_action_node(data) if node_type == 'action'
     end
   end
 
@@ -44,5 +56,28 @@ class Workflow < ApplicationRecord
         break
       end
     end
+  end
+
+  def validate_condition_node(data)
+    valid_condition = CONDITION_ATTRIBUTES.include?(data['attribute']) &&
+                      CONDITION_OPERATORS.include?(data['operator']) &&
+                      (data['operator'] == 'present' || data['value'].present?)
+    errors.add(:nodes, 'condition nodes need a supported attribute, operator, and value') unless valid_condition
+  end
+
+  def validate_action_node(data)
+    params = data['action_params'] || {}
+    action = data['action_name']
+    return errors.add(:nodes, 'action nodes need a supported action') unless ACTION_TYPES.include?(action)
+
+    required_param = {
+      'send_message' => 'content',
+      'add_label' => 'label',
+      'assign_agent' => 'agent_id',
+      'assign_team' => 'team_id',
+      'send_webhook' => 'url'
+    }.fetch(action)
+
+    errors.add(:nodes, "#{action} needs #{required_param}") if params[required_param].blank?
   end
 end

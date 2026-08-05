@@ -33,7 +33,7 @@ class Workflows::ExecutionService
       follow_edges(node['id'])
     when 'condition'
       result = evaluate_condition(data)
-      follow_edges(node['id'], result.to_s)
+      follow_edges(node['id']) if result
     when 'action'
       execute_action(data)
       follow_edges(node['id'])
@@ -57,18 +57,17 @@ class Workflows::ExecutionService
     target = fetch_target_object
     return false unless target
 
-    attribute = data['attribute'].to_s
-    attr_value = if target.attributes.key?(attribute)
-                   target.attributes[attribute]
-                 else
-                   target.try(:custom_attributes)&.dig(attribute)
-                 end
+    attr_value = condition_value(data['attribute'])
 
     case data['operator']
     when 'contains'
       attr_value.to_s.downcase.include?(data['value'].to_s.downcase)
     when 'equals'
       attr_value.to_s.downcase == data['value'].to_s.downcase
+    when 'not_equals'
+      attr_value.to_s.downcase != data['value'].to_s.downcase
+    when 'present'
+      attr_value.present?
     else
       false
     end
@@ -83,6 +82,12 @@ class Workflows::ExecutionService
       send_message(data['action_params'])
     when 'add_label'
       add_label(data['action_params'])
+    when 'assign_agent'
+      assign_agent(data['action_params'])
+    when 'assign_team'
+      assign_team(data['action_params'])
+    when 'send_webhook'
+      send_webhook(data['action_params'])
     end
   end
 
@@ -90,6 +95,22 @@ class Workflows::ExecutionService
     Rails.logger.info('[Workflows] AI Prompt node encountered — not yet implemented for MVP')
   end
   # rubocop:enable Metrics/CyclomaticComplexity
+
+  def condition_value(attribute)
+    conversation = resolve_conversation(fetch_target_object)
+    message = event_data[:message]
+
+    case attribute
+    when 'message_content'
+      message&.content
+    when 'conversation_status'
+      conversation&.status
+    when 'conversation_priority'
+      conversation&.priority
+    when 'contact_email'
+      conversation&.contact&.email
+    end
+  end
 
   def fetch_target_object
     case event_name
@@ -137,7 +158,38 @@ class Workflows::ExecutionService
     label = params&.fetch('label', nil).to_s
     return if label.blank?
 
+    Label.find_or_create_by!(account: conversation.account, title: label)
     conversation.label_list.add(label)
     conversation.save!
+  end
+
+  def assign_agent(params)
+    conversation = resolve_conversation(fetch_target_object)
+    agent_id = params&.fetch('agent_id', nil).to_s
+    return if conversation.blank? || agent_id.blank?
+
+    ActionService.new(conversation).assign_agent([agent_id])
+  end
+
+  def assign_team(params)
+    conversation = resolve_conversation(fetch_target_object)
+    team_id = params&.fetch('team_id', nil).to_s
+    return if conversation.blank? || team_id.blank?
+
+    ActionService.new(conversation).assign_team([team_id])
+  end
+
+  def send_webhook(params)
+    conversation = resolve_conversation(fetch_target_object)
+    url = params&.fetch('url', nil).to_s
+    return if conversation.blank? || url.blank?
+
+    payload = conversation.webhook_data.merge(
+      event: 'workflow.executed',
+      workflow_id: workflow.id,
+      workflow_name: workflow.name,
+      trigger_event: event_name
+    )
+    WebhookJob.perform_later(url, payload)
   end
 end
