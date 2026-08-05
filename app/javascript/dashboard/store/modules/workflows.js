@@ -5,6 +5,7 @@ const state = {
   records: [],
   uiFlags: {
     isFetching: false,
+    isFetchingItem: false,
     isCreating: false,
     isUpdating: false,
     isDeleting: false,
@@ -26,6 +27,16 @@ const actions = {
       // Ignore
     } finally {
       commit(types.default.SET_WORKFLOW_UI_FLAG, { isFetching: false });
+    }
+  },
+  show: async ({ commit }, id) => {
+    commit(types.default.SET_WORKFLOW_UI_FLAG, { isFetchingItem: true });
+    try {
+      const response = await WorkflowsAPI.show(id);
+      commit(types.default.UPDATE_WORKFLOW, response.data);
+      return response.data;
+    } finally {
+      commit(types.default.SET_WORKFLOW_UI_FLAG, { isFetchingItem: false });
     }
   },
   create: async ({ commit }, data) => {

@@ -7,14 +7,14 @@ class Workflows::ExecutionService
     return unless workflow.active?
 
     @visited_nodes = Set.new
-    trigger_node = workflow.nodes.find { |n| n['type'] == 'trigger' }
+    trigger_node = workflow.nodes.find { |node| node_type(node) == 'trigger' }
     return unless trigger_node
 
-    begin
+    with_workflow_context do
       execute_node(trigger_node)
-    rescue StandardError => e
-      Rails.logger.error("[Workflows] Execution failed for workflow #{workflow.id}: #{e.message}")
     end
+  rescue StandardError => e
+    Rails.logger.error("[Workflows] Execution failed for workflow #{workflow.id}: #{e.message}")
   end
 
   private
@@ -26,18 +26,19 @@ class Workflows::ExecutionService
     return if @visited_nodes.size >= MAX_NODES
 
     @visited_nodes.add(node['id'])
+    data = node['data'] || {}
 
-    case node['type']
+    case node_type(node)
     when 'trigger'
       follow_edges(node['id'])
     when 'condition'
-      result = evaluate_condition(node['data'])
+      result = evaluate_condition(data)
       follow_edges(node['id'], result.to_s)
     when 'action'
-      execute_action(node['data'])
+      execute_action(data)
       follow_edges(node['id'])
     when 'ai_prompt'
-      execute_ai_prompt(node['data'])
+      execute_ai_prompt(data)
       follow_edges(node['id'])
     end
   end
@@ -56,7 +57,12 @@ class Workflows::ExecutionService
     target = fetch_target_object
     return false unless target
 
-    attr_value = target.try(data['attribute'].to_sym) || target.try(:custom_attributes)&.dig(data['attribute'])
+    attribute = data['attribute'].to_s
+    attr_value = if target.attributes.key?(attribute)
+                   target.attributes[attribute]
+                 else
+                   target.try(:custom_attributes)&.dig(attribute)
+                 end
 
     case data['operator']
     when 'contains'
@@ -98,27 +104,29 @@ class Workflows::ExecutionService
     target.is_a?(Conversation) ? target : target.try(:conversation)
   end
 
+  def node_type(node)
+    node.dig('data', 'type') || node['type'] if node.is_a?(Hash)
+  end
+
+  def with_workflow_context
+    previous_executed_by = Current.executed_by
+    Current.executed_by = workflow
+    yield
+  ensure
+    Current.executed_by = previous_executed_by
+  end
+
   def send_message(params)
     conversation = resolve_conversation(fetch_target_object)
     return unless conversation
 
-    Message.create!(
-      conversation: conversation,
-      account: conversation.account,
-      sender: nil,
+    params ||= {}
+    Messages::MessageBuilder.new(nil, conversation, {
       content: params['content'],
-      message_type: :outgoing,
+      private: false,
       content_attributes: { workflow_id: workflow.id }
-    )
-
-    # Publish event with performed_by so WorkflowListener can detect and skip re-triggering
-    Rails.configuration.dispatcher.dispatch(
-      Events::Types::MESSAGE_CREATED,
-      Time.zone.now,
-      message: conversation.messages.last,
-      performed_by: workflow
-    )
-  rescue ActiveRecord::RecordInvalid => e
+    }).perform
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     Rails.logger.warn("[Workflows] send_message failed: #{e.message}")
   end
 
@@ -126,7 +134,10 @@ class Workflows::ExecutionService
     conversation = resolve_conversation(fetch_target_object)
     return unless conversation
 
-    conversation.label_list.add(params['label'])
+    label = params&.fetch('label', nil).to_s
+    return if label.blank?
+
+    conversation.label_list.add(label)
     conversation.save!
   end
 end

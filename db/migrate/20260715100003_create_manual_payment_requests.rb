@@ -11,7 +11,7 @@ class CreateManualPaymentRequests < ActiveRecord::Migration[7.1]
       t.integer :amount_cents, null: false, default: 0
       t.string :currency, default: 'EGP'
       t.text :admin_notes
-      t.references :approved_by, foreign_key: { to_table: :super_admins }, index: true
+      t.references :approved_by, foreign_key: { to_table: :users }, index: true
       t.datetime :approved_at
       t.integer :months, null: false, default: 1
       t.timestamps

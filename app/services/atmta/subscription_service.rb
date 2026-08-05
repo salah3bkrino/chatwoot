@@ -4,12 +4,16 @@ class Atmta::SubscriptionService
   end
 
   def activate!(plan:, months: 1)
+    months = Integer(months)
+    raise ArgumentError, 'Subscription duration must be positive' unless months.positive?
+
     end_date = compute_end_date(months)
 
     @account.update!(
       subscription_plan: plan,
       subscription_status: :active,
-      subscription_end_date: end_date
+      subscription_end_date: end_date,
+      status: :active
     )
 
     sync_limits_from_plan!(plan)
@@ -20,13 +24,15 @@ class Atmta::SubscriptionService
       subscription_plan: plan,
       subscription_status: :trial,
       trial_started_at: Time.current,
-      subscription_end_date: 14.days.from_now
+      subscription_end_date: plan.trial_days.days.from_now,
+      status: :active
     )
     sync_limits_from_plan!(plan)
   end
 
   def suspend!
     @account.update!(
+      status: :suspended,
       subscription_status: :suspended,
       subscription_end_date: nil
     )

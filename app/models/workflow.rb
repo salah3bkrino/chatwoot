@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Workflow < ApplicationRecord
+  NODE_TYPES = %w[trigger condition action ai_prompt].freeze
+
   belongs_to :account
 
   validates :name, presence: true, uniqueness: { scope: :account_id } # rubocop:disable Rails/UniqueValidationWithoutIndex
@@ -21,8 +23,10 @@ class Workflow < ApplicationRecord
     end
 
     nodes.each do |node|
-      unless node.is_a?(Hash) && node['id'].present? && node['type'].present?
-        errors.add(:nodes, 'each node must have an id and type')
+      node_type = node.dig('data', 'type') || node['type'] if node.is_a?(Hash)
+
+      unless node.is_a?(Hash) && node['id'].present? && NODE_TYPES.include?(node_type)
+        errors.add(:nodes, 'each node must have an id and a supported type')
         break
       end
     end

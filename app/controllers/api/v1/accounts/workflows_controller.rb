@@ -1,4 +1,5 @@
 class Api::V1::Accounts::WorkflowsController < Api::V1::Accounts::BaseController
+  before_action :check_authorization
   before_action :fetch_workflow, only: [:show, :update, :destroy]
 
   def index

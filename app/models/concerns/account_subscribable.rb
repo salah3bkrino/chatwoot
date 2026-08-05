@@ -19,17 +19,17 @@ module AccountSubscribable
   def subscription_active?
     return true if subscription_trial? && trial_still_valid?
 
-    subscription_active_status? && subscription_end_date.present? && subscription_end_date.future?
+    subscription_status == 'active' && subscription_end_date.present? && subscription_end_date.future?
   end
 
   def trial_still_valid?
-    trial_started_at.present? && trial_started_at > 14.days.ago
+    trial_started_at.present? && trial_started_at > subscription_trial_days.days.ago
   end
 
   def trial_days_remaining
     return 0 unless subscription_trial? && trial_started_at.present?
 
-    [(trial_started_at + 14.days - Time.current).to_i / 1.day, 0].max
+    [(trial_started_at + subscription_trial_days.days - Time.current).to_i / 1.day, 0].max
   end
 
   def days_until_expiry
@@ -39,11 +39,15 @@ module AccountSubscribable
   end
 
   def agents_limit
-    subscription_plan&.max_agents || 3
+    return subscription_plan.max_agents if subscription_active? && subscription_plan.present?
+
+    subscription_plan.present? ? 0 : 3
   end
 
   def inboxes_limit
-    subscription_plan&.max_inboxes || 5
+    return subscription_plan.max_inboxes if subscription_active? && subscription_plan.present?
+
+    subscription_plan.present? ? 0 : 5
   end
 
   def plan_feature_enabled?(feature)
@@ -61,15 +65,21 @@ module AccountSubscribable
   # Returns the Atmta-plan agent cap when a plan is active, nil otherwise.
   # Used by usage_limits to override the global ChatwootApp.max_limit.
   def atmta_agents_limit
-    return nil unless subscription_plan.present? && subscription_active?
+    return nil unless subscription_plan.present?
 
-    subscription_plan.max_agents
+    subscription_active? ? subscription_plan.max_agents : 0
   end
 
   # Returns the Atmta-plan inbox cap when a plan is active, nil otherwise.
   def atmta_inboxes_limit
-    return nil unless subscription_plan.present? && subscription_active?
+    return nil unless subscription_plan.present?
 
-    subscription_plan.max_inboxes
+    subscription_active? ? subscription_plan.max_inboxes : 0
+  end
+
+  private
+
+  def subscription_trial_days
+    subscription_plan&.trial_days || 14
   end
 end

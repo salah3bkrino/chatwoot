@@ -44,6 +44,8 @@ const deleteWorkflow = async id => {
   <SettingsLayout
     :is-loading="uiFlags.isFetching"
     :loading-message="$t('WORKFLOWS.LOADING')"
+    :no-records-found="!records.length && !uiFlags.isFetching"
+    :no-records-message="$t('WORKFLOWS.EMPTY')"
   >
     <template #header>
       <BaseSettingsHeader
@@ -63,14 +65,8 @@ const deleteWorkflow = async id => {
       </BaseSettingsHeader>
     </template>
 
-    <div class="flex-1 w-full p-4 overflow-auto">
-      <div
-        v-if="!records.length && !uiFlags.isFetching"
-        class="flex items-center justify-center h-full text-slate-500"
-      >
-        {{ $t('WORKFLOWS.EMPTY') }}
-      </div>
-      <div v-else-if="records.length" class="flex flex-col gap-2">
+    <template #body>
+      <div v-if="records.length" class="flex flex-col gap-2">
         <div
           v-for="workflow in records"
           :key="workflow.id"
@@ -106,6 +102,6 @@ const deleteWorkflow = async id => {
           </div>
         </div>
       </div>
-    </div>
+    </template>
   </SettingsLayout>
 </template>

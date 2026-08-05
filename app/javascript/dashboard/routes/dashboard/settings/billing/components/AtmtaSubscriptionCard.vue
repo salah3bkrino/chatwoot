@@ -1,26 +1,19 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import ButtonV4 from 'next/button/Button.vue';
 import BillingCard from './BillingCard.vue';
 import BillingMeter from './BillingMeter.vue';
-import AtmtaPaymentModal from './AtmtaPaymentModal.vue';
 import atmtaSubscriptionApi from 'dashboard/api/atmtaSubscription';
 
 const { t } = useI18n();
-const paymentModalRef = ref(null);
 const subscriptionData = ref(null);
-const isLoading = ref(false);
 
 const fetchSubscription = async () => {
-  isLoading.value = true;
   try {
     const { data } = await atmtaSubscriptionApi.get();
     subscriptionData.value = data;
   } catch {
     // handle silently
-  } finally {
-    isLoading.value = false;
   }
 };
 
@@ -60,8 +53,6 @@ const inboxesPercent = computed(() => {
   );
 });
 
-const openPaymentModal = () => paymentModalRef.value?.open();
-
 onMounted(fetchSubscription);
 </script>
 
@@ -71,12 +62,6 @@ onMounted(fetchSubscription);
       :title="$t('ATMTA_BILLING.TITLE')"
       :description="$t('ATMTA_BILLING.DESCRIPTION')"
     >
-      <template #action>
-        <ButtonV4 sm solid blue @click="openPaymentModal">
-          {{ $t('ATMTA_BILLING.UPGRADE_BTN') }}
-        </ButtonV4>
-      </template>
-
       <div
         v-if="subscription.plan"
         class="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-3 p-4"
@@ -143,7 +128,5 @@ onMounted(fetchSubscription);
         />
       </div>
     </BillingCard>
-
-    <AtmtaPaymentModal ref="paymentModalRef" />
   </div>
 </template>
