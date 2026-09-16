@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صناديق الوارد - دليل الإدارة الشامل</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: #f8fafc; color: #1e293b;
+  line-height: 1.7; direction: rtl;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+.cover {
+  text-align: center; padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a56db 100%);
+  color: #fff; border-radius: 16px; margin-bottom: 32px;
+}
+.cover h1 { font-size: 42px; margin-bottom: 8px; letter-spacing: 1px; }
+.cover .subtitle { font-size: 22px; opacity: .85; margin-bottom: 24px; }
+.cover .desc { font-size: 16px; opacity: .7; }
+.cover .version { margin-top: 28px; font-size: 13px; opacity: .5; }
+.section {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 28px 32px; margin-bottom: 24px;
+}
+h2 {
+  font-size: 24px; color: #1a56db; margin-bottom: 18px;
+  padding-bottom: 10px; border-bottom: 2px solid #e2e8f0;
+}
+h3 { font-size: 19px; color: #1e3a5f; margin: 22px 0 12px; }
+h4 { font-size: 16px; color: #334155; margin: 16px 0 8px; }
+p { margin-bottom: 12px; font-size: 15px; }
+ul, ol { padding-right: 24px; margin-bottom: 14px; }
+li { margin-bottom: 6px; font-size: 15px; }
+strong { color: #1e293b; }
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0 18px;
+  font-size: 14px;
+}
+thead th {
+  background: #1e3a5f; color: #fff; padding: 10px 14px;
+  text-align: right; font-weight: 600;
+}
+tbody td { padding: 9px 14px; border-bottom: 1px solid #e2e8f0; }
+tbody tr:nth-child(even) { background: #f8fafc; }
+tbody tr:hover { background: #eff6ff; }
+.tip, .warn, .info {
+  border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+  border-right: 4px solid;
+}
+.tip { background: #ecfdf5; border-color: #047857; }
+.tip .box-title { color: #047857; }
+.warn { background: #fef3c7; border-color: #d97706; }
+.warn .box-title { color: #d97706; }
+.info { background: #eff6ff; border-color: #1a56db; }
+.info .box-title { color: #1a56db; }
+.box-title { font-weight: 700; margin-bottom: 6px; font-size: 15px; }
+.box-body { font-size: 14px; line-height: 1.6; }
+code {
+  background: #f1f5f9; padding: 2px 6px; border-radius: 4px;
+  font-family: 'Courier New', monospace; font-size: 13px; color: #7c3aed;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="cover">
+  <h1>صناديق الوارد</h1>
+  <div class="subtitle">Inboxes — Chatwoot</div>
+  <div class="desc">الدليل الشامل لإعداد وإدارة صناديق الوارد والمحادثات</div>
+  <div class="version">الإصدار 2.0 &nbsp;|&nbsp; يوليو 2026</div>
+</div>
+
+<div class="section">
+  <h2>1. ما هو صندوق الوارد (Inbox)؟</h2>
+  <p>صندوق الوارد هو <strong>نقطة استقبال المحادثات</strong> من عملائك عبر قنوات مختلفة. كل صندوق يربط قناة اتصال واحدة (مثل Live Chat أو WhatsApp) بفريق دعم محدد.</p>
+  <p>يمكنك إنشاء صناديق وارد متعددة لكل قناة وكل فريق عمل منفصل.</p>
+
+  <h3>1.1 الفروقات الأساسية</h3>
+  <table>
+    <thead><tr><th>المفهوم</th><th>الوصف</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Inbox (صندوق)</strong></td><td>قناة اتصال واحدة مع فريق محدد (مثل: Live Chat للمبيعات)</td></tr>
+      <tr><td><strong>Channel (قناة)</strong></td><td>منصة التواصل (مثل: WhatsApp أو Facebook)</td></tr>
+      <tr><td><strong>Agent (وكيل)</strong></td><td>شخص يرد على المحادثات في الـ Inbox</td></tr>
+      <tr><td><strong>Team (فريق)</strong></td><td>مجموعة وكلاء يعملون معاً</td></tr>
+    </tbody>
+  </table>
+
+  <h3>1.2 مثال عملي</h3>
+  <p>شركة متجر إلكتروني قد تحتاج:</p>
+  <ul>
+    <li><strong>Inbox 1:</strong> Live Chat → فريق المبيعات</li>
+    <li><strong>Inbox 2:</strong> WhatsApp → فريق الدعم الفني</li>
+    <li><strong>Inbox 3:</strong> Email → فريق المحاسبة والفواتير</li>
+    <li><strong>Inbox 4:</strong> Facebook → فريق المجتمع والتسويق</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>2. إنشاء صندوق وارد جديد</h2>
+
+  <h3>2.1 الخطوات الأساسية</h3>
+  <ol>
+    <li>انتقل إلى <strong>الإعدادات</strong> &gt; <strong>صناديق الوارد</strong> &gt; <strong>صندوق جديد</strong></li>
+    <li>اختر <strong>القناة</strong> (Live Chat، WhatsApp، Email، إلخ)</li>
+    <li>أدخل <strong>اسم الصندوق</strong> (مثل: "دعم فني - WhatsApp")</li>
+    <li>اختر <strong>الفريق</strong> المسؤول (أو أنشئ فريقاً جديداً)</li>
+    <li>اضبط <strong>الإعدادات المتقدمة</strong> (الخطوة التالية)</li>
+  </ol>
+
+  <h3>2.2 الإعدادات الأساسية</h3>
+  <table>
+    <thead><tr><th>الإعداد</th><th>النوع</th><th>الوصف</th><th>مثال</th></tr></thead>
+    <tbody>
+      <tr><td><code>name</code></td><td>نص (مطلوب)</td><td>اسم الصندوق</td><td>دعم تقني - WhatsApp</td></tr>
+      <tr><td><code>description</code></td><td>نص</td><td>وصف دور الصندوق</td><td>لحل المشاكل التقنية عبر WhatsApp</td></tr>
+      <tr><td><code>greeting_message</code></td><td>نص</td><td>رسالة الترحيب التلقائية</td><td>أهلاً! كيف يمكننا مساعدتك؟</td></tr>
+      <tr><td><code>reply_time</code></td><td>نص</td><td>الوقت المتوقع للرد</td><td>عادة خلال ساعة واحدة</td></tr>
+      <tr><td><code>enable_auto_assignment</code></td><td>boolean</td><td>هل تفعّل الإسناد التلقائي؟</td><td>true</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.3 الإعدادات المتقدمة</h3>
+  <h4>أ) ساعات العمل (Business Hours)</h4>
+  <ul>
+    <li>حدد أيام وساعات العمل الرسمية</li>
+    <li>عيّن رسالة خارج أوقات العمل (Out of Office)</li>
+    <li>فعّل الردود التلقائية خارج الساعات</li>
+  </ul>
+
+  <h4>ب) رسالة خارج أوقات العمل</h4>
+  <p>تُرسل تلقائياً عندما يراسل عميل خارج ساعات العمل:</p>
+  <div class="info">
+    <div class="box-title">مثال</div>
+    <div class="box-body">شكراً لتواصلك! نحن مغلقين الآن ستتمكن من الرد عليك غداً الساعة 9:00 صباحاً. لا تتردد في ترك رسالة.</div>
+  </div>
+
+  <h4>ج) CSAT - استبيان رضا العملاء</h4>
+  <ul>
+    <li>اسأل العميل عن رضاه بعد حل المحادثة</li>
+    <li>خيارات: 😞 غير راضِ، 😐 محايد، 😊 راضِ جداً</li>
+    <li>يساعد في قياس جودة الخدمة</li>
+  </ul>
+
+  <h4>د) الربط مع Captain AI</h4>
+  <ul>
+    <li>اربط مساعد Captain بهذا الـ Inbox</li>
+    <li>سيرد تلقائياً على استفسارات معينة</li>
+    <li>يمكن تفعيل/تعطيل حسب الحاجة</li>
+  </ul>
+
+  <div class="tip">
+    <div class="box-title">نصيحة: الترحيب الأول</div>
+    <div class="box-body">رسالة الترحيب الأولى مهمة جداً! اجعلها ودودة ومختصرة وتوضح كيف يمكنك مساعدة العميل.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>3. إدارة أعضاء الصندوق</h2>
+
+  <h3>3.1 إضافة وكيل إلى الصندوق</h3>
+  <ol>
+    <li>انتقل إلى <strong>إعدادات الصندوق</strong> &gt; <strong>الأعضاء</strong></li>
+    <li>انقر <strong>إضافة عضو</strong></li>
+    <li>اختر <strong>الوكيل</strong> من القائمة</li>
+    <li>حدد <strong>الدور</strong> (مسؤول أو وكيل عادي)</li>
+  </ol>
+
+  <h3>3.2 أدوار الأعضاء</h3>
+  <table>
+    <thead><tr><th>الدور</th><th>الصلاحيات</th></tr></thead>
+    <tbody>
+      <tr><td><strong>مسؤول Inbox</strong></td><td>إدارة الأعضاء + تعديل الإعدادات + الرد على المحادثات</td></tr>
+      <tr><td><strong>وكيل</strong></td><td>الرد على المحادثات فقط</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.3 الأداء والتوفر</h3>
+  <ul>
+    <li>كل وكيل يمكنه تعيين <strong>حالة توفره</strong> (متاح / مشغول / غير متصل)</li>
+    <li>المحادثات تُوزع على الوكلاء المتاحين فقط (إذا فعّلت Auto Assignment)</li>
+    <li>مراقب الأداء يظهر إحصائيات كل وكيل (عدد المحادثات، الوقت المتوسط للرد)</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>4. نموذج ما قبل المحادثة (Pre-chat Form)</h2>
+
+  <h3>4.1 ما هو Pre-chat Form؟</h3>
+  <p>نموذج يظهر <strong>قبل بدء المحادثة</strong> لجمع معلومات العميل (الاسم، الإيميل، الموضوع، إلخ).</p>
+
+  <h3>4.2 الحقول المتاحة</h3>
+  <ul>
+    <li><strong>الاسم</strong> (Name) — إلزامي</li>
+    <li><strong>البريد الإلكتروني</strong> (Email) — إلزامي أو اختياري</li>
+    <li><strong>رقم الهاتف</strong> (Phone) — اختياري</li>
+    <li><strong>الموضوع</strong> (Subject) — اختياري</li>
+    <li><strong>الرسالة الأولى</strong> (Message) — اختياري</li>
+    <li><strong>حقول مخصصة</strong> (Custom Fields) — مثل رقم الطلب، نوع المشكلة</li>
+  </ul>
+
+  <h3>4.3 الفوائد</h3>
+  <ul>
+    <li>تقليل المحادثات العشوائية</li>
+    <li>جمع معلومات مهمة مسبقاً</li>
+    <li>تحسين تجربة العميل (معرفة الوكيل السياق مسبقاً)</li>
+  </ul>
+
+  <div class="warn">
+    <div class="box-title">تحذير</div>
+    <div class="box-body">النماذج الطويلة قد تثني العملاء عن التواصل! اجعل النموذج بسيطاً (3-5 حقول فقط).</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>5. تخصيص Widget (Live Chat)</h2>
+
+  <h3>5.1 مظهر الـ Widget</h3>
+  <table>
+    <thead><tr><th>الخاصية</th><th>الوصف</th></tr></thead>
+    <tbody>
+      <tr><td><code>position</code></td><td>الموضع: اليمين أو اليسار</td></tr>
+      <tr><td><code>color</code></td><td>اللون الأساسي للـ Widget</td></tr>
+      <tr><td><code>show_on_load</code></td><td>هل يظهر فوراً أم عند النقر؟</td></tr>
+      <tr><td><code>welcome_message</code></td><td>رسالة الترحيب في المحادثة</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.2 تخصيص الرسائل</h3>
+  <ul>
+    <li>رسالة البداية (Initial Message)</li>
+    <li>رسالة خارج الساعات (Out of Office)</li>
+    <li>رسالة عدم توفر الوكلاء (No Agents Available)</li>
+  </ul>
+
+  <h3>5.3 التثبيت على الموقع</h3>
+  <p>انسخ الكود التالي وضعه في <code>&lt;head&gt;</code> موقعك:</p>
+  <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin: 16px 0; direction: ltr; text-align: left; font-size: 13px; overflow-x: auto;">
+&lt;script&gt;
+  window.chatwootSDK.run({
+    websiteToken: 'YOUR_WEBSITE_TOKEN',
+    baseUrl: 'https://your-chatwoot-url.com'
+  })
+&lt;/script&gt;
+  </div>
+</div>
+
+<div class="section">
+  <h2>6. API: إدارة صناديق الوارد</h2>
+
+  <h3>6.1 Endpoints الرئيسية</h3>
+  <table>
+    <thead><tr><th>الطريقة</th><th>المسار</th><th>الوصف</th></tr></thead>
+    <tbody>
+      <tr><td>GET</td><td><code>/api/v1/accounts/:id/inboxes</code></td><td>قائمة جميع صناديق الوارد</td></tr>
+      <tr><td>POST</td><td><code>/api/v1/accounts/:id/inboxes</code></td><td>إنشاء صندوق جديد</td></tr>
+      <tr><td>GET</td><td><code>/api/v1/accounts/:id/inboxes/:inbox_id</code></td><td>تفاصيل صندوق محدد</td></tr>
+      <tr><td>PATCH</td><td><code>/api/v1/accounts/:id/inboxes/:inbox_id</code></td><td>تحديث الصندوق</td></tr>
+      <tr><td>DELETE</td><td><code>/api/v1/accounts/:id/inboxes/:inbox_id</code></td><td>حذف صندوق</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.2 مثال: إنشاء صندوق عبر API</h3>
+  <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin: 16px 0; direction: ltr; text-align: left; font-size: 13px; overflow-x: auto;">
+POST /api/v1/accounts/1/inboxes
+Authorization: Bearer YOUR_TOKEN
+Content-Type: application/json
+
+{
+  "name": "دعم تقني - WhatsApp",
+  "channel_type": "whatsapp",
+  "greeting_message": "أهلاً! كيف يمكننا مساعدتك؟",
+  "enable_auto_assignment": true
+}
+  </div>
+</div>
+
+<div class="section">
+  <h2>7. أفضل الممارسات</h2>
+
+  <h3>7.1 تنظيم صناديق الوارد</h3>
+  <ul>
+    <li><strong>قسّم حسب الموضوع:</strong> دعم ≠ مبيعات ≠ محاسبة</li>
+    <li><strong>استخدم أسماء واضحة:</strong> "دعم فني - Live Chat" أفضل من "Inbox 3"</li>
+    <li><strong>ربط الفرق الصحيحة:</strong> كل فريق في صندوقه الخاص</li>
+    <li><strong>فعّل CSAT:</strong> لقياس رضا العملاء</li>
+  </ul>
+
+  <h3>7.2 تجربة العميل</h3>
+  <ul>
+    <li>رسالة ترحيب ودودة وواضحة</li>
+    <li>نموذج بسيط (3-5 حقول فقط)</li>
+    <li>تحديد وقت الرد المتوقع</li>
+    <li>رسالة خارج الساعات مفيدة</li>
+  </ul>
+
+  <h3>7.3 أداء الفريق</h3>
+  <ul>
+    <li>راقب إحصائيات الوكلاء (وقت الرد، عدد المحادثات)</li>
+    <li>فعّل Auto Assignment لتوزيع عادل</li>
+    <li>استخدم Teams لتنظيم الفرق</li>
+  </ul>
+</div>
+
+<div style="text-align:center; padding: 40px 0 20px; color: #94a3b8; font-size: 13px;">
+  <p>نهاية الدليل — Inboxes Documentation v2.0</p>
+</div>
+
+</div>
+</body>
+</html>

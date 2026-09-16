@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفريق والوكلاء - دليل شامل</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: #f8fafc; color: #1e293b;
+  line-height: 1.7; direction: rtl;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+.cover {
+  text-align: center; padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a56db 100%);
+  color: #fff; border-radius: 16px; margin-bottom: 32px;
+}
+.cover h1 { font-size: 42px; margin-bottom: 8px; letter-spacing: 1px; }
+.cover .subtitle { font-size: 22px; opacity: .85; margin-bottom: 24px; }
+.cover .desc { font-size: 16px; opacity: .7; }
+.cover .version { margin-top: 28px; font-size: 13px; opacity: .5; }
+.section {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 28px 32px; margin-bottom: 24px;
+}
+h2 {
+  font-size: 24px; color: #1a56db; margin-bottom: 18px;
+  padding-bottom: 10px; border-bottom: 2px solid #e2e8f0;
+}
+h3 { font-size: 19px; color: #1e3a5f; margin: 22px 0 12px; }
+h4 { font-size: 16px; color: #334155; margin: 16px 0 8px; }
+p { margin-bottom: 12px; font-size: 15px; }
+ul, ol { padding-right: 24px; margin-bottom: 14px; }
+li { margin-bottom: 8px; font-size: 15px; }
+strong { color: #1e293b; }
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0 18px;
+  font-size: 14px;
+}
+thead th {
+  background: #1e3a5f; color: #fff; padding: 12px 14px;
+  text-align: right; font-weight: 600;
+}
+tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; }
+tbody tr:nth-child(even) { background: #f8fafc; }
+tbody tr:hover { background: #eff6ff; }
+.tip, .warn, .info, .example {
+  border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+  border-right: 4px solid;
+}
+.tip { background: #ecfdf5; border-color: #047857; }
+.tip .box-title { color: #047857; }
+.warn { background: #fef3c7; border-color: #d97706; }
+.warn .box-title { color: #d97706; }
+.info { background: #eff6ff; border-color: #1a56db; }
+.info .box-title { color: #1a56db; }
+.example { background: #f3f0ff; border-color: #7c3aed; }
+.example .box-title { color: #7c3aed; }
+.box-title { font-weight: 700; margin-bottom: 8px; font-size: 15px; }
+.box-body { font-size: 14px; line-height: 1.6; }
+code {
+  background: #f1f5f9; padding: 2px 6px; border-radius: 4px;
+  font-family: 'Courier New', monospace; font-size: 13px; color: #7c3aed;
+}
+.flow {
+  background: #f1f5f9; border-radius: 8px; padding: 16px;
+  margin: 16px 0; direction: ltr; text-align: left;
+  font-size: 13px; line-height: 1.8; overflow-x: auto;
+}
+.role-badge {
+  display: inline-block; padding: 4px 12px; border-radius: 12px;
+  font-size: 12px; font-weight: 600; margin: 4px 4px 4px 0;
+}
+.admin { background: #fee2e2; color: #991b1b; }
+.supervisor { background: #dbeafe; color: #1e40af; }
+.agent { background: #dcfce7; color: #166534; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="cover">
+  <h1>الفريق والوكلاء</h1>
+  <div class="subtitle">Teams & Agents — Chatwoot</div>
+  <div class="desc">دليل شامل لإدارة الفريق والصلاحيات</div>
+  <div class="version">الإصدار 2.0 &nbsp;|&nbsp; يوليو 2026</div>
+</div>
+
+<div class="section">
+  <h2>1. مقدمة الفريق والوكلاء</h2>
+
+  <h3>1.1 الفرق (Teams) مقابل الوكلاء (Agents)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>الفريق</th>
+        <th>الوكيل</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>مجموعة من الوكلاء يعملون معاً</td>
+        <td>شخص واحد يقدم الدعم</td>
+      </tr>
+      <tr>
+        <td>مثل: "Support Team", "Sales Team"</td>
+        <td>مثل: "Ahmed", "Fatima"</td>
+      </tr>
+      <tr>
+        <td>يمكن أسند محادثات للفريق</td>
+        <td>يمكن أسند محادثات للوكيل</td>
+      </tr>
+      <tr>
+        <td>له إعدادات مشتركة</td>
+        <td>له إعدادات فردية</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>1.2 الأدوار والصلاحيات (Roles)</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>الدور</th>
+        <th>الصلاحيات</th>
+        <th>الحد الأدنى للمسؤوليات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="role-badge admin">Admin</span></td>
+        <td>كل شيء (كامل الصلاحيات)</td>
+        <td>- إدارة الحساب<br>- إضافة/حذف الوكلاء<br>- إدارة الفريق</td>
+      </tr>
+      <tr>
+        <td><span class="role-badge supervisor">Supervisor</span></td>
+        <td>إدارة الفريق والإحصائيات</td>
+        <td>- مراقبة الأداء<br>- إدارة قائمة الفريق<br>- التقارير</td>
+      </tr>
+      <tr>
+        <td><span class="role-badge agent">Agent</span></td>
+        <td>الرد على المحادثات فقط</td>
+        <td>- الرد على الرسائل<br>- إضافة ملاحظات<br>- إغلاق المحادثات</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>2. إدارة الوكلاء</h2>
+
+  <h3>2.1 إضافة وكيل جديد</h3>
+  <ol>
+    <li>اذهب إلى <strong>Settings</strong> &gt; <strong>Team</strong></li>
+    <li>انقر <strong>Add Agent</strong> أو <strong>+ Invite</strong></li>
+    <li>أدخل بريده الإلكتروني</li>
+    <li>حدد الدور (Agent / Supervisor / Admin)</li>
+    <li>اختر الفريق الذي ينتمي له</li>
+    <li>اضغط <strong>Send Invite</strong></li>
+  </ol>
+
+  <p>سيتلقى الوكيل رسالة بريد إلكترونية بتفاصيل الدخول.</p>
+
+  <h3>2.2 تعديل بيانات الوكيل</h3>
+  <table>
+    <thead><tr><th>البيانات</th><th>الوصف</th><th>الأهمية</th></tr></thead>
+    <tbody>
+      <tr><td>الاسم الكامل</td><td>اسم الوكيل الحقيقي</td><td>مهم جداً</td></tr>
+      <tr><td>البريد الإلكتروني</td><td>بريد الدخول</td><td>حساس جداً</td></tr>
+      <tr><td>رقم الهاتف</td><td>للتواصل السريع</td><td>اختياري</td></tr>
+      <tr><td>الصورة الشخصية</td><td>صورة الوكيل</td><td>اختياري</td></tr>
+      <tr><td>السيرة الذاتية</td><td>معلومات عن الوكيل</td><td>اختياري</td></tr>
+      <tr><td>التخصص</td><td>ما يتخصص فيه</td><td>مفيد للأسناد</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.3 الحالات (Status)</h3>
+  <table>
+    <thead><tr><th>الحالة</th><th>المعنى</th><th>يقبل محادثات؟</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Online</strong> 🟢</td><td>متاح وجاهز</td><td>✅ نعم</td></tr>
+      <tr><td><strong>Busy</strong> 🟡</td><td>مشغول لكن متصل</td><td>❌ لا (اختياري)</td></tr>
+      <tr><td><strong>Away</strong> 🟠</td><td>بعيد عن الكمبيوتر</td><td>❌ لا</td></tr>
+      <tr><td><strong>Offline</strong> 🔴</td><td>غير متصل</td><td>❌ لا</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tip">
+    <div class="box-title">نصيحة: تغيير الحالة</div>
+    <div class="box-body">الوكيل يمكنه تغيير حالته مباشرة من القائمة العلوية. استخدم "Busy" عندما تحتاج فترة راحة سريعة.</div>
+  </div>
+
+  <h3>2.4 حذف وكيل</h3>
+  <ul>
+    <li>اذهب إلى <strong>Settings</strong> &gt; <strong>Team</strong></li>
+    <li>اختر الوكيل</li>
+    <li>انقر <strong>More Options</strong> (...)</li>
+    <li>اختر <strong>Delete</strong></li>
+    <li>تأكد الحذف</li>
+  </ul>
+
+  <div class="warn">
+    <div class="box-title">تحذير: الحذف نهائي</div>
+    <div class="box-body">حذف الوكيل يحذف جميع بياناته أيضاً. قبل الحذف، قم بتصدير بيانات الوكيل إذا كنت بحاجة لها.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>3. إدارة الفريق</h2>
+
+  <h3>3.1 إنشاء فريق جديد</h3>
+  <ol>
+    <li>اذهب إلى <strong>Settings</strong> &gt; <strong>Teams</strong></li>
+    <li>انقر <strong>Create Team</strong></li>
+    <li>أدخل اسم الفريق</li>
+    <li>أضف وصفاً (اختياري)</li>
+    <li>أضف الوكلاء الأعضاء</li>
+    <li>اضغط <strong>Create</strong></li>
+  </ol>
+
+  <h3>3.2 أمثلة الفريق</h3>
+  <table>
+    <thead><tr><th>اسم الفريق</th><th>الأعضاء</th><th>المسؤول</th><th>الاختصاص</th></tr></thead>
+    <tbody>
+      <tr><td>Support Team</td><td>Ahmed, Fatima, Ali</td><td>Ahmed</td><td>الدعم العام</td></tr>
+      <tr><td>Sales Team</td><td>Sara, Omar</td><td>Sara</td><td>الاستفسارات والمبيعات</td></tr>
+      <tr><td>Tech Support</td><td>Hassan</td><td>Hassan</td><td>الدعم التقني</td></tr>
+      <tr><td>VIP Support</td><td>Layla</td><td>Layla</td><td>العملاء المهمين</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.3 إضافة وكيل للفريق</h3>
+  <ol>
+    <li>افتح الفريق</li>
+    <li>انقر <strong>Add Member</strong></li>
+    <li>اختر الوكيل من القائمة</li>
+    <li>احفظ</li>
+  </ol>
+
+  <h3>3.4 إعدادات الفريق</h3>
+  <table>
+    <thead><tr><th>الإعداد</th><th>الوصف</th><th>المثال</th></tr></thead>
+    <tbody>
+      <tr><td>Team Name</td><td>اسم الفريق</td><td>Support Team</td></tr>
+      <tr><td>Description</td><td>وصف الفريق</td><td>فريق الدعم العام</td></tr>
+      <tr><td>Allow Reassignment</td><td>السماح بإعادة تسليم المحادثات</td><td>نعم</td></tr>
+      <tr><td>Allow Manual Assignment</td><td>السماح بالأسناد اليدوي</td><td>نعم</td></tr>
+      <tr><td>Auto Assignment</td><td>أسناد تلقائي؟</td><td>نعم (Round Robin)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.5 حذف فريق</h3>
+  <p><strong>قبل الحذف:</strong></p>
+  <ul>
+    <li>أنقل جميع الوكلاء إلى فريق آخر</li>
+    <li>أغلق أو أعد تسليم المحادثات المفتوحة</li>
+    <li>احفظ أي بيانات مهمة</li>
+  </ul>
+
+  <p><strong>بعدها:</strong></p>
+  <ol>
+    <li>اذهب إلى <strong>Settings</strong> &gt; <strong>Teams</strong></li>
+    <li>اختر الفريق</li>
+    <li>انقر <strong>Delete</strong></li>
+    <li>تأكد الحذف</li>
+  </ol>
+</div>
+
+<div class="section">
+  <h2>4. إدارة الأسناد (Assignment Management)</h2>
+
+  <h3>4.1 أنواع الأسناد</h3>
+
+  <h4>1) الأسناد اليدوي (Manual Assignment)</h4>
+  <p>الوكيل أو الفريق ينقل المحادثة يدويّاً:</p>
+  <ul>
+    <li>افتح المحادثة</li>
+    <li>انقر على اسم الوكيل الحالي</li>
+    <li>اختر وكيل/فريق جديد</li>
+    <li>أضف تعليق (اختياري)</li>
+    <li>اضغط Assign</li>
+  </ul>
+
+  <h4>2) الأسناد التلقائي (Auto Assignment)</h4>
+  <p>النظام يسند تلقائياً بناءً على القواعل:</p>
+  <ul>
+    <li><strong>Round Robin:</strong> توزيع دوري</li>
+    <li><strong>Least Busy:</strong> أقل مشغول</li>
+    <li><strong>Skill-based:</strong> بناءً على التخصص</li>
+  </ul>
+
+  <h3>4.2 إعدادات الأسناد التلقائي</h3>
+  <ol>
+    <li>اذهب إلى <strong>Settings</strong> &gt; <strong>Inbox</strong></li>
+    <li>اختر البريد الوارد</li>
+    <li>انتقل إلى <strong>Auto Assignment</strong></li>
+    <li>فعّل <strong>Enable Auto Assignment</strong></li>
+    <li>حدد الاستراتيجية</li>
+    <li>حدد الفريق/الوكلاء</li>
+    <li>احفظ</li>
+  </ol>
+
+  <h3>4.3 استراتيجيات الأسناد</h3>
+  <table>
+    <thead><tr><th>الاستراتيجية</th><th>الوصف</th><th>الأفضل لـ</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Round Robin</strong></td><td>توزيع متساوي بالتناوب</td><td>الفريق المتساوي الخبرة</td></tr>
+      <tr><td><strong>Least Busy</strong></td><td>أسند لأقل مشغول</td><td>التوزيع العادل</td></tr>
+      <tr><td><strong>Random</strong></td><td>توزيع عشوائي</td><td>الأحمال المتغيرة</td></tr>
+      <tr><td><strong>Skill-based</strong></td><td>حسب التخصص</td><td>المحادثات المعقدة</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4.4 قائمة الأسناد (Assignment List)</h3>
+  <p>انظر جميع المحادثات المسندة للوكيل:</p>
+  <ul>
+    <li>اذهب إلى اسم الوكيل في الشريط الجانبي</li>
+    <li>انقر على محادثة لتفتحها</li>
+    <li>انظر إلى عدد المحادثات</li>
+  </ul>
+
+  <div class="info">
+    <div class="box-title">نصيحة: توازن الحمل</div>
+    <div class="box-body">استخدم "Least Busy" لضمان عدم الإفراط في تحميل وكيل واحد.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>5. صلاحيات تفصيلية (Detailed Permissions)</h2>
+
+  <h3>5.1 صلاحيات Admin</h3>
+  <ul>
+    <li>✅ إضافة/حذف الوكلاء</li>
+    <li>✅ إدارة الفريق</li>
+    <li>✅ تغيير الإعدادات العامة</li>
+    <li>✅ عرض جميع الإحصائيات</li>
+    <li>✅ إدارة التكاملات</li>
+    <li>✅ إدارة الأتمتة</li>
+    <li>✅ حذف المحادثات</li>
+  </ul>
+
+  <h3>5.2 صلاحيات Supervisor</h3>
+  <ul>
+    <li>✅ عرض إحصائيات الفريق</li>
+    <li>✅ إدارة الفريق المسند</li>
+    <li>✅ الرد على المحادثات</li>
+    <li>✅ إعادة تسليم المحادثات</li>
+    <li>❌ إضافة وكلاء (Admin فقط)</li>
+    <li>❌ تغيير الإعدادات الأساسية (Admin فقط)</li>
+  </ul>
+
+  <h3>5.3 صلاحيات Agent</h3>
+  <ul>
+    <li>✅ الرد على المحادثات المسندة</li>
+    <li>✅ إضافة ملاحظات</li>
+    <li>✅ إغلاق المحادثات</li>
+    <li>✅ عرض الإحصائيات الخاصة</li>
+    <li>❌ رؤية إحصائيات الفريق</li>
+    <li>❌ إدارة الوكلاء</li>
+    <li>❌ تغيير الإعدادات</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>6. بيانات الملف الشخصي (Agent Profile)</h2>
+
+  <h3>6.1 تعديل الملف الشخصي</h3>
+  <ol>
+    <li>انقر على صورتك الشخصية (أعلى اليسار)</li>
+    <li>اختر <strong>Profile Settings</strong></li>
+    <li>عدّل البيانات المطلوبة</li>
+    <li>احفظ</li>
+  </ol>
+
+  <h3>6.2 البيانات القابلة للتعديل</h3>
+  <table>
+    <thead><tr><th>البيان</th><th>يمكن تعديله؟</th><th>الملاحظة</th></tr></thead>
+    <tbody>
+      <tr><td>الصورة الشخصية</td><td>✅ نعم</td><td>JPG, PNG (max 5MB)</td></tr>
+      <tr><td>البريد الإلكتروني</td><td>❌ لا</td><td>اطلب من Admin</td></tr>
+      <tr><td>الاسم الكامل</td><td>✅ نعم</td><td>يظهر في المحادثات</td></tr>
+      <tr><td>رقم الهاتف</td><td>✅ نعم</td><td>للتواصل الداخلي</td></tr>
+      <tr><td>اللغة</td><td>✅ نعم</td><td>واجهة النظام</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.3 تغيير كلمة المرور</h3>
+  <ol>
+    <li>انقر على صورتك</li>
+    <li>اختر <strong>Change Password</strong></li>
+    <li>أدخل كلمة المرور القديمة</li>
+    <li>أدخل كلمة المرور الجديدة (مرتين)</li>
+    <li>احفظ</li>
+  </ol>
+
+  <div class="tip">
+    <div class="box-title">نصيحة الأمان</div>
+    <div class="box-body">استخدم كلمة مرور قوية: حروف + أرقام + رموز، على الأقل 12 حرف.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>7. أفضل الممارسات</h2>
+
+  <h3>7.1 إدارة الفريق</h3>
+  <ul>
+    <li>✅ استخدم أسماء واضحة للفريق</li>
+    <li>✅ نظّم الفريق حسب الاختصاص</li>
+    <li>✅ راجع عضوية الفريق شهرياً</li>
+    <li>✅ حافظ على توازن الأحمال</li>
+    <li>❌ لا تجعل فريق يحتوي على وكيل واحد فقط</li>
+    <li>❌ لا تترك الوكلاء في فريقين في نفس الوقت</li>
+  </ul>
+
+  <h3>7.2 الأسناد الفعال</h3>
+  <ul>
+    <li>استخدم الأسناد التلقائي (Round Robin أو Least Busy)</li>
+    <li>راقب توازن الحمل</li>
+    <li>أعد التسليم إذا كان الوكيل مشغول</li>
+    <li>علّم الوكلاء بقواعل الأسناد</li>
+  </ul>
+
+  <h3>7.3 الإشراف والمراقبة</h3>
+  <ul>
+    <li>راجع الإحصائيات يومياً</li>
+    <li>أعط تغذية راجعة منتظمة</li>
+    <li>احتفل بالإنجازات</li>
+    <li>ساعد الوكلاء على التحسن</li>
+  </ul>
+
+  <h3>7.4 أمان وخصوصية</h3>
+  <ul>
+    <li>لا تشارك بيانات الدخول</li>
+    <li>استخدم كلمات مرور قوية</li>
+    <li>غيّر الدور عند الحاجة</li>
+    <li>احذف الوكلاء غير النشطين</li>
+  </ul>
+</div>
+
+<div style="text-align:center; padding: 40px 0 20px; color: #94a3b8; font-size: 13px;">
+  <p>نهاية الدليل — Teams & Agents Documentation v2.0</p>
+</div>
+
+</div>
+</body>
+</html>

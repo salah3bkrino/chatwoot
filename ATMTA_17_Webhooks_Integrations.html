@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الـ Webhooks والتكاملات - دليل شامل</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: #f8fafc; color: #1e293b;
+  line-height: 1.7; direction: rtl;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+.cover {
+  text-align: center; padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a56db 100%);
+  color: #fff; border-radius: 16px; margin-bottom: 32px;
+}
+.cover h1 { font-size: 42px; margin-bottom: 8px; letter-spacing: 1px; }
+.cover .subtitle { font-size: 22px; opacity: .85; margin-bottom: 24px; }
+.cover .desc { font-size: 16px; opacity: .7; }
+.cover .version { margin-top: 28px; font-size: 13px; opacity: .5; }
+.section {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 28px 32px; margin-bottom: 24px;
+}
+h2 {
+  font-size: 24px; color: #1a56db; margin-bottom: 18px;
+  padding-bottom: 10px; border-bottom: 2px solid #e2e8f0;
+}
+h3 { font-size: 19px; color: #1e3a5f; margin: 22px 0 12px; }
+h4 { font-size: 16px; color: #334155; margin: 16px 0 8px; }
+p { margin-bottom: 12px; font-size: 15px; }
+ul, ol { padding-right: 24px; margin-bottom: 14px; }
+li { margin-bottom: 8px; font-size: 15px; }
+strong { color: #1e293b; }
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0 18px;
+  font-size: 14px;
+}
+thead th {
+  background: #1e3a5f; color: #fff; padding: 12px 14px;
+  text-align: right; font-weight: 600;
+}
+tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; }
+tbody tr:nth-child(even) { background: #f8fafc; }
+tbody tr:hover { background: #eff6ff; }
+.tip, .warn, .info, .example {
+  border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+  border-right: 4px solid;
+}
+.tip { background: #ecfdf5; border-color: #047857; }
+.tip .box-title { color: #047857; }
+.warn { background: #fef3c7; border-color: #d97706; }
+.warn .box-title { color: #d97706; }
+.info { background: #eff6ff; border-color: #1a56db; }
+.info .box-title { color: #1a56db; }
+.example { background: #f3f0ff; border-color: #7c3aed; }
+.example .box-title { color: #7c3aed; }
+.box-title { font-weight: 700; margin-bottom: 8px; font-size: 15px; }
+.box-body { font-size: 14px; line-height: 1.6; }
+code {
+  background: #f1f5f9; padding: 2px 6px; border-radius: 4px;
+  font-family: 'Courier New', monospace; font-size: 13px; color: #7c3aed;
+}
+.flow {
+  background: #f1f5f9; border-radius: 8px; padding: 16px;
+  margin: 16px 0; direction: ltr; text-align: left;
+  font-size: 13px; line-height: 1.8; overflow-x: auto; word-break: break-all;
+}
+.json-example {
+  background: #1e293b; color: #e2e8f0; padding: 12px;
+  border-radius: 6px; margin: 12px 0; font-size: 12px;
+  overflow-x: auto; font-family: 'Courier New', monospace;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="cover">
+  <h1>الـ Webhooks والتكاملات</h1>
+  <div class="subtitle">Webhooks & Integrations — Chatwoot</div>
+  <div class="desc">دليل شامل لربط الأنظمة الخارجية</div>
+  <div class="version">الإصدار 2.0 &nbsp;|&nbsp; يوليو 2026</div>
+</div>
+
+<div class="section">
+  <h2>1. مقدمة الـ Webhooks</h2>
+
+  <h3>1.1 ما هي الـ Webhooks؟</h3>
+  <p>الـ <strong>Webhook</strong> هو <strong>رابط HTTP</strong> يرسل بيانات من Chatwoot إلى نظام آخر عند حدوث حدث معين. مثل الـ "تنبيهات الفوري" للأنظمة الخارجية.</p>
+
+  <h3>1.2 كيف تعمل؟</h3>
+  <div class="flow">
+حدث يحدث في Chatwoot
+    → تحقق الشروط
+    → إرسال POST request إلى الـ Webhook URL
+    → النظام الخارجي يستقبل البيانات ويعالجها
+    → (اختياري) إرسال رد مجدداً لـ Chatwoot
+  </div>
+
+  <h3>1.3 الأحداث المتاحة</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>الحدث</th>
+        <th>متى يُطلق</th>
+        <th>البيانات المرسلة</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>conversation.created</code></td>
+        <td>محادثة جديدة</td>
+        <td>معرّف المحادثة، العميل، الوصل</td>
+      </tr>
+      <tr>
+        <td><code>message.created</code></td>
+        <td>رسالة جديدة</td>
+        <td>محتوى الرسالة، المرسل، الوقت</td>
+      </tr>
+      <tr>
+        <td><code>conversation.status_changed</code></td>
+        <td>تغيير حالة</td>
+        <td>الحالة الجديدة، المحادثة</td>
+      </tr>
+      <tr>
+        <td><code>conversation.updated</code></td>
+        <td>تحديث المحادثة</td>
+        <td>البيانات المحدثة</td>
+      </tr>
+      <tr>
+        <td><code>agent.updated</code></td>
+        <td>تغيير الوكيل/الفريق</td>
+        <td>معرّف الوكيل، الفريق</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>1.4 الفوائد</h3>
+  <ul>
+    <li><strong>التكامل التلقائي:</strong> الربط بين الأنظمة بدون تدخل يدوي</li>
+    <li><strong>تحديثات فورية:</strong> بيانات محدثة في الوقت الفعلي</li>
+    <li><strong>عمليات جديدة:</strong> أتمتة إجراءات معقدة</li>
+    <li><strong>تقليل الأخطاء:</strong> لا نسخ يدوي للبيانات</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>2. إعداد Webhook</h2>
+
+  <h3>2.1 خطوات الإعداد</h3>
+  <ol>
+    <li>اذهب إلى <strong>Settings</strong> &gt; <strong>Webhooks</strong></li>
+    <li>انقر <strong>Create Webhook</strong></li>
+    <li>أدخل <strong>Webhook URL</strong> (رابط النظام الخارجي)</li>
+    <li>اختر <strong>Events</strong> التي تريد الاستماع لها</li>
+    <li>حدّد الشروط (اختياري)</li>
+    <li>أضف Headers مخصصة (مثل: Authentication)</li>
+    <li>اضغط <strong>Create</strong></li>
+  </ol>
+
+  <h3>2.2 مثال: Webhook بسيط</h3>
+
+  <div class="example">
+    <div class="box-title">مثال: إرسال بيانات إلى CRM</div>
+    <div class="box-body">
+      <strong>URL:</strong> https://api.mycrm.com/chatwoot/webhooks<br>
+      <strong>Events:</strong> conversation.created, message.created<br>
+      <strong>Headers:</strong><br>
+      <code>Authorization: Bearer YOUR_TOKEN</code><br>
+      <code>X-API-Key: secret123</code>
+    </div>
+  </div>
+
+  <h3>2.3 البيانات المرسلة (Payload)</h3>
+
+  <h4>مثال: conversation.created</h4>
+  <div class="json-example">
+{
+  "event": "conversation.created",
+  "id": 123456,
+  "conversation": {
+    "id": 789,
+    "status": "open",
+    "inbox_id": 1,
+    "user": {
+      "id": 456,
+      "name": "Ahmed",
+      "email": "ahmed@example.com",
+      "phone": "+201000000000"
+    },
+    "created_at": "2026-07-19T10:30:00Z"
+  }
+}
+  </div>
+
+  <h4>مثال: message.created</h4>
+  <div class="json-example">
+{
+  "event": "message.created",
+  "id": 123457,
+  "message": {
+    "id": 999,
+    "conversation_id": 789,
+    "content": "شكراً على الرد",
+    "message_type": "incoming",
+    "sender": {
+      "id": 456,
+      "name": "Ahmed"
+    },
+    "created_at": "2026-07-19T10:35:00Z"
+  }
+}
+  </div>
+</div>
+
+<div class="section">
+  <h2>3. أمثلة واقعية</h2>
+
+  <h3>3.1 مثال 1: التكامل مع CRM</h3>
+
+  <p><strong>الهدف:</strong> إرسال بيانات كل محادثة جديدة إلى نظام CRM</p>
+
+  <div class="example">
+    <div class="box-title">الإعداد</div>
+    <div class="box-body">
+      <strong>Event:</strong> conversation.created<br>
+      <strong>URL:</strong> https://api.salesforce.com/contacts/create<br>
+      <strong>Headers:</strong> Authorization: Bearer token<br>
+      <br>
+      <strong>في الطرف الآخر (CRM):</strong><br>
+      ✅ استقبال البيانات<br>
+      ✅ إنشاء contact جديد<br>
+      ✅ ربط مع حساب العميل<br>
+      ✅ إرسال رد إلى Chatwoot
+    </div>
+  </div>
+
+  <h3>3.2 مثال 2: تسجيل في قاعدة بيانات</h3>
+
+  <p><strong>الهدف:</strong> تسجيل جميع الرسائل في قاعدة بيانات خارجية</p>
+
+  <div class="example">
+    <div class="box-title">الإعداد</div>
+    <div class="box-body">
+      <strong>Event:</strong> message.created<br>
+      <strong>URL:</strong> https://mydb.com/api/logs<br>
+      <br>
+      <strong>النتيجة:</strong><br>
+      - كل رسالة تُسجل في قاعدة البيانات<br>
+      - يمكن البحث والتحليل لاحقاً<br>
+      - نسخة احتياطية من البيانات
+    </div>
+  </div>
+
+  <h3>3.3 مثال 3: إشعارات Slack</h3>
+
+  <p><strong>الهدف:</strong> إرسال إشعارات Slack عند وصول رسالة من عميل VIP</p>
+
+  <div class="example">
+    <div class="box-title">الإعداد</div>
+    <div class="box-body">
+      <strong>Event:</strong> message.created<br>
+      <strong>URL:</strong> https://hooks.slack.com/services/xxx/yyy/zzz<br>
+      <strong>Condition:</strong> label = "vip"<br>
+      <br>
+      <strong>النتيجة:</strong> فريقك يتلقى إشعار في Slack فوراً!
+    </div>
+  </div>
+
+  <h3>3.4 مثال 4: نظام التذاكر</h3>
+
+  <p><strong>الهدف:</strong> إنشاء تذكرة في نظام إدارة التذاكر</p>
+
+  <div class="example">
+    <div class="box-title">الإعداد</div>
+    <div class="box-body">
+      <strong>Event:</strong> conversation.created<br>
+      <strong>URL:</strong> https://jira.company.com/api/issues<br>
+      <strong>Headers:</strong> Authorization, Content-Type<br>
+      <br>
+      <strong>في JIRA:</strong><br>
+      ✅ تذكرة جديدة تُنشأ تلقائياً<br>
+      ✅ مرتبطة بـ Chatwoot<br>
+      ✅ الفريق يعمل على التذكرة<br>
+      ✅ تحديثات ثنائية الاتجاه
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>4. التكاملات المدمجة</h2>
+
+  <h3>4.1 التكاملات الرسمية</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>التطبيق</th>
+        <th>النوع</th>
+        <th>الميزات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Slack</strong></td>
+        <td>تطبيق مرسل</td>
+        <td>إشعارات، محادثات مباشرة</td>
+      </tr>
+      <tr>
+        <td><strong>Zapier</strong></td>
+        <td>منصة أتمتة</td>
+        <td>ربط مع 5000+ تطبيق</td>
+      </tr>
+      <tr>
+        <td><strong>Google Sheets</strong></td>
+        <td>جدول بيانات</td>
+        <td>تصدير البيانات تلقائياً</td>
+      </tr>
+      <tr>
+        <td><strong>Salesforce</strong></td>
+        <td>CRM</td>
+        <td>مزامنة الجهات والحسابات</td>
+      </tr>
+      <tr>
+        <td><strong>HubSpot</strong></td>
+        <td>CRM</td>
+        <td>إدارة جهات الاتصال</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>4.2 التثبيت السريع</h3>
+  <ol>
+    <li>اذهب إلى <strong>Integrations</strong> من الـ Marketplace</li>
+    <li>ابحث عن التطبيق المطلوب</li>
+    <li>انقر <strong>Install</strong></li>
+    <li>وافق على الأذونات</li>
+    <li>أكمل الإعداد</li>
+  </ol>
+</div>
+
+<div class="section">
+  <h2>5. الأمان وأفضل الممارسات</h2>
+
+  <h3>5.1 أمان الـ Webhook</h3>
+
+  <h4>التحقق من التوقيع (Signature Verification)</h4>
+  <p>كل webhook يأتي مع توقيع للتأكد من أنه من Chatwoot:</p>
+  <ul>
+    <li><strong>Header:</strong> <code>X-Chatwoot-Signature</code></li>
+    <li><strong>الخوارزمية:</strong> HMAC-SHA256</li>
+    <li><strong>الاستخدام:</strong> التحقق في الطرف المستقبل</li>
+  </ul>
+
+  <div class="example">
+    <div class="box-title">مثال: التحقق من التوقيع (Node.js)</div>
+    <div class="box-body">
+      <div class="json-example">
+const crypto = require('crypto');
+const signature = req.headers['x-chatwoot-signature'];
+const secret = process.env.CHATWOOT_SECRET;
+const payload = req.rawBody;
+
+const hash = crypto
+  .createHmac('sha256', secret)
+  .update(payload)
+  .digest('hex');
+
+if (hash === signature) {
+  console.log('✅ توقيع صحيح');
+} else {
+  console.log('❌ توقيع غير صحيح');
+}
+      </div>
+    </div>
+  </div>
+
+  <h3>5.2 أفضل الممارسات</h3>
+  <ul>
+    <li>✅ استخدم HTTPS فقط (مشفر)</li>
+    <li>✅ تحقق من التوقيع دائماً</li>
+    <li>✅ استخدم رموز مصادقة قوية</li>
+    <li>✅ سجّل جميع الـ Webhooks</li>
+    <li>✅ اختبر قبل التفعيل</li>
+    <li>✅ راقب الأخطاء والفشل</li>
+    <li>❌ لا تضع بيانات حساسة في URL</li>
+    <li>❌ لا تنسَ تحديث الـ URLs</li>
+  </ul>
+
+  <h3>5.3 معالجة الأخطاء</h3>
+  <table>
+    <thead><tr><th>الخطأ</th><th>السبب</th><th>الحل</th></tr></thead>
+    <tbody>
+      <tr><td>Timeout</td><td>النظام الخارجي بطيء</td><td>أضف timeout، أو عالج بشكل غير متزامن</td></tr>
+      <tr><td>404 Not Found</td><td>URL غير صحيح</td><td>تحقق من الـ URL</td></tr>
+      <tr><td>401 Unauthorized</td><td>مشكلة في المصادقة</td><td>تحقق من الرموز والـ Headers</td></tr>
+      <tr><td>500 Internal Error</td><td>مشكلة في النظام الآخر</td><td>اتصل بـ support النظام الآخر</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.4 إعادة المحاولة (Retries)</h3>
+  <p>إذا فشل الـ Webhook، Chatwoot يحاول مجدداً:</p>
+  <ul>
+    <li><strong>عدد المحاولات:</strong> حتى 5 مرات</li>
+    <li><strong>الفاصل الزمني:</strong> 30 ثانية، دقيقة، 5 دقائق، إلخ</li>
+    <li><strong>إذا فشل:</strong> تُرسل إشعار للـ Admin</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>6. الاختبار والتصحيح</h2>
+
+  <h3>6.1 اختبار الـ Webhook</h3>
+
+  <h4>الطريقة 1: Test Button في Chatwoot</h4>
+  <ol>
+    <li>انقر على الـ Webhook من القائمة</li>
+    <li>انقر <strong>Test</strong></li>
+    <li>اختر حدث تجريبي</li>
+    <li>ابحث عن الرد</li>
+  </ol>
+
+  <h4>الطريقة 2: استخدام أداة Online</h4>
+  <ul>
+    <li><strong>Webhook.cool:</strong> تطبيق تجريبي مجاني</li>
+    <li><strong>RequestBin:</strong> معاينة الـ Requests</li>
+    <li><strong>ngrok:</strong> نفق آمن للاختبار المحلي</li>
+  </ul>
+
+  <h3>6.2 Logs والتتبع</h3>
+  <p>انظر إلى سجل Webhooks:</p>
+  <ol>
+    <li>اذهب إلى <strong>Settings</strong> &gt; <strong>Webhooks</strong></li>
+    <li>اختر الـ Webhook</li>
+    <li>انقر <strong>Logs</strong> أو <strong>History</strong></li>
+    <li>اعرض:<br>
+      - الحدث التي تم إرسالها<br>
+      - الرد من النظام الآخر<br>
+      - الأخطاء (إن وجدت)<br>
+      - الوقت والحالة</li>
+  </ol>
+
+  <h3>6.3 أدوات مفيدة</h3>
+  <ul>
+    <li><strong>curl:</strong> اختبار الـ URLs من سطر الأوامر</li>
+    <li><strong>Postman:</strong> أداة احترافية للـ APIs</li>
+    <li><strong>VS Code REST Client:</strong> اختبار مباشر في المحرر</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>7. التطوير المتقدم</h2>
+
+  <h3>7.1 Webhook مخصص (Custom Webhook)</h3>
+
+  <div class="example">
+    <div class="box-title">مثال: Node.js Server يستقبل Webhooks</div>
+    <div class="box-body">
+      <div class="json-example">
+const express = require('express');
+const app = express();
+
+app.post('/webhook', (req, res) => {
+  const { event, conversation, message } = req.body;
+
+  if (event === 'message.created') {
+    console.log(`رسالة جديدة: ${message.content}`);
+    // معالجة الرسالة هنا
+  }
+
+  res.json({ success: true });
+});
+
+app.listen(3000);
+      </div>
+    </div>
+  </div>
+
+  <h3>7.2 التكاملات مع Zapier</h3>
+  <p>تطبيق Zapier يمكنه ربط Chatwoot مع آلاف التطبيقات:</p>
+  <ul>
+    <li>Google Drive (حفظ الملفات)</li>
+    <li>Email (إرسال رسائل)</li>
+    <li>Calendar (حجز الاجتماعات)</li>
+    <li>Wave (الفواتير)</li>
+  </ul>
+
+  <h3>7.3 واجهة برمجية API</h3>
+  <p>بجانب الـ Webhooks، Chatwoot توفر API كاملة:</p>
+  <table>
+    <thead><tr><th>الـ Endpoint</th><th>الوصف</th></tr></thead>
+    <tbody>
+      <tr><td>GET /api/v1/conversations</td><td>الحصول على المحادثات</td></tr>
+      <tr><td>POST /api/v1/conversations</td><td>إنشاء محادثة</td></tr>
+      <tr><td>GET /api/v1/conversations/:id/messages</td><td>الحصول على الرسائل</td></tr>
+      <tr><td>POST /api/v1/conversations/:id/messages</td><td>إضافة رسالة</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>8. استكشاف الأخطاء</h2>
+
+  <h3>8.1 المشاكل الشائعة</h3>
+
+  <div class="warn">
+    <div class="box-title">المشكلة: Webhook لا يُطلق</div>
+    <div class="box-body">
+      ✅ <strong>الحلول:</strong><br>
+      - تحقق من أن الـ Event محدد بشكل صحيح<br>
+      - تحقق من أن الشروط محققة<br>
+      - اختبر الـ Webhook يدويّاً<br>
+      - انظر في السجلات للأخطاء<br>
+      - تأكد من أن الـ URL يعمل
+    </div>
+  </div>
+
+  <div class="warn">
+    <div class="box-title">المشكلة: Webhook يفشل بـ 401 Unauthorized</div>
+    <div class="box-body">
+      ✅ <strong>الحلول:</strong><br>
+      - تحقق من الرموز (Tokens) والمفاتيح<br>
+      - تحقق من صيغة Authorization Header<br>
+      - تأكد من عدم انتهاء صلاحية الرمز<br>
+      - جدد الرمز إذا لزم الأمر
+    </div>
+  </div>
+
+  <div class="warn">
+    <div class="box-title">المشكلة: البيانات لا تصل كاملة</div>
+    <div class="box-body">
+      ✅ <strong>الحلول:</strong><br>
+      - تحقق من Content-Type (application/json)<br>
+      - تحقق من صيغة JSON الداخلة<br>
+      - استخدم Logs لرؤية البيانات الفعلية<br>
+      - اختبر مع أداة مثل Postman
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>9. أفضل الممارسات</h2>
+
+  <h3>9.1 التخطيط</h3>
+  <ul>
+    <li>✅ حدد احتياجاتك قبل الإعداد</li>
+    <li>✅ رسم مخطط تدفق البيانات</li>
+    <li>✅ اختبر في بيئة اختبار أولاً</li>
+    <li>✅ وثّق الإعدادات والـ URLs</li>
+  </ul>
+
+  <h3>9.2 الأداء</h3>
+  <ul>
+    <li>استخدم معالجة غير متزامنة</li>
+    <li>أضف cache إذا أمكن</li>
+    <li>راقب الـ Timeout والأداء</li>
+    <li>لا ترسل بيانات زائدة</li>
+  </ul>
+
+  <h3>9.3 الصيانة</h3>
+  <ul>
+    <li>راجع الـ Webhooks شهرياً</li>
+    <li>احذف الـ Webhooks غير المستخدمة</li>
+    <li>حدّث الـ URLs إذا تغيرت</li>
+    <li>انظر في السجلات للمشاكل</li>
+  </ul>
+</div>
+
+<div style="text-align:center; padding: 40px 0 20px; color: #94a3b8; font-size: 13px;">
+  <p>نهاية الدليل — Webhooks & Integrations Documentation v2.0</p>
+</div>
+
+</div>
+</body>
+</html>

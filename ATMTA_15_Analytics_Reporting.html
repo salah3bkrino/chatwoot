@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التحليلات والإحصائيات - دليل شامل</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: #f8fafc; color: #1e293b;
+  line-height: 1.7; direction: rtl;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+.cover {
+  text-align: center; padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a56db 100%);
+  color: #fff; border-radius: 16px; margin-bottom: 32px;
+}
+.cover h1 { font-size: 42px; margin-bottom: 8px; letter-spacing: 1px; }
+.cover .subtitle { font-size: 22px; opacity: .85; margin-bottom: 24px; }
+.cover .desc { font-size: 16px; opacity: .7; }
+.cover .version { margin-top: 28px; font-size: 13px; opacity: .5; }
+.section {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 28px 32px; margin-bottom: 24px;
+}
+h2 {
+  font-size: 24px; color: #1a56db; margin-bottom: 18px;
+  padding-bottom: 10px; border-bottom: 2px solid #e2e8f0;
+}
+h3 { font-size: 19px; color: #1e3a5f; margin: 22px 0 12px; }
+h4 { font-size: 16px; color: #334155; margin: 16px 0 8px; }
+p { margin-bottom: 12px; font-size: 15px; }
+ul, ol { padding-right: 24px; margin-bottom: 14px; }
+li { margin-bottom: 8px; font-size: 15px; }
+strong { color: #1e293b; }
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0 18px;
+  font-size: 14px;
+}
+thead th {
+  background: #1e3a5f; color: #fff; padding: 12px 14px;
+  text-align: right; font-weight: 600;
+}
+tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; }
+tbody tr:nth-child(even) { background: #f8fafc; }
+tbody tr:hover { background: #eff6ff; }
+.tip, .warn, .info, .example {
+  border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+  border-right: 4px solid;
+}
+.tip { background: #ecfdf5; border-color: #047857; }
+.tip .box-title { color: #047857; }
+.warn { background: #fef3c7; border-color: #d97706; }
+.warn .box-title { color: #d97706; }
+.info { background: #eff6ff; border-color: #1a56db; }
+.info .box-title { color: #1a56db; }
+.example { background: #f3f0ff; border-color: #7c3aed; }
+.example .box-title { color: #7c3aed; }
+.box-title { font-weight: 700; margin-bottom: 8px; font-size: 15px; }
+.box-body { font-size: 14px; line-height: 1.6; }
+code {
+  background: #f1f5f9; padding: 2px 6px; border-radius: 4px;
+  font-family: 'Courier New', monospace; font-size: 13px; color: #7c3aed;
+}
+.flow {
+  background: #f1f5f9; border-radius: 8px; padding: 16px;
+  margin: 16px 0; direction: ltr; text-align: left;
+  font-size: 13px; line-height: 1.8; overflow-x: auto;
+}
+.metric-box {
+  background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px;
+  padding: 16px; margin: 12px 0; text-align: center;
+}
+.metric-value { font-size: 24px; font-weight: 700; color: #1a56db; }
+.metric-label { font-size: 13px; color: #64748b; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="cover">
+  <h1>التحليلات والإحصائيات</h1>
+  <div class="subtitle">Analytics & Reporting — Chatwoot</div>
+  <div class="desc">دليل شامل لقياس الأداء والإحصائيات</div>
+  <div class="version">الإصدار 2.0 &nbsp;|&nbsp; يوليو 2026</div>
+</div>
+
+<div class="section">
+  <h2>1. مقدمة التحليلات</h2>
+
+  <h3>1.1 أهمية التحليلات</h3>
+  <p>التحليلات تساعدك على:</p>
+  <ul>
+    <li><strong>قياس الأداء:</strong> هل فريقك يعمل بكفاءة؟</li>
+    <li><strong>اكتشاف المشاكل:</strong> أين الاختناقات؟</li>
+    <li><strong>تحسين الخدمة:</strong> رضا العملاء يزداد أم ينخفض؟</li>
+    <li><strong>اتخاذ القرارات:</strong> بيانات وليس تخمينات</li>
+    <li><strong>التخطيط:</strong> هل نحتاج وكلاء إضافيين؟</li>
+  </ul>
+
+  <h3>1.2 المقاييس الرئيسية (KPIs)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>المقياس</th>
+        <th>الوصف</th>
+        <th>الهدف</th>
+        <th>الأهمية</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Response Time</strong></td>
+        <td>وقت أول رد من الوكيل</td>
+        <td><2 دقيقة</td>
+        <td>⭐⭐⭐⭐⭐</td>
+      </tr>
+      <tr>
+        <td><strong>Resolution Time</strong></td>
+        <td>الوقت من بداية المحادثة إلى الحل</td>
+        <td><30 دقيقة</td>
+        <td>⭐⭐⭐⭐⭐</td>
+      </tr>
+      <tr>
+        <td><strong>CSAT Score</strong></td>
+        <td>رضا العميل (1-5)</td>
+        <td>>4.5</td>
+        <td>⭐⭐⭐⭐⭐</td>
+      </tr>
+      <tr>
+        <td><strong>Agent Utilization</strong></td>
+        <td>نسبة وقت الوكيل المستخدم</td>
+        <td>70-85%</td>
+        <td>⭐⭐⭐⭐</td>
+      </tr>
+      <tr>
+        <td><strong>Conversation Volume</strong></td>
+        <td>عدد المحادثات اليومية</td>
+        <td>تصاعدي</td>
+        <td>⭐⭐⭐</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>2. لوحة التحكم (Dashboard)</h2>
+
+  <h3>2.1 الأقسام الرئيسية</h3>
+
+  <h4>أ) ملخص سريع (Overview)</h4>
+  <table>
+    <thead><tr><th>المقياس</th><th>الوصف</th></tr></thead>
+    <tbody>
+      <tr><td>Conversations Today</td><td>عدد المحادثات اليوم</td></tr>
+      <tr><td>Open Conversations</td><td>محادثات مفتوحة حالياً</td></tr>
+      <tr><td>Average Response Time</td><td>متوسط وقت الرد</td></tr>
+      <tr><td>CSAT Average</td><td>متوسط رضا العميل</td></tr>
+    </tbody>
+  </table>
+
+  <h4>ب) أداء الفريق (Team Performance)</h4>
+  <table>
+    <thead><tr><th>الوكيل</th><th>المحادثات</th><th>متوسط الرد</th><th>الرضا</th></tr></thead>
+    <tbody>
+      <tr><td>Ahmed</td><td>24</td><td>1.5 دقيقة</td><td>4.8/5</td></tr>
+      <tr><td>Fatima</td><td>22</td><td>2.1 دقيقة</td><td>4.6/5</td></tr>
+      <tr><td>Ali</td><td>20</td><td>1.2 دقيقة</td><td>4.9/5</td></tr>
+    </tbody>
+  </table>
+
+  <h4>ج) أداء الوصول/البريد الوارد (Inbox Performance)</h4>
+  <table>
+    <thead><tr><th>البريد</th><th>عدد المحادثات</th><th>متوسط الرد</th><th>معدل الإغلاق</th></tr></thead>
+    <tbody>
+      <tr><td>WhatsApp Support</td><td>150</td><td>1.8 دقيقة</td><td>88%</td></tr>
+      <tr><td>Email Support</td><td>45</td><td>25 دقيقة</td><td>92%</td></tr>
+      <tr><td>Live Chat</td><td>78</td><td>1.2 دقيقة</td><td>95%</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.2 الفترات الزمنية</h3>
+  <ul>
+    <li><strong>Today:</strong> من منتصف الليل حتى الآن</li>
+    <li><strong>This Week:</strong> الأسبوع الحالي</li>
+    <li><strong>This Month:</strong> الشهر الحالي</li>
+    <li><strong>Custom Range:</strong> نطاق مخصص</li>
+  </ul>
+
+  <div class="tip">
+    <div class="box-title">نصيحة</div>
+    <div class="box-body">استخدم "Custom Range" لمقارنة فترات مختلفة أو تحليل عميق.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>3. تقارير مفصلة</h2>
+
+  <h3>3.1 تقرير أداء الوكيل</h3>
+
+  <div class="example">
+    <div class="box-title">مثال: تقرير Wأحمد للأسبوع الماضي</div>
+    <div class="box-body">
+      <strong>إحصائيات أحمد:</strong><br>
+      - إجمالي المحادثات: 120<br>
+      - متوسط وقت الرد: 1.5 دقيقة<br>
+      - متوسط وقت الحل: 18 دقيقة<br>
+      - رضا العميل: 4.8/5 (87% من التقييمات)<br>
+      - معدل الإغلاق: 94%<br>
+      - عدد الردود المجمعة: 312<br>
+      - استخدام Macros: 45 مرة
+    </div>
+  </div>
+
+  <h3>3.2 تقرير الاتجاهات (Trends)</h3>
+  <ul>
+    <li><strong>Daily Trend:</strong> المحادثات اليومية على الرسم البياني</li>
+    <li><strong>Weekly Average:</strong> متوسط كل أسبوع</li>
+    <li><strong>Monthly Growth:</strong> نمو الشهر الحالي مقارنة بالسابق</li>
+  </ul>
+
+  <h3>3.3 تقرير الرضا (CSAT Report)</h3>
+  <table>
+    <thead><tr><th>التقييم</th><th>العدد</th><th>النسبة</th><th>الترند</th></tr></thead>
+    <tbody>
+      <tr><td>5 نجوم ⭐⭐⭐⭐⭐</td><td>345</td><td>62%</td><td>📈 ↑5%</td></tr>
+      <tr><td>4 نجوم ⭐⭐⭐⭐</td><td>150</td><td>27%</td><td>📉 ↓2%</td></tr>
+      <tr><td>3 نجوم ⭐⭐⭐</td><td>45</td><td>8%</td><td>➡️ ستابل</td></tr>
+      <tr><td>أقل من 3 نجوم</td><td>15</td><td>3%</td><td>📉 ↓1%</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.4 تقرير القنوات (Channel Report)</h3>
+  <table>
+    <thead><tr><th>القناة</th><th>المحادثات</th><th>متوسط الرد</th><th>CSAT</th><th>الترند</th></tr></thead>
+    <tbody>
+      <tr><td>WhatsApp</td><td>320</td><td>1.8 دقيقة</td><td>4.7</td><td>📈</td></tr>
+      <tr><td>Email</td><td>85</td><td>22 دقيقة</td><td>4.5</td><td>➡️</td></tr>
+      <tr><td>Live Chat</td><td>145</td><td>1.2 دقيقة</td><td>4.9</td><td>📈</td></tr>
+      <tr><td>Facebook</td><td>32</td><td>8 دقائق</td><td>4.3</td><td>📉</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>4. مقاييس متقدمة</h2>
+
+  <h3>4.1 متوسط وقت الحل (MTTR)</h3>
+  <p><strong>Mean Time To Resolution</strong> - الوقت من بداية المحادثة إلى الإغلاق</p>
+
+  <div class="metric-box">
+    <div class="metric-value">24.3 دقيقة</div>
+    <div class="metric-label">متوسط وقت الحل لهذا الأسبوع</div>
+  </div>
+
+  <p><strong>الحساب:</strong> إجمالي وقت الحل ÷ عدد المحادثات المغلقة</p>
+
+  <h3>4.2 أول وقت رد (First Response Time)</h3>
+  <p>الوقت من استقبال رسالة العميل إلى أول رد من الوكيل</p>
+
+  <div class="metric-box">
+    <div class="metric-value">2.1 دقيقة</div>
+    <div class="metric-label">متوسط أول وقت رد</div>
+  </div>
+
+  <p><strong>الأهمية:</strong> كلما كان أقصر، كان أفضل (العملاء ينتظرون ردود سريعة)</p>
+
+  <h3>4.3 معدل الحل من أول اتصال (First Contact Resolution)</h3>
+  <p>نسبة المحادثات التي تُحل دون الحاجة لمزيد من التفاعلات</p>
+
+  <div class="metric-box">
+    <div class="metric-value">68%</div>
+    <div class="metric-label">نسبة الحل من أول اتصال</div>
+  </div>
+
+  <p><strong>الحساب:</strong> (المحادثات المحلولة بـ رد واحد ÷ إجمالي المحادثات) × 100</p>
+
+  <h3>4.4 معدل إعادة الفتح (Reopen Rate)</h3>
+  <p>نسبة المحادثات التي تم إغلاقها ثم فتحها مجدداً</p>
+
+  <div class="metric-box">
+    <div class="metric-value">5.2%</div>
+    <div class="metric-label">نسبة إعادة الفتح</div>
+  </div>
+
+  <p><strong>الهدف:</strong> أقل من 5% (أقل = أفضل)</p>
+
+  <h3>4.5 استخدام AI (AI Adoption Rate)</h3>
+  <table>
+    <thead><tr><th>ميزة AI</th><th>الاستخدام</th><th>معدل القبول</th></tr></thead>
+    <tbody>
+      <tr><td>Reply Suggestion</td><td>234 مرة</td><td>78%</td></tr>
+      <tr><td>Rewrite</td><td>156 مرة</td><td>82%</td></tr>
+      <tr><td>Summarize</td><td>89 مرة</td><td>91%</td></tr>
+      <tr><td>Label Suggestion</td><td>267 مرة</td><td>72%</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>5. مقاييس الفريق والعمليات</h2>
+
+  <h3>5.1 توازن الحمل (Workload Balance)</h3>
+  <table>
+    <thead><tr><th>الوكيل</th><th>المحادثات النشطة</th><th>متوسط المحادثات/ساعة</th><th>الحالة</th></tr></thead>
+    <tbody>
+      <tr><td>Ahmed</td><td>8</td><td>6</td><td>✅ متوازن</td></tr>
+      <tr><td>Fatima</td><td>12</td><td>8</td><td>⚠️ مثقل</td></tr>
+      <tr><td>Ali</td><td>6</td><td>4</td><td>✅ خفيف</td></tr>
+      <tr><td>Sara</td><td>10</td><td>7</td><td>✅ متوازن</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn">
+    <div class="box-title">لاحظ: Fatima مثقلة!</div>
+    <div class="box-body">عدد المحادثات مرتفع جداً. قد يؤثر على جودة الرد. فكر في توزيع بعض المحادثات على Ali.</div>
+  </div>
+
+  <h3>5.2 الإنتاجية (Productivity)</h3>
+  <ul>
+    <li><strong>Messages per Conversation:</strong> متوسط عدد الرسائل</li>
+    <li><strong>Average Message Length:</strong> طول الرسالة المتوسط</li>
+    <li><strong>Response Rate:</strong> نسبة الرد على الرسائل</li>
+    <li><strong>Typing Speed:</strong> سرعة الكتابة (رسائل/دقيقة)</li>
+  </ul>
+
+  <h3>5.3 جودة الخدمة (Service Quality)</h3>
+  <table>
+    <thead><tr><th>المقياس</th><th>الحالة</th><th>الهدف</th></tr></thead>
+    <tbody>
+      <tr><td>عدم الرد في الوقت</td><td>3 حالات</td><td>0</td></tr>
+      <tr><td>محادثات بدون وكيل</td><td>0</td><td>0</td></tr>
+      <tr><td>رسائل بدون رد</td><td>2</td><td>0</td></tr>
+      <tr><td>شكاوى العملاء</td><td>5</td><td><1% من المحادثات</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>6. التقارير المجدولة</h2>
+
+  <h3>6.1 إنشاء تقرير مجدول</h3>
+  <ol>
+    <li>اذهب إلى <strong>Reports</strong> &gt; <strong>Scheduled Reports</strong></li>
+    <li>انقر <strong>Create New</strong></li>
+    <li>اختر نوع التقرير (Performance, CSAT, Channel, etc.)</li>
+    <li>حدد التكرار (يومي، أسبوعي، شهري)</li>
+    <li>أضف المستقبلين (بريدهم)</li>
+    <li>احفظ</li>
+  </ol>
+
+  <h3>6.2 أمثلة تقارير مجدولة</h3>
+  <ul>
+    <li><strong>تقرير أداء يومي:</strong> كل صباح 9 صباحاً</li>
+    <li><strong>تقرير أسبوعي:</strong> كل اثنين في 10 صباحاً</li>
+    <li><strong>تقرير شهري:</strong> أول يوم من الشهر</li>
+  </ul>
+
+  <h3>6.3 صيغ التقارير</h3>
+  <ul>
+    <li>PDF - مناسب للطباعة والمشاركة</li>
+    <li>Excel - مناسب للتحليل الإضافي</li>
+    <li>CSV - مناسب للاستيراد إلى أنظمة أخرى</li>
+    <li>Email - مباشرة في البريد الإلكتروني</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>7. تصدير البيانات والتكاملات</h2>
+
+  <h3>7.1 تصدير البيانات</h3>
+  <ul>
+    <li><strong>Analytics Export:</strong> جميع البيانات التحليلية</li>
+    <li><strong>Conversation Export:</strong> تفاصيل جميع المحادثات</li>
+    <li><strong>Agent Report Export:</strong> تقرير الوكلاء</li>
+  </ul>
+
+  <h3>7.2 التكاملات الشهيرة</h3>
+  <table>
+    <thead><tr><th>الخدمة</th><th>ما يمكن فعله</th></tr></thead>
+    <tbody>
+      <tr><td>Google Sheets</td><td>إضافة البيانات تلقائياً إلى جدول</td></tr>
+      <tr><td>Slack</td><td>إرسال التقارير إلى القنة</td></tr>
+      <tr><td>Zapier</td><td>ربط مع تطبيقات أخرى</td></tr>
+      <tr><td>Power BI</td><td>تحليل متقدم ولوحات</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>8. تحليل البيانات المتقدم</h2>
+
+  <h3>8.1 مقارنة الفترات</h3>
+  <p>قارن أداء فترتين مختلفتين:</p>
+  <ul>
+    <li>هذا الأسبوع مقابل الأسبوع السابق</li>
+    <li>هذا الشهر مقابل نفس الشهر من السنة السابقة</li>
+    <li>فترة مخصصة مقابل فترة أخرى</li>
+  </ul>
+
+  <h3>8.2 تحليل الفئات</h3>
+  <table>
+    <thead><tr><th>الفئة</th><th>عدد المحادثات</th><th>النسبة</th></tr></thead>
+    <tbody>
+      <tr><td>Sales Inquiry</td><td>125</td><td>28%</td></tr>
+      <tr><td>Technical Support</td><td>180</td><td>41%</td></tr>
+      <tr><td>Billing Question</td><td>95</td><td>21%</td></tr>
+      <tr><td>Other</td><td>41</td><td>10%</td></tr>
+    </tbody>
+  </table>
+
+  <h3>8.3 تحليل الأوقات (Peak Hours)</h3>
+  <ul>
+    <li>أكثر ساعات الازدحام</li>
+    <li>أهدأ أوقات العمل</li>
+    <li>تخطيط عدد الوكلاء حسب الوقت</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>9. أفضل الممارسات</h2>
+
+  <h3>9.1 استخدام التحليلات</h3>
+  <ul>
+    <li>✅ راجع التقارير بانتظام (يومي، أسبوعي، شهري)</li>
+    <li>✅ اقارن مع الفترات السابقة</li>
+    <li>✅ اكتشف الاتجاهات (إيجابية وسلبية)</li>
+    <li>✅ اتخذ إجراءات بناءً على البيانات</li>
+    <li>❌ لا تتجاهل الأرقام السيئة</li>
+    <li>❌ لا تعتمد على رقم واحد فقط</li>
+  </ul>
+
+  <h3>9.2 مراقبة الأداء</h3>
+  <ul>
+    <li>حدد أهداف واضحة لكل وكيل/فريق</li>
+    <li>راقب التقدم نحو الأهداف</li>
+    <li>أعط تغذية راجعة منتظمة</li>
+    <li>احتفل بالإنجازات</li>
+  </ul>
+
+  <h3>9.3 التحسين المستمر</h3>
+  <ul>
+    <li>تحليل الأسباب الجذرية للمشاكل</li>
+    <li>تنفيذ تحسينات محددة</li>
+    <li>قياس تأثير التحسينات</li>
+    <li>تكرار العملية</li>
+  </ul>
+</div>
+
+<div style="text-align:center; padding: 40px 0 20px; color: #94a3b8; font-size: 13px;">
+  <p>نهاية الدليل — Analytics & Reporting Documentation v2.0</p>
+</div>
+
+</div>
+</body>
+</html>

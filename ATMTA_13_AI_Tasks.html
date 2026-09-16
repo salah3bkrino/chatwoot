@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مهام الذكاء الاصطناعي - دليل شامل</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: #f8fafc; color: #1e293b;
+  line-height: 1.7; direction: rtl;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+.cover {
+  text-align: center; padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a56db 100%);
+  color: #fff; border-radius: 16px; margin-bottom: 32px;
+}
+.cover h1 { font-size: 42px; margin-bottom: 8px; letter-spacing: 1px; }
+.cover .subtitle { font-size: 22px; opacity: .85; margin-bottom: 24px; }
+.cover .desc { font-size: 16px; opacity: .7; }
+.cover .version { margin-top: 28px; font-size: 13px; opacity: .5; }
+.section {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 28px 32px; margin-bottom: 24px;
+}
+h2 {
+  font-size: 24px; color: #1a56db; margin-bottom: 18px;
+  padding-bottom: 10px; border-bottom: 2px solid #e2e8f0;
+}
+h3 { font-size: 19px; color: #1e3a5f; margin: 22px 0 12px; }
+h4 { font-size: 16px; color: #334155; margin: 16px 0 8px; }
+p { margin-bottom: 12px; font-size: 15px; }
+ul, ol { padding-right: 24px; margin-bottom: 14px; }
+li { margin-bottom: 8px; font-size: 15px; }
+strong { color: #1e293b; }
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0 18px;
+  font-size: 14px;
+}
+thead th {
+  background: #1e3a5f; color: #fff; padding: 12px 14px;
+  text-align: right; font-weight: 600;
+}
+tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; }
+tbody tr:nth-child(even) { background: #f8fafc; }
+tbody tr:hover { background: #eff6ff; }
+.tip, .warn, .info, .example {
+  border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+  border-right: 4px solid;
+}
+.tip { background: #ecfdf5; border-color: #047857; }
+.tip .box-title { color: #047857; }
+.warn { background: #fef3c7; border-color: #d97706; }
+.warn .box-title { color: #d97706; }
+.info { background: #eff6ff; border-color: #1a56db; }
+.info .box-title { color: #1a56db; }
+.example { background: #f3f0ff; border-color: #7c3aed; }
+.example .box-title { color: #7c3aed; }
+.box-title { font-weight: 700; margin-bottom: 8px; font-size: 15px; }
+.box-body { font-size: 14px; line-height: 1.6; }
+code {
+  background: #f1f5f9; padding: 2px 6px; border-radius: 4px;
+  font-family: 'Courier New', monospace; font-size: 13px; color: #7c3aed;
+}
+.comparison-table { margin: 20px 0; }
+.comparison-table th { background: #1e3a5f; }
+.flow {
+  background: #f1f5f9; border-radius: 8px; padding: 16px;
+  margin: 16px 0; direction: ltr; text-align: left;
+  font-size: 13px; line-height: 1.8; overflow-x: auto;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="cover">
+  <h1>مهام الذكاء الاصطناعي</h1>
+  <div class="subtitle">AI Tasks — Chatwoot</div>
+  <div class="desc">دليل استخدام مهام AI لتحسين الإنتاجية والردود</div>
+  <div class="version">الإصدار 2.0 &nbsp;|&nbsp; يوليو 2026</div>
+</div>
+
+<div class="section">
+  <h2>1. مقدمة عن مهام AI</h2>
+
+  <h3>1.1 ما هي مهام AI؟</h3>
+  <p><strong>مهام AI</strong> هي أدوات ذكية تساعد الوكلاء على تحسين ردودهم وتسريع عملية الكتابة. بنقرة واحدة، يمكنك إعادة صياغة رد، تلخيص محادثة، أو الحصول على اقتراح للرد التالي.</p>
+
+  <h3>1.2 المهام المتاحة</h3>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>المهمة</th>
+        <th>الوصف</th>
+        <th>الاستخدام</th>
+        <th>المدخل</th>
+        <th>المخرج</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Rewrite</strong><br>(إعادة صياغة)</td>
+        <td>تحسين أسلوب الرد وجعله أكثر احترافية وودية</td>
+        <td>تحسين جودة الرد</td>
+        <td>نص الرد الحالي</td>
+        <td>نسخة محسّنة من الرد</td>
+      </tr>
+      <tr>
+        <td><strong>Summarize</strong><br>(تلخيص)</td>
+        <td>تلخيص المحادثة بأكملها أو رسالة طويلة</td>
+        <td>حفظ الوقت والوضوح</td>
+        <td>المحادثة أو الرسالة</td>
+        <td>ملخص مختصر وواضح</td>
+      </tr>
+      <tr>
+        <td><strong>Reply Suggestion</strong><br>(اقتراح رد)</td>
+        <td>AI يقترح رد مناسب بناءً على السياق</td>
+        <td>الرد السريع على الأسئلة</td>
+        <td>سياق المحادثة</td>
+        <td>اقتراح رد كامل</td>
+      </tr>
+      <tr>
+        <td><strong>Label Suggestion</strong><br>(اقتراح تسميات)</td>
+        <td>AI يقترح تسميات مناسبة للمحادثة</td>
+        <td>تنظيم المحادثات</td>
+        <td>محتوى المحادثة</td>
+        <td>قائمة بالتسميات المقترحة</td>
+      </tr>
+      <tr>
+        <td><strong>Follow-up Message</strong><br>(رسالة متابعة)</td>
+        <td>اقتراح رسالة متابعة ذكية للمحادثة</td>
+        <td>المتابعة اللاحقة</td>
+        <td>المحادثة والسياق</td>
+        <td>رسالة متابعة مقترحة</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>1.3 Feature Flags المطلوبة</h3>
+  <table>
+    <thead><tr><th>المهمة</th><th>الـ Flag</th><th>النوع</th><th>التوفر</th></tr></thead>
+    <tbody>
+      <tr><td>كل مهام AI</td><td><code>captain_tasks</code></td><td>Standard</td><td>✅ متاح للجميع</td></tr>
+      <tr><td>تحسينات متقدمة</td><td><code>captain_integration</code></td><td>Premium</td><td>🔒 مدفوع</td></tr>
+      <tr><td>Copilot للوكلاء</td><td><code>openai_integration</code></td><td>Premium</td><td>🔒 مدفوع</td></tr>
+    </tbody>
+  </table>
+
+  <h3>1.4 الفوائد الرئيسية</h3>
+  <ul>
+    <li><strong>توفير الوقت:</strong> بدلاً من الكتابة من الصفر، استخدم اقتراحات AI</li>
+    <li><strong>تحسين الجودة:</strong> AI يحسّن الأسلوب والوضوح</li>
+    <li><strong>الاتساق:</strong> جميع الردود تتبع نفس الأسلوب والمعايير</li>
+    <li><strong>التعلم:</strong> مع الوقت، الوكلاء يتعلمون من الاقتراحات</li>
+    <li><strong>رضا العملاء:</strong> ردود أفضل = عملاء أكثر رضا</li>
+  </ul>
+
+  <div class="info">
+    <div class="box-title">ملاحظة: اللغات</div>
+    <div class="box-body">معظم مهام AI تدعم اللغة العربية بشكل جيد، لكن بعض الاقتراحات قد تكون أفضل باللغة الإنجليزية أولاً ثم ترجمتها.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>2. Rewrite - إعادة الصياغة</h2>
+
+  <h3>2.1 متى تستخدمه؟</h3>
+  <ul>
+    <li>الرد طويل جداً ويحتاج اختصار</li>
+    <li>الأسلوب رسمي جداً أو غير ودود</li>
+    <li>الرد يحتوي على أخطاء نحوية</li>
+    <li>تريد جعل الرد أكثر احترافية</li>
+    <li>تريد تغيير نبرة الرد (أكثر ودية، أكثر احترافية، إلخ)</li>
+  </ul>
+
+  <h3>2.2 أمثلة</h3>
+
+  <div class="example">
+    <div class="box-title">مثال 1: تحسين النبرة</div>
+    <div class="box-body">
+      <strong>الأصلي:</strong><br>
+      "انت مخطئ. الطلب كان واضح جداً. الشحن يستغرق 3-5 أيام دائماً. ما كان يجب أن تتوقع أسرع من كده."<br><br>
+      <strong>بعد Rewrite:</strong><br>
+      "شكراً على تفهمك! الشحن عادة يستغرق 3-5 أيام عملية. طلبك تم معالجته بسرعة، والآن في الطريق إليك. إذا كانت لديك أي أسئلة أخرى، نحن هنا للمساعدة!"
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="box-title">مثال 2: اختصار طويل</div>
+    <div class="box-body">
+      <strong>الأصلي (طويل جداً):</strong><br>
+      "بناءً على سياسة الاسترجاع الخاصة بنا والتي تم توضيحها في شروط الخدمة، يحق للعملاء إرجاع المنتجات خلال 30 يوماً من تاريخ الشراء. ومع ذلك، يجب أن يكون المنتج في حالة جيدة وغير مستخدم. بالإضافة إلى ذلك، يجب إرسال البريد بصورة آمنة..."<br><br>
+      <strong>بعد Rewrite:</strong><br>
+      "يمكنك إرجاع المنتج خلال 30 يوم من الشراء، طالما كان بحالة جيدة وغير مستخدم. نرسل عليك ملصق الشحن المجاني."
+    </div>
+  </div>
+
+  <h3>2.3 كيفية الاستخدام</h3>
+  <ol>
+    <li>كتب ردك الأولي</li>
+    <li>انقر على <strong>AI Actions</strong> أو اضغط <code>/ai</code></li>
+    <li>اختر <strong>Rewrite</strong></li>
+    <li>اختر النبرة المطلوبة (professional, friendly, concise)</li>
+    <li>اقبل الاقتراح أو عدّله</li>
+  </ol>
+
+  <div class="tip">
+    <div class="box-title">نصيحة: الاستخدام الفعال</div>
+    <div class="box-body">استخدم Rewrite مع نبرات مختلفة: اكتب أولاً، ثم دع AI يحسّن الأسلوب.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>3. Summarize - التلخيص</h2>
+
+  <h3>3.1 الحالات الشائعة</h3>
+  <ul>
+    <li>محادثات طويلة جداً (10+ رسائل)</li>
+    <li>رسائل طويلة من العميل تحتاج فهم سريع</li>
+    <li>قبل تسليم المحادثة لفريق آخر</li>
+    <li>لتوثيق السبب الرئيسي للمشكلة</li>
+  </ul>
+
+  <h3>3.2 مثال عملي</h3>
+
+  <div class="example">
+    <div class="box-title">مثال: تلخيص محادثة معقدة</div>
+    <div class="box-body">
+      <strong>المحادثة الأصلية (مختصرة):</strong><br>
+      العميل يشكو من أن الطلب وصل بتأخير، والعبوة كانت مفتوحة جزئياً، والمنتج لا يعمل. الوكيل سأل عدة أسئلة عن موديل المنتج، متى تم الشراء، إلخ.
+      <br><br>
+      <strong>بعد Summarize:</strong><br>
+      "المشكلة: الطلب #12345 وصل متأخراً (3 أيام أكثر من المتوقع)، العبوة مفتوحة جزئياً، والمنتج لا يعمل بشكل صحيح. الحل المطلوب: استبدال أو استرجاع كامل."
+    </div>
+  </div>
+
+  <h3>3.3 إعدادات التلخيص</h3>
+  <table>
+    <thead><tr><th>الخيار</th><th>الوصف</th><th>التأثير</th></tr></thead>
+    <tbody>
+      <tr><td><code>focus</code></td><td>ركز على جزء معين (المشكلة، الحل، الخط الزمني)</td><td>ملخص محدد ودقيق</td></tr>
+      <tr><td><code>length</code></td><td>طول الملخص (قصير جداً، متوسط، طويل)</td><td>التوازن بين الإيجاز والتفصيل</td></tr>
+      <tr><td><code>include_sentiment</code></td><td>هل تضمّن مشاعر العميل؟</td><td>معرفة مزاج العميل</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.4 الخطوات</h3>
+  <ol>
+    <li>افتح المحادثة</li>
+    <li>انقر على <strong>AI Actions</strong></li>
+    <li>اختر <strong>Summarize Conversation</strong></li>
+    <li>اختر <strong>Focus</strong> (المشكلة / الحل / الكل)</li>
+    <li>انسخ الملخص وأضفه في ملاحظة خاصة</li>
+  </ol>
+</div>
+
+<div class="section">
+  <h2>4. Reply Suggestion - اقتراح الرد</h2>
+
+  <h3>4.1 متى يكون مفيداً؟</h3>
+  <ul>
+    <li>سؤال روتيني (تكرار متكرر)</li>
+    <li>وكيل جديد يحتاج دعم في الرد</li>
+    <li>الرد يحتاج معرفة متخصصة</li>
+    <li>توفير الوقت في الأسئلة الشائعة</li>
+  </ul>
+
+  <h3>4.2 مثال</h3>
+
+  <div class="example">
+    <div class="box-title">اقتراح رد لسؤال الشحن</div>
+    <div class="box-body">
+      <strong>السؤال:</strong> "متى سيصل طلبي؟"<br><br>
+      <strong>اقتراح AI:</strong><br>
+      "شكراً لتواصلك! طلبك #12345 تم شحنه بتاريخ 2026-07-18 ويتوقع وصوله بـ 3-5 أيام عملية. يمكنك تتبع الطلب عبر الرابط: [رابط التتبع]. إذا كان لديك أي أسئلة أخرى، أنا هنا للمساعدة!"
+    </div>
+  </div>
+
+  <h3>4.3 كيفية الاستخدام</h3>
+  <ol>
+    <li>اقرأ رسالة العميل</li>
+    <li>انقر على <strong>AI Actions</strong> &gt; <strong>Suggest Reply</strong></li>
+    <li>AI يحلل السياق ويقترح رد مناسب</li>
+    <li>اقبل كما هو، أو عدّل حسب الحاجة</li>
+    <li>أرسل الرد</li>
+  </ol>
+
+  <div class="info">
+    <div class="box-title">ملاحظة أمان</div>
+    <div class="box-body">تحقق دائماً من الاقتراح قبل الإرسال! قد يخطئ AI في بعض التفاصيل الدقيقة.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>5. Label Suggestion - اقتراح التسميات</h2>
+
+  <h3>5.1 الفائدة</h3>
+  <p>تنظيم تلقائي للمحادثات حسب الموضوع دون الحاجة لإضافة يدوية.</p>
+
+  <h3>5.2 التسميات الشائعة</h3>
+  <table>
+    <thead><tr><th>التسمية</th><th>المتى تُقترح</th><th>الفائدة</th></tr></thead>
+    <tbody>
+      <tr><td>billing</td><td>أسئلة الفواتير والدفع</td><td>توجيه لفريق الحسابات</td></tr>
+      <tr><td>technical-support</td><td>مشاكل تقنية</td><td>توجيه للدعم الفني</td></tr>
+      <tr><td>complaint</td><td>شكاوى وشكاوى</td><td>المراقبة والرد السريع</td></tr>
+      <tr><td>urgent</td><td>مسائل عاجلة</td><td>الأولوية العالية</td></tr>
+      <tr><td>sales</td><td>أسئلة المبيعات</td><td>توجيه لفريق المبيعات</td></tr>
+      <tr><td>return-exchange</td><td>استرجاع واستبدال</td><td>معالجة سريعة</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.3 كيفية الاستخدام</h3>
+  <ol>
+    <li>افتح المحادثة</li>
+    <li>انقر على <strong>AI Actions</strong> &gt; <strong>Suggest Labels</strong></li>
+    <li>AI يقترح 2-3 تسميات ذات صلة</li>
+    <li>اقبل كلاً منها أو بعضها</li>
+  </ol>
+
+  <h3>5.4 الدقة والفعالية</h3>
+  <ul>
+    <li>✅ <strong>دقيق جداً:</strong> في الأسئلة الواضحة (شكوى = complaint)</li>
+    <li>⚠️ <strong>متوسط:</strong> عندما تكون المحادثة معقدة أو غير واضحة</li>
+    <li>❌ <strong>قد يخطئ:</strong> عندما تحتاج محادثة تسميات متعددة</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>6. Follow-up Message - رسالة المتابعة</h2>
+
+  <h3>6.1 الحالات المثالية</h3>
+  <ul>
+    <li>بعد حل المشكلة (تأكد من رضا العميل)</li>
+    <li>قبل إغلاق المحادثة</li>
+    <li>متابعة عميل قديم</li>
+  </ul>
+
+  <h3>6.2 مثال</h3>
+
+  <div class="example">
+    <div class="box-title">رسالة متابعة ذكية</div>
+    <div class="box-body">
+      <strong>السياق:</strong> تم حل المشكلة (شحن المنتج)<br><br>
+      <strong>اقتراح AI:</strong><br>
+      "أتمنى أن تكون قد استقبلت طلبك وأنت راضٍ عنه! إذا كان لديك أي مشاكل أو كان هناك أي شيء يمكننا تحسينه، تفضل بإخبارنا. نقدّر تعاملك معنا!"
+    </div>
+  </div>
+
+  <h3>6.3 الخطوات</h3>
+  <ol>
+    <li>قبل إغلاق المحادثة</li>
+    <li>انقر على <strong>AI Actions</strong> &gt; <strong>Suggest Follow-up</strong></li>
+    <li>اختر نوع المتابعة (رضا، تقييم، عرض، إلخ)</li>
+    <li>أرسل الرسالة المقترحة</li>
+  </ol>
+</div>
+
+<div class="section">
+  <h2>7. الأفضليات والإعدادات</h2>
+
+  <h3>7.1 إعدادات المستخدم</h3>
+  <table>
+    <thead><tr><th>الإعداد</th><th>الوصف</th><th>التأثير</th></tr></thead>
+    <tbody>
+      <tr><td>AI Language</td><td>اللغة المفضلة (عربي / إنجليزي)</td><td>الاقتراحات بلغتك</td></tr>
+      <tr><td>Tone</td><td>النبرة المفضلة (رسمي / ودي / تقني)</td><td>جميع الاقتراحات تتابع النبرة</td></tr>
+      <tr><td>Auto-accept</td><td>قبول تلقائي للاقتراحات البسيطة؟</td><td>توفير الوقت</td></tr>
+      <tr><td>Confidence Level</td><td>عتبة الثقة (عالية / متوسطة / منخفضة)</td><td>عدد الاقتراحات</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.2 إعدادات الحساب</h3>
+  <ul>
+    <li><strong>Brand Voice:</strong> حفظ نبرة ماركتك الخاصة</li>
+    <li><strong>Custom Terms:</strong> مصطلحات خاصة بشركتك</li>
+    <li><strong>Excluded Topics:</strong> مواضيع لا تريد AI أن يتعامل معها</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>8. أفضل الممارسات</h2>
+
+  <h3>8.1 استخدام فعّال</h3>
+  <ul>
+    <li><strong>لا تعتمد كليّاً:</strong> AI أداة مساعدة، ليست بديل للوكيل</li>
+    <li><strong>تحقق دائماً:</strong> قبل إرسال، تأكد من الاقتراح صحيح</li>
+    <li><strong>خصّص:</strong> لا تستخدم الاقتراح كما هو، أضف لمستك الشخصية</li>
+    <li><strong>تعلّم من الأخطاء:</strong> إذا خطئ AI، صحح وتابع</li>
+  </ul>
+
+  <h3>8.2 للفريق</h3>
+  <ul>
+    <li>وضّح معايير الاستخدام للوكلاء الجدد</li>
+    <li>عرّف الفريق عن أنواع المهام المختلفة</li>
+    <li>قيّم استخدام AI ضمن أداء الوكلاء</li>
+    <li>شارك الأمثلة الناجحة مع الفريق</li>
+  </ul>
+
+  <h3>8.3 تجنب الأخطاء الشائعة</h3>
+  <ul>
+    <li>❌ إرسال اقتراح بدون مراجعة</li>
+    <li>❌ الاعتماد على AI للأسئلة الحساسة جداً</li>
+    <li>❌ عدم تخصيص الاقتراح (يبدو عام جداً)</li>
+    <li>❌ نسيان سياق المحادثة</li>
+  </ul>
+
+  <div class="warn">
+    <div class="box-title">تحذير أمان</div>
+    <div class="box-body">لا تُرسل بيانات حساسة (أرقام بطاقات ائتمان، كلمات مرور) إلى AI. دائماً احجب أو امسح البيانات الحساسة قبل استخدام AI Tasks.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>9. الأداء والإحصائيات</h2>
+
+  <h3>9.1 قياس الفائدة</h3>
+  <table>
+    <thead><tr><th>المقياس</th><th>الوصف</th><th>الهدف</th></tr></thead>
+    <tbody>
+      <tr><td>Rewrite Acceptance Rate</td><td>نسبة قبول اقتراحات Rewrite</td><td>>70%</td></tr>
+      <tr><td>Reply Suggestion Usage</td><td>كم اقتراح رد تم استخدامه</td><td>تصاعدي</td></tr>
+      <tr><td>Time Saved per Agent</td><td>الوقت الموفر بـ AI Tasks</td><td>>2 ساعة/أسبوع</td></tr>
+      <tr><td>Customer Satisfaction</td><td>رضا العملاء مع ردود AI</td><td>>4.5/5</td></tr>
+    </tbody>
+  </table>
+
+  <h3>9.2 تحسين مستمر</h3>
+  <ul>
+    <li>تحليل الاقتراحات المرفوضة</li>
+    <li>تتبع الأخطاء والتعلم منها</li>
+    <li>تحديث إعدادات الحساب بناءً على الملاحظات</li>
+    <li>تدريب الفريق على الاستخدام الأمثل</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>10. API والتكامل</h2>
+
+  <h3>10.1 Endpoints</h3>
+  <table>
+    <thead><tr><th>المهمة</th><th>Endpoint</th><th>Method</th></tr></thead>
+    <tbody>
+      <tr><td>Rewrite</td><td>/api/v1/messages/:id/rewrite</td><td>POST</td></tr>
+      <tr><td>Summarize</td><td>/api/v1/conversations/:id/summarize</td><td>POST</td></tr>
+      <tr><td>Reply Suggestion</td><td>/api/v1/conversations/:id/suggest_reply</td><td>POST</td></tr>
+      <tr><td>Label Suggestion</td><td>/api/v1/conversations/:id/suggest_labels</td><td>POST</td></tr>
+      <tr><td>Follow-up</td><td>/api/v1/conversations/:id/suggest_followup</td><td>POST</td></tr>
+    </tbody>
+  </table>
+
+  <h3>10.2 مثال: استدعاء API</h3>
+  <div class="flow">
+POST /api/v1/conversations/123/suggest_reply
+Authorization: Bearer YOUR_TOKEN
+Content-Type: application/json
+
+{
+  "tone": "friendly",
+  "language": "ar",
+  "context": "Customer asking about shipping time"
+}
+
+Response:
+{
+  "suggestion": "شكراً لسؤالك!...",
+  "confidence": 0.85,
+  "alternatives": [...]
+}
+  </div>
+</div>
+
+<div style="text-align:center; padding: 40px 0 20px; color: #94a3b8; font-size: 13px;">
+  <p>نهاية الدليل — AI Tasks Documentation v2.0</p>
+</div>
+
+</div>
+</body>
+</html>

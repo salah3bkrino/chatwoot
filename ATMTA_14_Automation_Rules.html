@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قواعد الأتمتة المتقدمة - دليل شامل</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: #f8fafc; color: #1e293b;
+  line-height: 1.7; direction: rtl;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+.cover {
+  text-align: center; padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a56db 100%);
+  color: #fff; border-radius: 16px; margin-bottom: 32px;
+}
+.cover h1 { font-size: 42px; margin-bottom: 8px; letter-spacing: 1px; }
+.cover .subtitle { font-size: 22px; opacity: .85; margin-bottom: 24px; }
+.cover .desc { font-size: 16px; opacity: .7; }
+.cover .version { margin-top: 28px; font-size: 13px; opacity: .5; }
+.section {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 28px 32px; margin-bottom: 24px;
+}
+h2 {
+  font-size: 24px; color: #1a56db; margin-bottom: 18px;
+  padding-bottom: 10px; border-bottom: 2px solid #e2e8f0;
+}
+h3 { font-size: 19px; color: #1e3a5f; margin: 22px 0 12px; }
+h4 { font-size: 16px; color: #334155; margin: 16px 0 8px; }
+p { margin-bottom: 12px; font-size: 15px; }
+ul, ol { padding-right: 24px; margin-bottom: 14px; }
+li { margin-bottom: 8px; font-size: 15px; }
+strong { color: #1e293b; }
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0 18px;
+  font-size: 14px;
+}
+thead th {
+  background: #1e3a5f; color: #fff; padding: 12px 14px;
+  text-align: right; font-weight: 600;
+}
+tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; }
+tbody tr:nth-child(even) { background: #f8fafc; }
+tbody tr:hover { background: #eff6ff; }
+.tip, .warn, .info, .example {
+  border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+  border-right: 4px solid;
+}
+.tip { background: #ecfdf5; border-color: #047857; }
+.tip .box-title { color: #047857; }
+.warn { background: #fef3c7; border-color: #d97706; }
+.warn .box-title { color: #d97706; }
+.info { background: #eff6ff; border-color: #1a56db; }
+.info .box-title { color: #1a56db; }
+.example { background: #f3f0ff; border-color: #7c3aed; }
+.example .box-title { color: #7c3aed; }
+.box-title { font-weight: 700; margin-bottom: 8px; font-size: 15px; }
+.box-body { font-size: 14px; line-height: 1.6; }
+code {
+  background: #f1f5f9; padding: 2px 6px; border-radius: 4px;
+  font-family: 'Courier New', monospace; font-size: 13px; color: #7c3aed;
+}
+.flow {
+  background: #f1f5f9; border-radius: 8px; padding: 16px;
+  margin: 16px 0; direction: ltr; text-align: left;
+  font-size: 13px; line-height: 1.8; overflow-x: auto;
+}
+.condition-block, .action-block {
+  background: #f8fafc; border: 1px dashed #cbd5e1;
+  border-radius: 8px; padding: 12px 16px; margin: 12px 0;
+}
+.condition-block { border-right: 3px solid #3b82f6; }
+.action-block { border-right: 3px solid #10b981; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="cover">
+  <h1>قواعد الأتمتة المتقدمة</h1>
+  <div class="subtitle">Advanced Automation Rules — Chatwoot</div>
+  <div class="desc">دليل شامل لأتمتة سير العمل والعمليات</div>
+  <div class="version">الإصدار 2.0 &nbsp;|&nbsp; يوليو 2026</div>
+</div>
+
+<div class="section">
+  <h2>1. مقدمة قواعد الأتمتة</h2>
+
+  <h3>1.1 ما هي قواعد الأتمتة؟</h3>
+  <p>قواعد الأتمتة هي <strong>قوانين شرطية</strong> تُنفذ إجراءات تلقائياً بناءً على أحداث معينة. بدلاً من الوكيل يفعل شيء يدوياً، النظام يفعله تلقائياً.</p>
+
+  <h3>1.2 البنية الأساسية</h3>
+  <p>كل قاعدة تتكون من ثلاثة أجزاء:</p>
+  <ol>
+    <li><strong>الحدث (Event):</strong> ماذا يحدث؟ (مثل: محادثة جديدة)</li>
+    <li><strong>الشروط (Conditions):</strong> متى تعمل القاعدة؟ (مثل: لو كانت من WhatsApp)</li>
+    <li><strong>الإجراءات (Actions):</strong> ماذا يجب فعله؟ (مثل: أسند لـ Agent A)</li>
+  </ol>
+
+  <div class="flow">
+Event (حدث) → Conditions (شروط) → Actions (إجراءات)
+محادثة جديدة → من WhatsApp → أسند تلقائياً + أرسل رسالة ترحيب
+  </div>
+
+  <h3>1.3 الأحداث المتاحة</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>الحدث</th>
+        <th>الوصف</th>
+        <th>الحالات الاستخدام</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Conversation Created</strong></td><td>محادثة جديدة تماماً</td><td>ترحيب، أسند، تسمية</td></tr>
+      <tr><td><strong>Message Received</strong></td><td>رسالة جديدة من العميل</td><td>رد تلقائي، تسمية</td></tr>
+      <tr><td><strong>Message Sent</strong></td><td>رسالة أرسلها الوكيل</td><td>تسجيل، إشعارات</td></tr>
+      <tr><td><strong>Conversation Updated</strong></td><td>تغيير في المحادثة (حالة، تسمية)</td><td>إعادة توجيه، إشعارات</td></tr>
+      <tr><td><strong>Customer Updated</strong></td><td>تحديث بيانات العميل</td><td>تحديثات قاعدة البيانات</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>2. الشروط (Conditions)</h2>
+
+  <h3>2.1 أنواع الشروط</h3>
+
+  <h4>أ) شروط المصدر (Source Conditions)</h4>
+  <table>
+    <thead><tr><th>الشرط</th><th>المعنى</th><th>المثال</th></tr></thead>
+    <tbody>
+      <tr><td><code>inbox_name</code></td><td>اسم البريد الوارد</td><td>= "Customer Support"</td></tr>
+      <tr><td><code>channel</code></td><td>قناة الاتصال</td><td>= "WhatsApp"</td></tr>
+      <tr><td><code>message_sender</code></td><td>المرسل (عميل / وكيل)</td><td>= "customer"</td></tr>
+    </tbody>
+  </table>
+
+  <h4>ب) شروط المحتوى (Content Conditions)</h4>
+  <table>
+    <thead><tr><th>الشرط</th><th>المعنى</th><th>المثال</th></tr></thead>
+    <tbody>
+      <tr><td><code>message_contains</code></td><td>الرسالة تحتوي على كلمة</td><td>contains "شكوى"</td></tr>
+      <tr><td><code>message_matches</code></td><td>الرسالة تطابق نمط (regex)</td><td>matches "رقم الطلب: \d+"</td></tr>
+      <tr><td><code>label</code></td><td>تسمية موجودة على المحادثة</td><td>= "urgent"</td></tr>
+    </tbody>
+  </table>
+
+  <h4>ج) شروط العميل (Customer Conditions)</h4>
+  <table>
+    <thead><tr><th>الشرط</th><th>المعنى</th><th>المثال</th></tr></thead>
+    <tbody>
+      <tr><td><code>customer_country</code></td><td>دولة العميل</td><td>= "SA"</td></tr>
+      <tr><td><code>customer_custom_attr</code></td><td>خاصية مخصصة</td><td>= "vip"</td></tr>
+      <tr><td><code>is_first_message</code></td><td>هل أول رسالة من العميل؟</td><td>= true</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.2 المعاملات المنطقية</h3>
+  <ul>
+    <li><strong>=</strong> (يساوي)</li>
+    <li><strong>!=</strong> (لا يساوي)</li>
+    <li><strong>contains</strong> (يحتوي على)</li>
+    <li><strong>not_contains</strong> (لا يحتوي على)</li>
+    <li><strong>matches</strong> (يطابق regex)</li>
+    <li><strong>starts_with</strong> (يبدأ بـ)</li>
+    <li><strong>ends_with</strong> (ينتهي بـ)</li>
+  </ul>
+
+  <h3>2.3 الجمع بين الشروط</h3>
+  <p><strong>AND:</strong> يجب تحقق كل الشروط</p>
+  <p><strong>OR:</strong> يكفي تحقق واحد من الشروط</p>
+
+  <div class="example">
+    <div class="box-title">مثال: شروط معقدة</div>
+    <div class="box-body">
+      القاعدة: إذا كانت محادثة جديدة على WhatsApp <strong>AND</strong> من السعودية <strong>OR</strong> من الإمارات<br>
+      <br>
+      <strong>الشروط:</strong><br>
+      - channel = "WhatsApp" <strong>AND</strong><br>
+      - (customer_country = "SA" <strong>OR</strong> customer_country = "AE")
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>3. الإجراءات (Actions)</h2>
+
+  <h3>3.1 أنواع الإجراءات</h3>
+
+  <h4>إجراءات الأسناد (Assignment)</h4>
+  <table>
+    <thead><tr><th>الإجراء</th><th>الوصف</th><th>الحالات</th></tr></thead>
+    <tbody>
+      <tr><td><code>assign_agent</code></td><td>أسند الرسالة لوكيل معين</td><td>توزيع الحمل</td></tr>
+      <tr><td><code>assign_team</code></td><td>أسند لفريق كامل</td><td>التوزيع على فريق</td></tr>
+      <tr><td><code>round_robin</code></td><td>توزيع دوري على الوكلاء</td><td>التوزيع العادل</td></tr>
+    </tbody>
+  </table>
+
+  <h4>إجراءات الردود (Messaging)</h4>
+  <table>
+    <thead><tr><th>الإجراء</th><th>الوصف</th><th>الاستخدام</th></tr></thead>
+    <tbody>
+      <tr><td><code>send_message</code></td><td>أرسل رسالة تلقائية</td><td>ترحيب، تحديثات</td></tr>
+      <tr><td><code>send_macro</code></td><td>أرسل macro معين</td><td>ردود معيارية</td></tr>
+      <tr><td><code>send_template</code></td><td>أرسل template من WhatsApp</td><td>WhatsApp فقط</td></tr>
+    </tbody>
+  </table>
+
+  <h4>إجراءات التصنيف (Tagging)</h4>
+  <table>
+    <thead><tr><th>الإجراء</th><th>الوصف</th><th>المثال</th></tr></thead>
+    <tbody>
+      <tr><td><code>add_label</code></td><td>أضف تسمية للمحادثة</td><td>add "urgent"</td></tr>
+      <tr><td><code>remove_label</code></td><td>أزل تسمية من المحادثة</td><td>remove "pending"</td></tr>
+      <tr><td><code>update_custom_attr</code></td><td>حدّث خاصية مخصصة</td><td>set priority = "high"</td></tr>
+    </tbody>
+  </table>
+
+  <h4>إجراءات الحالة (Status)</h4>
+  <table>
+    <thead><tr><th>الإجراء</th><th>القيم</th></tr></thead>
+    <tbody>
+      <tr><td><code>set_status</code></td><td>open, pending, resolved, snoozed</td></tr>
+    </tbody>
+  </table>
+
+  <h4>إجراءات الإشعارات (Notifications)</h4>
+  <table>
+    <thead><tr><th>الإجراء</th><th>الوصف</th></tr></thead>
+    <tbody>
+      <tr><td><code>send_notification</code></td><td>أرسل تنبيه للفريق</td></tr>
+      <tr><td><code>webhook</code></td><td>اطلب webhook خارجي</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.2 متغيرات (Variables)</h3>
+  <p>في الردود والرسائل، يمكنك استخدام متغيرات ديناميكية:</p>
+  <ul>
+    <li><code>{{customer.name}}</code> - اسم العميل</li>
+    <li><code>{{customer.email}}</code> - بريد العميل</li>
+    <li><code>{{conversation.id}}</code> - معرّف المحادثة</li>
+    <li><code>{{message.text}}</code> - محتوى الرسالة</li>
+    <li><code>{{agent.name}}</code> - اسم الوكيل المعين</li>
+    <li><code>{{current_date}}</code> - التاريخ الحالي</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>4. أمثلة عملية</h2>
+
+  <h3>4.1 مثال 1: ترحيب تلقائي</h3>
+
+  <div class="condition-block">
+    <strong>الحدث:</strong> محادثة جديدة<br>
+    <strong>الشروط:</strong><br>
+    - channel = "WhatsApp"
+  </div>
+
+  <div class="action-block">
+    <strong>الإجراء:</strong> أرسل رسالة<br>
+    "أهلا {{customer.name}}! نحن هنا لمساعدتك. كيف يمكننا أن نساعدك اليوم؟"
+  </div>
+
+  <h3>4.2 مثال 2: أسند فوري حسب الشكوى</h3>
+
+  <div class="condition-block">
+    <strong>الحدث:</strong> رسالة من عميل<br>
+    <strong>الشروط:</strong><br>
+    - message_contains "شكوى" OR message_contains "مشكلة"<br>
+    - label != "assigned"
+  </div>
+
+  <div class="action-block">
+    <strong>الإجراء:</strong><br>
+    1. أضف تسمية: "complaint"<br>
+    2. أضف تسمية: "urgent"<br>
+    3. أسند لفريق: "Support Team"<br>
+    4. أرسل رسالة: "شكراً على إخبارنا. نحن نعمل على حل هذا الفور!"
+  </div>
+
+  <h3>4.3 مثال 3: توزيع حسب البلد</h3>
+
+  <div class="condition-block">
+    <strong>الحدث:</strong> محادثة جديدة<br>
+    <strong>الشروط:</strong><br>
+    - customer_country = "SA"
+  </div>
+
+  <div class="action-block">
+    <strong>الإجراء:</strong><br>
+    1. أسند لوكيل: "Ahmed" (متخصص المملكة)<br>
+    2. أضف تسمية: "KSA"
+  </div>
+
+  <h3>4.4 مثال 4: رسالة متابعة مؤجلة</h3>
+
+  <div class="condition-block">
+    <strong>الحدث:</strong> المحادثة تم تعيينها الحالة "snoozed"<br>
+    <strong>الشروط:</strong><br>
+    - label = "pending-reply"
+  </div>
+
+  <div class="action-block">
+    <strong>الإجراء:</strong><br>
+    1. أرسل رسالة بعد ساعة: "شكراً لصبرك، لدينا تحديث لك!"<br>
+    2. أرسل webhook لنظام CRM
+  </div>
+
+  <h3>4.5 مثال 5: أتمتة الدعم التقني</h3>
+
+  <div class="condition-block">
+    <strong>الحدث:</strong> رسالة من عميل<br>
+    <strong>الشروط:</strong><br>
+    - message_contains "خطأ" OR message_contains "bug"<br>
+    - message_contains "تطبيق" OR message_contains "ويب"
+  </div>
+
+  <div class="action-block">
+    <strong>الإجراء:</strong><br>
+    1. أضف تسمية: "technical"<br>
+    2. أسند لفريق: "Tech Support"<br>
+    3. أرسل رسالة: "رسالتك نقلت للفريق التقني. سنتابع معك خلال ساعة."<br>
+    4. اطلب webhook: https://api.internal.com/tickets/create
+  </div>
+</div>
+
+<div class="section">
+  <h2>5. قوائم التوزيع والأسناد (Lists & Routing)</h2>
+
+  <h3>5.1 Round Robin Distribution</h3>
+  <p><strong>التوزيع الدوري:</strong> توزيع متساوي على الوكلاء</p>
+
+  <table>
+    <thead><tr><th>الوكيل</th><th>المحادثات</th></tr></thead>
+    <tbody>
+      <tr><td>Ahmed</td><td>5</td></tr>
+      <tr><td>Fatima</td><td>5</td></tr>
+      <tr><td>Ali</td><td>5</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tip">
+    <div class="box-title">النصيحة</div>
+    <div class="box-body">استخدم Round Robin عندما تريد توزيع عادل على الفريق.</div>
+  </div>
+
+  <h3>5.2 التوزيع حسب التخصص</h3>
+  <p>أسند كل محادثة للوكيل المتخصص:</p>
+  <ul>
+    <li>أسئلة الفواتير → أحمد (متخصص الفواتير)</li>
+    <li>مشاكل تقنية → فاطمة (فني)</li>
+    <li>استعلامات عن المبيعات → علي (مبيعات)</li>
+  </ul>
+
+  <h3>5.3 التوزيع على أساس الحمل</h3>
+  <p><strong>Availability-based Assignment:</strong> أسند فقط للوكلاء المتاحين</p>
+  <ul>
+    <li>فقط وكلاء في حالة "Available"</li>
+    <li>حد أقصى من المحادثات المفتوحة (مثل: 10 محادثات)</li>
+    <li>تجنب الإرهاق</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>6. الأولويات والترتيب</h2>
+
+  <h3>6.1 ترتيب تنفيذ القواعد</h3>
+  <p>عندما تتطابق عدة قواعل، تُنفّذ بالترتيب:</p>
+  <ol>
+    <li>قواعل الأولوية العالية أولاً</li>
+    <li>ثم قواعل الأولوية المتوسطة</li>
+    <li>ثم قواعل الأولوية المنخفضة</li>
+  </ol>
+
+  <h3>6.2 مثال: قواعل متعارضة</h3>
+
+  <table>
+    <thead><tr><th>القاعدة</th><th>الأولوية</th><th>الشرط</th><th>الإجراء</th></tr></thead>
+    <tbody>
+      <tr><td>R1</td><td>عالية</td><td>channel = "WhatsApp"</td><td>أسند لـ "WhatsApp Team"</td></tr>
+      <tr><td>R2</td><td>متوسطة</td><td>label = "urgent"</td><td>أسند لـ "Urgent Team"</td></tr>
+      <tr><td>R3</td><td>منخفضة</td><td>جميع المحادثات</td><td>Round Robin</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>النتيجة:</strong> محادثة جديدة على WhatsApp → تُنفّذ R1 فقط (لأنها الأولوية الأعلى)</p>
+
+  <div class="warn">
+    <div class="box-title">تحذير</div>
+    <div class="box-body">قد يؤدي عدم ترتيب الأولويات بشكل صحيح إلى سلوك غير متوقع. تأكد دائماً من الترتيب.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>7. التعارضات والحالات الحدية</h2>
+
+  <h3>7.1 ماذا يحدث عند تضارب القواعد؟</h3>
+  <ul>
+    <li>تُنفّذ الأولويات قبل غيرها</li>
+    <li>إذا كانت نفس الأولوية، تُنفّذ الأقدم أولاً</li>
+    <li>بعض الإجراءات قد تلغي الأخرى (مثل: تعيين الحالة)</li>
+  </ul>
+
+  <h3>7.2 الحالات الشائعة</h3>
+
+  <div class="example">
+    <div class="box-title">الحالة 1: إسناد متضارب</div>
+    <div class="box-body">
+      <strong>القاعدة A:</strong> أسند لـ "Ahmed"<br>
+      <strong>القاعدة B:</strong> أسند لـ "Fatima"<br>
+      <strong>النتيجة:</strong> تُنفّذ الأولوية العالية فقط. الإسناد الثاني يُهمل.
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="box-title">الحالة 2: تحديثات الحالة</div>
+    <div class="box-body">
+      <strong>القاعدة A:</strong> set status = "pending"<br>
+      <strong>القاعدة B:</strong> set status = "resolved"<br>
+      <strong>النتيجة:</strong> تُنفّذ الأولوية العالية. الحالة الأخيرة تلغي السابقة.
+    </div>
+  </div>
+
+  <h3>7.3 كيفية التعامل</h3>
+  <ul>
+    <li>استخدم شروط دقيقة لتجنب التضارب</li>
+    <li>استخدم <code>NOT</code> في الشروط (مثل: label != "handled")</li>
+    <li>رتّب الأولويات بعناية</li>
+    <li>اختبر القواعل قبل التفعيل</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>8. الاختبار والتصحيح</h2>
+
+  <h3>8.1 اختبار القاعدة</h3>
+  <ol>
+    <li>أنشئ القاعدة</li>
+    <li>لا تفعّلها مباشرة</li>
+    <li>استخدم <strong>Test Mode</strong></li>
+    <li>أرسل رسالة تطابق الشروط</li>
+    <li>تحقق من النتائج</li>
+    <li>عدّل إذا لزم الأمر</li>
+    <li>فعّل القاعدة</li>
+  </ol>
+
+  <h3>8.2 التتبع والتصحيح</h3>
+  <p>في سجل المحادثة، يمكنك رؤية:</p>
+  <ul>
+    <li>✅ القواعل التي تم تطبيقها</li>
+    <li>❌ القواعل التي لم تطابق الشروط</li>
+    <li>⚠️ الأخطاء في التنفيذ</li>
+  </ul>
+
+  <div class="info">
+    <div class="box-title">نصيحة التصحيح</div>
+    <div class="box-body">انقر على "Automation History" لرؤية جميع الأتمتات التي تم تطبيقها على محادثة معينة.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>9. أفضل الممارسات</h2>
+
+  <h3>9.1 تصميم القواعل</h3>
+  <ul>
+    <li>✅ استخدم شروط واضحة وبسيطة</li>
+    <li>✅ سمّ القواعل بشكل وصفي</li>
+    <li>✅ اختبر كل قاعدة قبل التفعيل</li>
+    <li>✅ وثّق القواعل المعقدة</li>
+    <li>❌ لا تُغرق في التعقيد</li>
+    <li>❌ لا تنسَ الحالات الحدية</li>
+  </ul>
+
+  <h3>9.2 الأداء</h3>
+  <ul>
+    <li>كل قاعدة تستغرق <code>~100ms</code> للتنفيذ</li>
+    <li>ترتيب الشروط من الأسرع للأبطأ</li>
+    <li>لا تستخدم regex معقدة</li>
+    <li>اختبر تحت الحمل</li>
+  </ul>
+
+  <h3>9.3 الصيانة</h3>
+  <ul>
+    <li>راجع القواعل شهرياً</li>
+    <li>احذف القواعل المتقادمة</li>
+    <li>وثّق التغييرات</li>
+    <li>تجنب الإفراط في الأتمتة</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>10. الإحصائيات والتحليل</h2>
+
+  <h3>10.1 مقاييس الأتمتة</h3>
+  <table>
+    <thead><tr><th>المقياس</th><th>الوصف</th><th>الهدف</th></tr></thead>
+    <tbody>
+      <tr><td>Rules Triggered</td><td>عدد مرات تم تطبيق القاعدة</td><td>تصاعدي</td></tr>
+      <tr><td>Automation Success Rate</td><td>نسبة نجاح الأتمتة</td><td>>95%</td></tr>
+      <tr><td>Time Saved</td><td>الوقت الموفر من الأتمتة</td><td>تصاعدي</td></tr>
+      <tr><td>Error Rate</td><td>نسبة الأخطاء</td><td><5%</td></tr>
+    </tbody>
+  </table>
+
+  <h3>10.2 التحسين المستمر</h3>
+  <ul>
+    <li>تحليل الأتمتات الفاشلة</li>
+    <li>مراجعة الشروط والإجراءات</li>
+    <li>تحديث القواعل بناءً على التغييرات</li>
+    <li>جمع تغذية راجعة من الفريق</li>
+  </ul>
+</div>
+
+<div style="text-align:center; padding: 40px 0 20px; color: #94a3b8; font-size: 13px;">
+  <p>نهاية الدليل — Automation Rules Documentation v2.0</p>
+</div>
+
+</div>
+</body>
+</html>

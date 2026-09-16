@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>القنوات - دليل التكامل الشامل</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: #f8fafc; color: #1e293b;
+  line-height: 1.7; direction: rtl;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+.cover {
+  text-align: center; padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a56db 100%);
+  color: #fff; border-radius: 16px; margin-bottom: 32px;
+}
+.cover h1 { font-size: 42px; margin-bottom: 8px; letter-spacing: 1px; }
+.cover .subtitle { font-size: 22px; opacity: .85; margin-bottom: 24px; }
+.cover .desc { font-size: 16px; opacity: .7; }
+.cover .version { margin-top: 28px; font-size: 13px; opacity: .5; }
+.section {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 28px 32px; margin-bottom: 24px;
+}
+h2 {
+  font-size: 24px; color: #1a56db; margin-bottom: 18px;
+  padding-bottom: 10px; border-bottom: 2px solid #e2e8f0;
+}
+h3 { font-size: 19px; color: #1e3a5f; margin: 22px 0 12px; }
+h4 { font-size: 16px; color: #334155; margin: 16px 0 8px; }
+p { margin-bottom: 12px; font-size: 15px; }
+ul, ol { padding-right: 24px; margin-bottom: 14px; }
+li { margin-bottom: 6px; font-size: 15px; }
+strong { color: #1e293b; }
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0 18px;
+  font-size: 14px;
+}
+thead th {
+  background: #1e3a5f; color: #fff; padding: 10px 14px;
+  text-align: right; font-weight: 600;
+}
+tbody td { padding: 9px 14px; border-bottom: 1px solid #e2e8f0; }
+tbody tr:nth-child(even) { background: #f8fafc; }
+tbody tr:hover { background: #eff6ff; }
+.tip, .warn, .info {
+  border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+  border-right: 4px solid;
+}
+.tip { background: #ecfdf5; border-color: #047857; }
+.tip .box-title { color: #047857; }
+.warn { background: #fef3c7; border-color: #d97706; }
+.warn .box-title { color: #d97706; }
+.info { background: #eff6ff; border-color: #1a56db; }
+.info .box-title { color: #1a56db; }
+.box-title { font-weight: 700; margin-bottom: 6px; font-size: 15px; }
+.box-body { font-size: 14px; line-height: 1.6; }
+code {
+  background: #f1f5f9; padding: 2px 6px; border-radius: 4px;
+  font-family: 'Courier New', monospace; font-size: 13px; color: #7c3aed;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="cover">
+  <h1>القنوات</h1>
+  <div class="subtitle">Channels — Chatwoot</div>
+  <div class="desc">الدليل الشامل لجميع قنوات التواصل المتاحة والتكامل معها</div>
+  <div class="version">الإصدار 2.0 &nbsp;|&nbsp; يوليو 2026</div>
+</div>
+
+<div class="section">
+  <h2>1. القنوات المتاحة في Chatwoot</h2>
+
+  <h3>1.1 قائمة القنوات المدعومة</h3>
+  <table>
+    <thead><tr><th>القناة</th><th>الاستخدام</th><th>الحالة</th><th>الأولوية</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Live Chat Widget</strong></td><td>دردشة مباشرة على الموقع</td><td>مدعوم كاملاً</td><td>عالية</td></tr>
+      <tr><td><strong>Email</strong></td><td>البريد الإلكتروني (IMAP/SMTP)</td><td>مدعوم كاملاً</td><td>عالية</td></tr>
+      <tr><td><strong>WhatsApp Cloud API</strong></td><td>WhatsApp رسمي عبر Meta</td><td>مدعوم كاملاً</td><td>عالية</td></tr>
+      <tr><td><strong>Facebook Messenger</strong></td><td>الرسائل عبر فيسبوك</td><td>مدعوم كاملاً</td><td>متوسطة</td></tr>
+      <tr><td><strong>Instagram</strong></td><td>Direct Messages في إنستاجرام</td><td>مدعوم كاملاً</td><td>متوسطة</td></tr>
+      <tr><td><strong>Twitter/X</strong></td><td>الرسائل المباشرة في تويتر</td><td>مدعوم كاملاً</td><td>منخفضة</td></tr>
+      <tr><td><strong>Telegram</strong></td><td>Telegram Bot</td><td>مدعوم كاملاً</td><td>متوسطة</td></tr>
+      <tr><td><strong>SMS (Twilio)</strong></td><td>رسائل نصية عبر Twilio</td><td>مدعوم كاملاً</td><td>متوسطة</td></tr>
+      <tr><td><strong>Line</strong></td><td>تطبيق Line الياباني</td><td>مدعوم</td><td>منخفضة</td></tr>
+      <tr><td><strong>API Channel</strong></td><td>قناة مخصصة عبر API</td><td>مدعوم</td><td>متوسطة</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>2. Live Chat Widget</h2>
+
+  <h3>2.1 المميزات</h3>
+  <ul>
+    <li>✅ دردشة مباشرة على الموقع (في الوقت الفعلي)</li>
+    <li>✅ قابل للتخصيص (الألوان، الموضع، الرسائل)</li>
+    <li>✅ يظهر/يختفي تلقائياً حسب توفر الوكلاء</li>
+    <li>✅ دعم الملفات والصور</li>
+    <li>✅ نموذج ما قبل المحادثة (Pre-chat Form)</li>
+    <li>✅ يعمل على الهاتف والكمبيوتر</li>
+  </ul>
+
+  <h3>2.2 خطوات التكامل</h3>
+  <ol>
+    <li>أنشئ <strong>صندوق وارد جديد</strong> ونوع القناة <strong>Website</strong></li>
+    <li>انسخ <strong>Website Token</strong> من إعدادات الصندوق</li>
+    <li>أضف الكود في <strong>&lt;head&gt;</strong> موقعك</li>
+    <li>اختبر الـ Widget على موقعك</li>
+  </ol>
+
+  <h3>2.3 الحد الأقصى</h3>
+  <ul>
+    <li><strong>عدد الرسائل:</strong> بلا حد (تُخزن في قاعدة البيانات)</li>
+    <li><strong>حجم الملف:</strong> حتى 100 ميجابايت</li>
+    <li><strong>المستخدمين المتزامنين:</strong> بلا حد</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>3. البريد الإلكتروني (Email)</h2>
+
+  <h3>3.1 طرق التكامل</h3>
+  <table>
+    <thead><tr><th>الطريقة</th><th>الوصف</th><th>الإعداد</th></tr></thead>
+    <tbody>
+      <tr><td><strong>IMAP/SMTP</strong></td><td>ربط حساب إيميل عادي</td><td>معقد (بحاجة IMAP)</td></tr>
+      <tr><td><strong>Forward Email</strong></td><td>توجيه الإيميلات تلقائياً</td><td>بسيط جداً</td></tr>
+      <tr><td><strong>Google Workspace</strong></td><td>تكامل مع جوجل</td><td>متوسط</td></tr>
+      <tr><td><strong>Microsoft 365</strong></td><td>تكامل مع أوتلوك</td><td>متوسط</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.2 IMAP/SMTP - الإعداد</h3>
+  <p>مثال لـ Gmail:</p>
+  <ul>
+    <li><strong>IMAP Host:</strong> imap.gmail.com</li>
+    <li><strong>IMAP Port:</strong> 993 (SSL)</li>
+    <li><strong>SMTP Host:</strong> smtp.gmail.com</li>
+    <li><strong>SMTP Port:</strong> 465 (SSL)</li>
+    <li><strong>Username:</strong> your-email@gmail.com</li>
+    <li><strong>Password:</strong> App Password (ليس كلمة المرور العادية)</li>
+  </ul>
+
+  <h3>3.3 Forward Email - الطريقة الأسهل</h3>
+  <ol>
+    <li>في Chatwoot، اختر <strong>Email Channel</strong></li>
+    <li>ستحصل على <strong>بريد Chatwoot</strong> فريد (مثل: inbox-12345@chatwoot.example.com)</li>
+    <li>في إيميل عملك، <strong>أضف Forwarding Rule</strong></li>
+    <li>وجّه رسائل العملاء لـ بريد Chatwoot</li>
+    <li>كل رسالة ستظهر تلقائياً كمحادثة جديدة!</li>
+  </ol>
+
+  <div class="tip">
+    <div class="box-title">نصيحة: استخدم Forward Email</div>
+    <div class="box-body">الطريقة الأسهل والأكثر موثوقية هي Forward Email. لا تحتاج لتخزين كلمات مرور.</div>
+  </div>
+
+  <h3>3.4 الحد الأقصى</h3>
+  <ul>
+    <li>حجم البريد: حتى 25 ميجابايت</li>
+    <li>عدد المرفقات: بلا حد</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>4. WhatsApp Cloud API</h2>
+
+  <h3>4.1 المميزات</h3>
+  <ul>
+    <li>✅ WhatsApp رسمي من Meta</li>
+    <li>✅ أرقام المرسل الموثقة (Business)</li>
+    <li>✅ قوائم الرسائل (Message Templates)</li>
+    <li>✅ رسائل تلقائية مُدرجة</li>
+    <li>✅ إحصائيات تفصيلية</li>
+    <li>❌ المراسلات الجماعية (فقط 1-to-1)</li>
+  </ul>
+
+  <h3>4.2 المتطلبات</h3>
+  <ul>
+    <li>حساب Facebook Business</li>
+    <li>رقم هاتف موثق (WhatsApp Business Account)</li>
+    <li>API Token من Meta</li>
+    <li>Phone Number ID من Meta</li>
+  </ul>
+
+  <h3>4.3 خطوات الإعداد</h3>
+  <ol>
+    <li>انتقل إلى <strong>Facebook Business Manager</strong></li>
+    <li>أنشئ <strong>WhatsApp Business Account</strong></li>
+    <li>تحقق من رقم الهاتف</li>
+    <li>احصل على <strong>API Token</strong> و <strong>Phone Number ID</strong></li>
+    <li>في Chatwoot، أنشئ قناة WhatsApp وأدخل البيانات</li>
+  </ol>
+
+  <h3>4.4 الحد الأقصى</h3>
+  <ul>
+    <li><strong>الرسائل المرسلة يومياً:</strong> يعتمد على رقم الهاتف (عادة 1000+)</li>
+    <li><strong>حجم الملف:</strong> 100 ميجابايت</li>
+    <li><strong>أنواع الرسائل:</strong> نص، صور، فيديو، مستندات، موقع</li>
+  </ul>
+
+  <div class="warn">
+    <div class="box-title">تحذير: الموافقة من Meta</div>
+    <div class="box-body">قد يستغرق التحقق من Meta عدة أيام. تأكد من أن معلومات عملك صحيحة.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>5. Facebook و Instagram</h2>
+
+  <h3>5.1 Facebook Messenger</h3>
+  <p><strong>الإعداد:</strong></p>
+  <ol>
+    <li>أنشئ صفحة Facebook Business</li>
+    <li>في Chatwoot، أنشئ قناة Facebook</li>
+    <li>وصّل صفحتك عبر OAuth</li>
+    <li>سيبدأ استقبال الرسائل تلقائياً</li>
+  </ol>
+
+  <h3>5.2 Instagram Direct Messages</h3>
+  <p>نفس خطوات Facebook. الحساب يجب أن يكون Business Account.</p>
+
+  <h3>5.3 الحد الأقصى</h3>
+  <ul>
+    <li>الرسائل: بلا حد</li>
+    <li>الملفات: صور وفيديو فقط</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>6. مقارنة شاملة بين القنوات</h2>
+
+  <table>
+    <thead><tr><th>المعيار</th><th>Live Chat</th><th>Email</th><th>WhatsApp</th><th>Facebook</th><th>SMS</th></tr></thead>
+    <tbody>
+      <tr><td><strong>سرعة الرد</strong></td><td>فوري</td><td>ساعات</td><td>فوري</td><td>فوري</td><td>فوري</td></tr>
+      <tr><td><strong>الملفات</strong></td><td>✅ نعم</td><td>✅ نعم</td><td>✅ نعم</td><td>✅ محدود</td><td>❌ لا</td></tr>
+      <tr><td><strong>الصور</strong></td><td>✅ نعم</td><td>✅ نعم</td><td>✅ نعم</td><td>✅ نعم</td><td>❌ لا</td></tr>
+      <tr><td><strong>التكلفة</strong></td><td>مجاني</td><td>مجاني</td><td>بـ رسوم</td><td>مجاني</td><td>بـ رسوم</td></tr>
+      <tr><td><strong>سهولة الإعداد</strong></td><td>جداً سهل</td><td>سهل</td><td>معقد</td><td>سهل</td><td>معقد</td></tr>
+      <tr><td><strong>Automation</strong></td><td>✅ ممكن</td><td>✅ ممكن</td><td>✅ ممكن</td><td>✅ ممكن</td><td>محدود</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>7. API Channel - قناة مخصصة</h2>
+
+  <h3>7.1 ما هي API Channel؟</h3>
+  <p>قناة تسمح باستقبال رسائل من أي مصدر خارجي عبر API REST.</p>
+
+  <h3>7.2 الاستخدامات</h3>
+  <ul>
+    <li>تطبيق مخصص خاص بك</li>
+    <li>نظام CRM قديم</li>
+    <li>قناة غير مدعومة حالياً</li>
+    <li>Webhooks من الخدمات الخارجية</li>
+  </ul>
+
+  <h3>7.3 مثال: إرسال رسالة عبر API</h3>
+  <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin: 16px 0; direction: ltr; text-align: left; font-size: 13px; overflow-x: auto;">
+POST /api/v1/inboxes/:inbox_id/contacts/:contact_id/conversations
+
+{
+  "name": "علي",
+  "email": "ali@example.com",
+  "phone_number": "+966501234567",
+  "message": "السلام عليكم، أحتاج مساعدة"
+}
+  </div>
+</div>
+
+<div class="section">
+  <h2>8. اختيار القناة المناسبة</h2>
+
+  <h3>8.1 للعملاء الدولين → Live Chat</h3>
+  <ul>
+    <li>سريع وفوري</li>
+    <li>بلا تطبيق إضافي مطلوب</li>
+    <li>يعمل من الموقع مباشرة</li>
+  </ul>
+
+  <h3>8.2 للعملاء في الخليج → WhatsApp</h3>
+  <ul>
+    <li>الكل يستخدمه</li>
+    <li>يشعر العميل بأنه يتحدث مع عمل حقيقي</li>
+    <li>سهل الاستخدام</li>
+  </ul>
+
+  <h3>8.3 للعملاء الفنيين → Email</h3>
+  <ul>
+    <li>للمسائل المعقدة</li>
+    <li>للمرفقات الكبيرة</li>
+    <li>يترك أثر رسمي</li>
+  </ul>
+
+  <h3>8.4 للعلامات التجارية الصغيرة → Facebook + Instagram</h3>
+  <ul>
+    <li>كل العملاء لديهم حساب</li>
+    <li>تسويق مدمج</li>
+    <li>مجاني تماماً</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>9. أفضل الممارسات</h2>
+
+  <h3>9.1 استخدم قنوات متعددة</h3>
+  <p>لا تقتصر على قناة واحدة! العملاء يختارون القناة المريحة لهم.</p>
+
+  <h3>9.2 استقبل من كل مكان</h3>
+  <ul>
+    <li>Live Chat على الموقع ← العملاء الجدد</li>
+    <li>WhatsApp ← العملاء المحليين</li>
+    <li>Email ← الحالات الرسمية</li>
+    <li>Facebook ← للعلاقات العامة</li>
+  </ul>
+
+  <h3>9.3 تدريب الفريق على كل قناة</h3>
+  <p>كل قناة لها أسلوب مختلف. تأكد من أن الفريق يعرف الفروقات.</p>
+
+  <h3>9.4 مراقبة الأداء</h3>
+  <ul>
+    <li>أي قناة لها أعلى معدل استجابة؟</li>
+    <li>أي قناة لها أعلى معدل حل؟</li>
+    <li>أي قناة تحتاج تحسين؟</li>
+  </ul>
+</div>
+
+<div style="text-align:center; padding: 40px 0 20px; color: #94a3b8; font-size: 13px;">
+  <p>نهاية الدليل — Channels Documentation v2.0</p>
+</div>
+
+</div>
+</body>
+</html>

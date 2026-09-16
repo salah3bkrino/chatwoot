@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الأتمتة والماكرو - دليل التشغيل الذاتي</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: #f8fafc; color: #1e293b;
+  line-height: 1.7; direction: rtl;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+.cover {
+  text-align: center; padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a56db 100%);
+  color: #fff; border-radius: 16px; margin-bottom: 32px;
+}
+.cover h1 { font-size: 42px; margin-bottom: 8px; letter-spacing: 1px; }
+.cover .subtitle { font-size: 22px; opacity: .85; margin-bottom: 24px; }
+.cover .desc { font-size: 16px; opacity: .7; }
+.cover .version { margin-top: 28px; font-size: 13px; opacity: .5; }
+.section {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 28px 32px; margin-bottom: 24px;
+}
+h2 {
+  font-size: 24px; color: #1a56db; margin-bottom: 18px;
+  padding-bottom: 10px; border-bottom: 2px solid #e2e8f0;
+}
+h3 { font-size: 19px; color: #1e3a5f; margin: 22px 0 12px; }
+h4 { font-size: 16px; color: #334155; margin: 16px 0 8px; }
+p { margin-bottom: 12px; font-size: 15px; }
+ul, ol { padding-right: 24px; margin-bottom: 14px; }
+li { margin-bottom: 6px; font-size: 15px; }
+strong { color: #1e293b; }
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0 18px;
+  font-size: 14px;
+}
+thead th {
+  background: #1e3a5f; color: #fff; padding: 10px 14px;
+  text-align: right; font-weight: 600;
+}
+tbody td { padding: 9px 14px; border-bottom: 1px solid #e2e8f0; }
+tbody tr:nth-child(even) { background: #f8fafc; }
+tbody tr:hover { background: #eff6ff; }
+.tip, .warn, .info {
+  border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+  border-right: 4px solid;
+}
+.tip { background: #ecfdf5; border-color: #047857; }
+.tip .box-title { color: #047857; }
+.warn { background: #fef3c7; border-color: #d97706; }
+.warn .box-title { color: #d97706; }
+.info { background: #eff6ff; border-color: #1a56db; }
+.info .box-title { color: #1a56db; }
+.box-title { font-weight: 700; margin-bottom: 6px; font-size: 15px; }
+.box-body { font-size: 14px; line-height: 1.6; }
+code {
+  background: #f1f5f9; padding: 2px 6px; border-radius: 4px;
+  font-family: 'Courier New', monospace; font-size: 13px; color: #7c3aed;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="cover">
+  <h1>الأتمتة والماكرو</h1>
+  <div class="subtitle">Automation & Macros — Chatwoot</div>
+  <div class="desc">دليل أتمتة المحادثات وتسريع الردود المتكررة</div>
+  <div class="version">الإصدار 2.0 &nbsp;|&nbsp; يوليو 2026</div>
+</div>
+
+<div class="section">
+  <h2>1. الماكرو (Macros) - الردود السريعة</h2>
+
+  <h3>1.1 ما هو الماكرو؟</h3>
+  <p>قوالب ردود جاهزة يمكن استخدامها بنقرة واحدة لتسريع الرد على الأسئلة المتكررة.</p>
+
+  <h3>1.2 مثال عملي</h3>
+  <div class="info">
+    <div class="box-title">سيناريو عملي</div>
+    <div class="box-body">عندما يسأل عميل "كم سعر الشحن؟"، بدلاً من كتابة الرد كاملاً، الوكيل ينقر على ماكرو <strong>"سعر الشحن"</strong> ويُرسل الرد مباشرة مع تخصيصه بالعميل.</div>
+  </div>
+
+  <h3>1.3 إنشاء ماكرو جديد</h3>
+  <ol>
+    <li>انتقل إلى <strong>الإعدادات</strong> &gt; <strong>الماكروهات</strong> &gt; <strong>جديد</strong></li>
+    <li>أدخل <strong>اسم الماكرو</strong> (مثل: "شكراً على تواصلك")</li>
+    <li>اكتب <strong>نص الرد</strong> (يدعم متغيرات)</li>
+    <li>أضف <strong>labels</strong> لتنظيمها (مثل: sales, support, billing)</li>
+  </ol>
+
+  <h3>1.4 المتغيرات المتاحة</h3>
+  <table>
+    <thead><tr><th>المتغير</th><th>يُستبدل بـ</th><th>مثال</th></tr></thead>
+    <tbody>
+      <tr><td><code>{{contact.name}}</code></td><td>اسم العميل</td><td>أحمد</td></tr>
+      <tr><td><code>{{contact.email}}</code></td><td>إيميل العميل</td><td>ahmed@example.com</td></tr>
+      <tr><td><code>{{contact.phone_number}}</code></td><td>رقم الهاتف</td><td>+966501234567</td></tr>
+      <tr><td><code>{{agent.name}}</code></td><td>اسم الوكيل</td><td>فاطمة</td></tr>
+      <tr><td><code>{{current_date}}</code></td><td>التاريخ اليوم</td><td>2026-07-19</td></tr>
+      <tr><td><code>{{current_time}}</code></td><td>الوقت الحالي</td><td>14:30</td></tr>
+    </tbody>
+  </table>
+
+  <h3>1.5 مثال على ماكرو</h3>
+  <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin: 16px 0;">
+    <p><strong>الاسم:</strong> شكراً على طلبك</p>
+    <p><strong>النص:</strong></p>
+    <p>السلام عليكم {{contact.name}}،<br>شكراً لتواصلك معنا! تم استقبال طلبك وسنعود إليك قريباً.<br>رقم الطلب: [أضفه يدويّاً]<br>شكراً لصبرك!</p>
+  </div>
+
+  <h3>1.6 استخدام الماكرو أثناء المحادثة</h3>
+  <ol>
+    <li>في المحادثة، اكتب <code>/</code> (شرطة مائلة)</li>
+    <li>ستظهر قائمة الماكروهات</li>
+    <li>اختر الماكرو المطلوب</li>
+    <li>عدّل النص إذا لزم الأمر</li>
+    <li>أرسل الرد</li>
+  </ol>
+
+  <div class="tip">
+    <div class="box-title">نصيحة: تنظيم الماكروهات</div>
+    <div class="box-body">استخدم التسميات (labels) لتنظيم الماكروهات. مثل: sales, support, billing, etc.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>2. قواعس الأتمتة (Automation Rules)</h2>
+
+  <h3>2.1 ما هي قاعدة الأتمتة؟</h3>
+  <p><strong>قاعدة تُنفذ تلقائياً</strong> عند حدوث حدث معين (مثل: محادثة جديدة، ظهور كلمة معينة، إعادة الفتح).</p>
+
+  <h3>2.2 أمثلة على قواعد مفيدة</h3>
+  <ul>
+    <li><strong>تعيين Label:</strong> إذا حدثت محادثة جديدة → أضف Label "جديد"</li>
+    <li><strong>التصعيد:</strong> إذا لم يُرد أحد لـ 24 ساعة → أضفها للأولويات</li>
+    <li><strong>التوجيه:</strong> إذا ظهرت كلمة "تقني" → وجّهها لفريق الدعم الفني</li>
+    <li><strong>الترحيب:</strong> عند محادثة جديدة → أرسل رسالة ترحيب</li>
+    <li><strong>الإغلاق التلقائي:</strong> إذا أُغلقت المحادثة 7 أيام → احذفها</li>
+  </ul>
+
+  <h3>2.3 إنشاء قاعدة أتمتة</h3>
+  <ol>
+    <li>انتقل إلى <strong>الإعدادات</strong> &gt; <strong>قواعس الأتمتة</strong> &gt; <strong>جديدة</strong></li>
+    <li>أدخل <strong>اسم القاعدة</strong></li>
+    <li>حدد <strong>شرط التفعيل</strong> (When/Trigger)</li>
+    <li>حدد <strong>الإجراء</strong> (Action/Then)</li>
+  </ol>
+
+  <h3>2.4 الشروط المتاحة</h3>
+  <table>
+    <thead><tr><th>الشرط</th><th>الوصف</th></tr></thead>
+    <tbody>
+      <tr><td><code>conversation.created</code></td><td>محادثة جديدة</td></tr>
+      <tr><td><code>conversation.reopened</code></td><td>إعادة فتح محادثة</td></tr>
+      <tr><td><code>message.created</code></td><td>رسالة جديدة</td></tr>
+      <tr><td><code>message.contains_word</code></td><td>رسالة تحتوي على كلمة</td></tr>
+      <tr><td><code>assignee.changed</code></td><td>تغيير المسؤول</td></tr>
+      <tr><td><code>status.changed</code></td><td>تغيير الحالة</td></tr>
+      <tr><td><code>no_activity_for</code></td><td>عدم نشاط لـ X ساعة</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.5 الإجراءات المتاحة</h3>
+  <table>
+    <thead><tr><th>الإجراء</th><th>الوصف</th></tr></thead>
+    <tbody>
+      <tr><td>Add label</td><td>إضافة تسميات</td></tr>
+      <tr><td>Remove label</td><td>إزالة تسميات</td></tr>
+      <tr><td>Assign to agent</td><td>تعيين لوكيل</td></tr>
+      <tr><td>Assign to team</td><td>تعيين لفريق</td></tr>
+      <tr><td>Change priority</td><td>تغيير الأولوية</td></tr>
+      <tr><td>Change status</td><td>تغيير الحالة (open/resolved)</td></tr>
+      <tr><td>Send message</td><td>إرسال رسالة تلقائية</td></tr>
+      <tr><td>Add note</td><td>إضافة ملاحظة داخلية</td></tr>
+      <tr><td>Snooze</td><td>تأجيل المحادثة</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.6 مثال: قاعدة ترحيب تلقائية</h3>
+  <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin: 16px 0;">
+    <p><strong>الاسم:</strong> ترحيب تلقائي للمحادثات الجديدة</p>
+    <p><strong>الشرط:</strong> conversation.created</p>
+    <p><strong>الإجراء:</strong> Send message</p>
+    <p><strong>الرسالة:</strong> "أهلاً {{contact.name}}! شكراً لتواصلك معنا. سيتولى معك أحد فريقنا قريباً."</p>
+  </div>
+
+  <h3>2.7 مثال: تصعيد عند عدم النشاط</h3>
+  <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin: 16px 0;">
+    <p><strong>الاسم:</strong> تصعيد - عدم رد لـ 2 ساعة</p>
+    <p><strong>الشرط:</strong> no_activity_for → 2 hours</p>
+    <p><strong>الإجراء:</strong> Change priority → high</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>3. الأتمتة المتقدمة</h2>
+
+  <h3>3.1 الشروط المركبة (AND/OR)</h3>
+  <ul>
+    <li><strong>AND:</strong> جميع الشروط يجب أن تكون صحيحة</li>
+    <li><strong>OR:</strong> واحد من الشروط يكفي</li>
+  </ul>
+
+  <h3>3.2 التسلسلات (Sequences)</h3>
+  <p>تنفيذ عدة إجراءات بالتتابع أو متوازي.</p>
+
+  <div class="info">
+    <div class="box-title">مثال: معالجة شكوى</div>
+    <div class="box-body">
+      <strong>الشرط:</strong> الرسالة تحتوي على كلمة "شكوى"<br>
+      <strong>الإجراءات:</strong><br>
+      1. إضافة Label "شكوى"<br>
+      2. تغيير الأولوية لـ "عالية"<br>
+      3. تعيين لمدير الفريق<br>
+      4. إرسال رسالة: "شكراً على تقديم الشكوى، سننظر فيها فوراً"
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>4. أفضل الممارسات</h2>
+
+  <h3>4.1 للماكروهات</h3>
+  <ul>
+    <li><strong>اجعلها قصيرة:</strong> ماكرو طويل يصعب استخدامه</li>
+    <li><strong>استخدم متغيرات:</strong> شخّص الرد بإضافة اسم العميل</li>
+    <li><strong>اختبرها:</strong> تأكد أن الماكرو يظهر المتغيرات صحيح</li>
+    <li><strong>نظّمها بـ Labels:</strong> sales, support, billing, etc.</li>
+    <li><strong>تحديث منتظم:</strong> أزل الماكروهات غير المستخدمة</li>
+  </ul>
+
+  <h3>4.2 لقواعس الأتمتة</h3>
+  <ul>
+    <li><strong>اختبرها قبل التفعيل:</strong> قد تؤثر على آلاف المحادثات</li>
+    <li><strong>ابدأ بسيط:</strong> قاعدة واحدة محدودة أفضل من قاعدة معقدة</li>
+    <li><strong>وثّقها:</strong> اكتب ملاحظة عن الغرض من كل قاعدة</li>
+    <li><strong>راقب التأثير:</strong> هل الإجراءات تحدث صحيح؟</li>
+    <li><strong>عطّل ما لم يعد مفيداً:</strong> نظّف القواعس القديمة</li>
+  </ul>
+
+  <h3>4.3 التوازن</h3>
+  <ul>
+    <li>❌ <strong>كثير من الأتمتة:</strong> قد تشعر بعدم الشخصية</li>
+    <li>✅ <strong>أتمتة معتدلة:</strong> توازن بين السرعة والشخصية</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>5. API: إدارة الماكروهات والقواعس</h2>
+
+  <h3>5.1 Endpoints</h3>
+  <table>
+    <thead><tr><th>الطريقة</th><th>المسار</th></tr></thead>
+    <tbody>
+      <tr><td>GET</td><td><code>/api/v1/accounts/:id/macros</code></td></tr>
+      <tr><td>POST</td><td><code>/api/v1/accounts/:id/macros</code></td></tr>
+      <tr><td>GET</td><td><code>/api/v1/accounts/:id/automation_rules</code></td></tr>
+      <tr><td>POST</td><td><code>/api/v1/accounts/:id/automation_rules</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="text-align:center; padding: 40px 0 20px; color: #94a3b8; font-size: 13px;">
+  <p>نهاية الدليل — Automation & Macros Documentation v2.0</p>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Captain AI - دليل المستخدم الشامل</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: #f8fafc; color: #1e293b;
+  line-height: 1.7; direction: rtl;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+
+/* Cover */
+.cover {
+  text-align: center; padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a56db 100%);
+  color: #fff; border-radius: 16px; margin-bottom: 32px;
+}
+.cover h1 { font-size: 42px; margin-bottom: 8px; letter-spacing: 1px; }
+.cover .subtitle { font-size: 22px; opacity: .85; margin-bottom: 24px; }
+.cover .desc { font-size: 16px; opacity: .7; }
+.cover .version { margin-top: 28px; font-size: 13px; opacity: .5; }
+
+/* TOC */
+.toc {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 28px 32px; margin-bottom: 32px;
+}
+.toc h2 { font-size: 22px; color: #1a56db; margin-bottom: 16px; border: none; padding: 0; }
+.toc ol { padding-right: 24px; }
+.toc li { margin-bottom: 6px; }
+.toc a { color: #1e3a5f; text-decoration: none; font-size: 15px; }
+.toc a:hover { color: #1a56db; text-decoration: underline; }
+.toc ol ol { margin-top: 4px; padding-right: 20px; }
+.toc ol ol li { margin-bottom: 3px; }
+.toc ol ol a { font-size: 14px; color: #475569; }
+
+/* Sections */
+.section {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 28px 32px; margin-bottom: 24px;
+}
+h2 {
+  font-size: 24px; color: #1a56db; margin-bottom: 18px;
+  padding-bottom: 10px; border-bottom: 2px solid #e2e8f0;
+}
+h3 { font-size: 19px; color: #1e3a5f; margin: 22px 0 12px; }
+h4 { font-size: 16px; color: #334155; margin: 16px 0 8px; }
+p { margin-bottom: 12px; font-size: 15px; }
+ul, ol { padding-right: 24px; margin-bottom: 14px; }
+li { margin-bottom: 6px; font-size: 15px; }
+strong { color: #1e293b; }
+
+/* Tables */
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0 18px;
+  font-size: 14px;
+}
+thead th {
+  background: #1e3a5f; color: #fff; padding: 10px 14px;
+  text-align: right; font-weight: 600;
+}
+tbody td { padding: 9px 14px; border-bottom: 1px solid #e2e8f0; }
+tbody tr:nth-child(even) { background: #f8fafc; }
+tbody tr:hover { background: #eff6ff; }
+
+/* Boxes */
+.tip, .warn, .info {
+  border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+  border-right: 4px solid;
+}
+.tip { background: #ecfdf5; border-color: #047857; }
+.tip .box-title { color: #047857; }
+.warn { background: #fef3c7; border-color: #d97706; }
+.warn .box-title { color: #d97706; }
+.info { background: #eff6ff; border-color: #1a56db; }
+.info .box-title { color: #1a56db; }
+.box-title { font-weight: 700; margin-bottom: 6px; font-size: 15px; }
+.box-body { font-size: 14px; line-height: 1.6; }
+
+/* Flow diagram */
+.flow {
+  background: #f1f5f9; border-radius: 10px; padding: 20px;
+  margin: 16px 0; font-family: 'Courier New', monospace;
+  direction: ltr; text-align: left; font-size: 13px;
+  line-height: 1.8; white-space: pre; overflow-x: auto;
+}
+
+/* Code */
+code {
+  background: #f1f5f9; padding: 2px 6px; border-radius: 4px;
+  font-family: 'Courier New', monospace; font-size: 13px; color: #7c3aed;
+}
+
+/* Print */
+@media print {
+  body { background: #fff; }
+  .container { max-width: 100%; }
+  .section { border: none; box-shadow: none; page-break-inside: avoid; }
+  .cover { page-break-after: always; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ========== COVER ========== -->
+<div class="cover">
+  <h1>Captain AI</h1>
+  <div class="subtitle">Chatwoot</div>
+  <div class="desc">الدليل الشامل لإعداد وتدريب واستخدام مساعد الذكاء الاصطناعي</div>
+  <div class="version">الإصدار 2.0 &nbsp;|&nbsp; يوليو 2026</div>
+</div>
+
+<!-- ========== TOC ========== -->
+<div class="toc">
+  <h2>فهرس المحتويات</h2>
+  <ol>
+    <li><a href="#sec1">مقدمة عن Captain AI</a>
+      <ol>
+        <li><a href="#sec1-1">ما هو Captain؟</a></li>
+        <li><a href="#sec1-2">القدرات الأساسية</a></li>
+        <li><a href="#sec1-3">كيف يعمل Captain؟</a></li>
+      </ol>
+    </li>
+    <li><a href="#sec2">إعداد Captain لأول مرة</a>
+      <ol>
+        <li><a href="#sec2-1">إنشاء مساعد جديد</a></li>
+        <li><a href="#sec2-2">الإعدادات الأساسية</a></li>
+        <li><a href="#sec2-3">الميزات القابلة للتفعيل</a></li>
+        <li><a href="#sec2-4">ربط المساعد بصندوق الوارد</a></li>
+      </ol>
+    </li>
+    <li><a href="#sec3">بناء قاعدة المعرفة (تدريب Captain)</a>
+      <ol>
+        <li><a href="#sec3-1">المستندات</a></li>
+        <li><a href="#sec3-2">الأسئلة الشائعة (FAQs)</a></li>
+        <li><a href="#sec3-3">البحث الدلالي</a></li>
+      </ol>
+    </li>
+    <li><a href="#sec4">الحدود والإرشادات</a>
+      <ol>
+        <li><a href="#sec4-1">حدود الأمان (Guardrails)</a></li>
+        <li><a href="#sec4-2">إرشادات الردود (Response Guidelines)</a></li>
+      </ol>
+    </li>
+    <li><a href="#sec5">السيناريوهات (Scenarios) - نظام V2</a></li>
+    <li><a href="#sec6">الأدوات المتاحة</a>
+      <ol>
+        <li><a href="#sec6-1">الأدوات المدمجة</a></li>
+        <li><a href="#sec6-2">الأدوات المخصصة (Custom Tools)</a></li>
+      </ol>
+    </li>
+    <li><a href="#sec7">نظام التحويل (Handoff)</a></li>
+    <li><a href="#sec8">أفضل ممارسات التدريب</a></li>
+    <li><a href="#sec9">مساعد الوكلاء (Copilot)</a></li>
+    <li><a href="#sec10">المراقبة والتحسين المستمر</a></li>
+    <li><a href="#sec11">الحل التلقائي للمحادثات</a></li>
+    <li><a href="#sec12">مقارنة V1 و V2</a></li>
+    <li><a href="#sec13">مرجع واجهات API</a></li>
+  </ol>
+</div>
+
+<!-- ========== 1. INTRODUCTION ========== -->
+<div class="section" id="sec1">
+  <h2>1. مقدمة عن Captain AI</h2>
+
+  <h3 id="sec1-1">1.1 ما هو Captain؟</h3>
+  <p>Captain هو نظام ذكاء اصطناعي متقدم مدمج في Chatwoot (النسخة المؤسسية) يعمل كخط دعم أول يستقبل رسائل العملاء ويرد عليها تلقائياً بناءً على قاعدة المعرفة المُدربة. يستطيع Captain حل المشكلات البسيطة بنفسه أو تحويل المحادثات المعقدة لوكيل بشري بسلاسة.</p>
+
+  <h3 id="sec1-2">1.2 القدرات الأساسية</h3>
+  <ul>
+    <li><strong>الرد التلقائي</strong> على استفسارات العملاء بناءً على قاعدة المعرفة والمستندات المُدربة</li>
+    <li><strong>تحويل المحادثات</strong> (Handoff) تلقائياً لوكيل بشري عند الحاجة</li>
+    <li><strong>حل المحادثات</strong> تلقائياً عند اكتمال الإجابة</li>
+    <li><strong>تعلّم مستمر</strong> من المحادثات المحلولة لتحسين الردود مستقبلاً</li>
+    <li><strong>تحليل المشاعر</strong> لتحديد مزاج العميل (إيجابي / سلبي / محايد)</li>
+    <li><strong>تصنيف تلقائي</strong> للمحادثات حسب الموضوع</li>
+    <li><strong>ذاكرة جهة الاتصال</strong> لحفظ ملاحظات عن كل عميل تلقائياً</li>
+    <li><strong>سيناريوهات متعددة</strong> (V2) للتعامل مع مواقف مختلفة عبر وكلاء فرعيين</li>
+    <li><strong>أدوات مخصصة</strong> للتكامل مع أنظمة خارجية عبر HTTP</li>
+    <li><strong>مساعد Copilot</strong> لمساعدة الوكلاء البشريين أثناء المحادثات</li>
+  </ul>
+
+  <h3 id="sec1-3">1.3 كيف يعمل Captain؟</h3>
+  <p>عند وصول رسالة من العميل، يتبع Captain هذا التدفق:</p>
+
+  <table>
+    <thead><tr><th>الخطوة</th><th>الإجراء</th><th>التفاصيل</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>استقبال الرسالة</td><td>المحادثة تكون في حالة "معلقة" (Pending)</td></tr>
+      <tr><td>2</td><td>البحث في قاعدة المعرفة</td><td>بحث دلالي في FAQs باستخدام Vector Embeddings</td></tr>
+      <tr><td>3</td><td>توليد الرد</td><td>LLM ينشئ رداً مناسباً بناءً على السياق والمعرفة</td></tr>
+      <tr><td>4</td><td>تقييم الإجراء</td><td>يقرر: رد / تحويل لبشري / حل المحادثة</td></tr>
+      <tr><td>5</td><td>تنفيذ الإجراء</td><td>إرسال الرد أو التحويل حسب القرار</td></tr>
+    </tbody>
+  </table>
+
+  <div class="flow">Customer sends message
+        ↓
+  CaptainListener.message_created
+        ↓
+  Captain::Conversation::ResponseBuilderJob
+        ↓
+  ┌─ V1: AssistantChatService → LLM + FAQ Search
+  │       + ActionClassifier → decide: reply / handoff / resolve
+  │
+  └─ V2: AgentRunnerService → Multi-Agent with Tools
+           + HandoffTool → direct human handoff
+           + ResolveTool → auto-resolve
+           + HttpTool    → custom integrations
+        ↓
+  Response sent to customer  OR  Handoff to human agent</div>
+
+  <div class="info">
+    <div class="box-title">ملاحظة مهمة</div>
+    <div class="box-body">المحادثات التي يتعامل معها Captain تبقى في حالة <strong>"معلقة" (Pending)</strong>. عند تحويلها لوكيل بشري تتحول لحالة <strong>"مفتوحة" (Open)</strong> ويبدأ نظام الإسناد التلقائي في توزيعها. عند رد وكيل بشري على محادثة معلقة، تُفتح تلقائياً.</div>
+  </div>
+</div>
+
+<!-- ========== 2. SETUP ========== -->
+<div class="section" id="sec2">
+  <h2>2. إعداد Captain لأول مرة</h2>
+
+  <h3 id="sec2-1">2.1 إنشاء مساعد جديد (Assistant)</h3>
+  <p>المساعد (Assistant) هو الكيان الرئيسي في Captain. كل مساعد يمثل بوت ذكاء اصطناعي مستقل بإعداداته وقاعدة معرفته الخاصة.</p>
+  <p><strong>خطوات الإنشاء:</strong></p>
+  <ol>
+    <li>انتقل إلى <strong>الإعدادات</strong> &gt; <strong>Captain</strong> &gt; <strong>إنشاء مساعد جديد</strong></li>
+    <li>أدخل <strong>اسم المساعد</strong> — سيظهر كاسم المرسل في المحادثات</li>
+    <li>أدخل <strong>وصف المساعد</strong> — يحدد دور البوت وشخصيته (مهم جداً للتدريب)</li>
+  </ol>
+
+  <h3 id="sec2-2">2.2 الإعدادات الأساسية (Config)</h3>
+  <table>
+    <thead><tr><th>الإعداد</th><th>النوع</th><th>الوصف</th><th>القيمة الافتراضية</th></tr></thead>
+    <tbody>
+      <tr><td><code>product_name</code></td><td>نص</td><td>اسم منتجك / خدمتك — يُستخدم في الردود</td><td>"this product"</td></tr>
+      <tr><td><code>temperature</code></td><td>رقم (0–2)</td><td>درجة الإبداع: 0 = دقيق جداً، 2 = إبداعي جداً</td><td>0.7</td></tr>
+      <tr><td><code>handoff_message</code></td><td>نص</td><td>الرسالة عند التحويل لوكيل بشري</td><td>رسالة افتراضية</td></tr>
+      <tr><td><code>resolution_message</code></td><td>نص</td><td>الرسالة عند حل المحادثة تلقائياً</td><td>رسالة افتراضية</td></tr>
+      <tr><td><code>welcome_message</code></td><td>نص</td><td>رسالة الترحيب الأولى</td><td>—</td></tr>
+      <tr><td><code>instructions</code></td><td>نص طويل</td><td>تعليمات مخصصة تُحقن في system prompt (V1)</td><td>—</td></tr>
+      <tr><td><code>timezone</code></td><td>نص</td><td>المنطقة الزمنية للسياق</td><td>UTC</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="sec2-3">2.3 الميزات القابلة للتفعيل</h3>
+  <table>
+    <thead><tr><th>الميزة</th><th>الوصف</th><th>متى تُفعّل؟</th></tr></thead>
+    <tbody>
+      <tr><td><code>feature_faq</code></td><td>توليد أسئلة شائعة تلقائياً من المحادثات المحلولة</td><td>دائماً — لتحسين الأداء المستمر</td></tr>
+      <tr><td><code>feature_memory</code></td><td>حفظ ملاحظات تلقائية عن جهة الاتصال من المحادثات</td><td>عندما تريد CRM ذكي</td></tr>
+      <tr><td><code>feature_contact_attributes</code></td><td>تضمين معلومات جهة الاتصال (اسم، إيميل، هاتف، سمات مخصصة) في سياق البوت</td><td>للتخصيص حسب العميل</td></tr>
+      <tr><td><code>feature_citation</code></td><td>إضافة استشهادات مرقمة في الردود</td><td>للمصداقية والشفافية</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tip">
+    <div class="box-title">نصيحة للتدريب الأمثل</div>
+    <div class="box-body">فعّل <strong>feature_faq</strong> دائماً! هذه الميزة تجعل Captain يتعلم من كل محادثة محلولة ويضيف أسئلة جديدة لقاعدة معرفته تلقائياً. مع الوقت سيصبح أكثر دقة.</div>
+  </div>
+
+  <h3 id="sec2-4">2.4 ربط المساعد بصندوق الوارد (Inbox)</h3>
+  <p>بعد إنشاء المساعد، يجب ربطه بصناديق الوارد التي سيعمل عليها:</p>
+  <ul>
+    <li>انتقل إلى <strong>إعدادات المساعد</strong> &gt; <strong>Inboxes</strong></li>
+    <li>اختر صندوق الوارد المراد ربطه</li>
+    <li>يمكن ربط <strong>مساعد واحد بعدة صناديق وارد</strong></li>
+    <li>كل صندوق وارد يمكن ربطه <strong>بمساعد واحد فقط</strong></li>
+  </ul>
+
+  <div class="warn">
+    <div class="box-title">تنبيه</div>
+    <div class="box-body">عند ربط Captain بصندوق وارد، سيتعامل مع <strong>جميع المحادثات الجديدة</strong> تلقائياً. تأكد من تدريبه جيداً قبل الربط مع صناديق الإنتاج (Production). استخدم <strong>Playground</strong> للاختبار أولاً.</div>
+  </div>
+</div>
+
+<!-- ========== 3. KNOWLEDGE BASE ========== -->
+<div class="section" id="sec3">
+  <h2>3. بناء قاعدة المعرفة (تدريب Captain)</h2>
+  <p>قاعدة المعرفة هي الأساس الذي يبني عليه Captain ردوده. كلما كانت أغنى وأدق، كانت ردود Captain أفضل.</p>
+
+  <h3 id="sec3-1">3.1 المستندات (Documents)</h3>
+  <p>المستندات هي المصدر الرئيسي لمعرفة Captain. يدعم نوعين:</p>
+
+  <h4>أ) مستندات الويب</h4>
+  <ul>
+    <li>أدخل <strong>رابط URL</strong> لصفحة ويب أو موقع كامل</li>
+    <li>Captain يزحف الصفحة تلقائياً ويستخرج المحتوى</li>
+    <li>يدعم محركين للزحف: <strong>Firecrawl</strong> (متقدم) و <strong>Simple Crawl</strong> (أساسي)</li>
+    <li>الحد الأقصى للمحتوى: <strong>200,000 حرف</strong> لكل مستند</li>
+    <li>يدعم <strong>المزامنة الدورية</strong> لتحديث المحتوى تلقائياً</li>
+    <li>يكتشف التغييرات عبر <strong>بصمة المحتوى</strong> (Content Fingerprint)</li>
+  </ul>
+
+  <h4>ب) مستندات PDF</h4>
+  <ul>
+    <li>ارفع ملف PDF مباشرة (الحد الأقصى: <strong>10 ميجابايت</strong>)</li>
+    <li>يُعالج صفحة بصفحة عبر <strong>PaginatedFaqGeneratorService</strong></li>
+    <li>يُولّد أسئلة وأجوبة (FAQs) من كل صفحة تلقائياً</li>
+    <li><strong>غير قابل للمزامنة</strong> — معالجة لمرة واحدة</li>
+  </ul>
+
+  <h4>ج) حالات المستند</h4>
+  <table>
+    <thead><tr><th>الحالة</th><th>الوصف</th><th>ماذا يحدث؟</th></tr></thead>
+    <tbody>
+      <tr><td><code>in_progress</code></td><td>قيد المعالجة</td><td>يتم زحف وتحليل المحتوى</td></tr>
+      <tr><td><code>available</code></td><td>متاح</td><td>تم استخراج المحتوى وجاهز لتوليد FAQs</td></tr>
+      <tr><td><code>syncing</code></td><td>قيد المزامنة</td><td>يتم تحديث المحتوى (للويب فقط)</td></tr>
+      <tr><td><code>synced</code></td><td>مُزامن</td><td>المحتوى محدّث</td></tr>
+      <tr><td><code>failed</code></td><td>فشل</td><td>حدث خطأ — تحقق من الرابط أو حجم الملف</td></tr>
+    </tbody>
+  </table>
+
+  <h4>د) خط أنابيب المعالجة</h4>
+  <div class="flow">Create Document → CrawlJob → (Firecrawl or SimpleCrawl) → Extract content → status: available
+       ↓
+Content available → ResponseBuilderJob → Generate FAQs via LLM → Create AssistantResponse + embeddings
+       ↓
+Periodic Sync → ScheduleSyncsJob → PerformSyncJob → Compare fingerprints → Re-crawl if changed</div>
+
+  <h3 id="sec3-2">3.2 الأسئلة الشائعة (FAQs / Assistant Responses)</h3>
+  <p>هذه هي وحدات المعرفة الفعلية التي يبحث فيها Captain عند الرد. كل وحدة تتكون من <strong>سؤال وجواب</strong> مع vector embedding للبحث الدلالي.</p>
+
+  <h4>مصادر الأسئلة الشائعة</h4>
+  <table>
+    <thead><tr><th>المصدر</th><th>المحفز</th><th>الحالة عند الإنشاء</th><th>يحتاج موافقة؟</th></tr></thead>
+    <tbody>
+      <tr><td>زحف مستندات الويب</td><td>إنشاء / مزامنة المستند</td><td>معتمد (approved)</td><td>لا</td></tr>
+      <tr><td>معالجة PDF</td><td>رفع ملف PDF</td><td>معتمد (approved)</td><td>لا</td></tr>
+      <tr><td>تعلم من المحادثات</td><td>حل محادثة + <code>feature_faq</code> مفعّل</td><td>معلق (pending)</td><td><strong>نعم</strong></td></tr>
+      <tr><td>إدخال يدوي</td><td>إضافة عبر API / واجهة</td><td>معتمد (approved)</td><td>لا</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="sec3-3">3.3 البحث الدلالي (Vector Search)</h3>
+  <p>عندما يسأل العميل سؤالاً، لا يبحث Captain عن تطابق نصي حرفي. بدلاً من ذلك:</p>
+  <ul>
+    <li>يُحوّل سؤال العميل إلى <strong>vector embedding</strong> (متجه رقمي بـ 1536 بُعد)</li>
+    <li>يبحث عن أقرب الأسئلة المخزنة باستخدام <strong>Cosine Similarity</strong></li>
+    <li>يأخذ أقرب <strong>5 نتائج</strong> ويستخدمها كسياق لتوليد الرد</li>
+    <li>فقط FAQs <strong>المعتمدة</strong> (approved) تظهر في نتائج البحث</li>
+  </ul>
+
+  <div class="info">
+    <div class="box-title">نصيحة مهمة للتدريب</div>
+    <div class="box-body">راجع الأسئلة المعلقة (Pending) بانتظام واعتمد المفيدة منها. هذه الأسئلة المُولّدة من المحادثات هي مصدر قيّم لتحسين أداء Captain المستمر. يمكنك تعديل السؤال أو الجواب قبل الاعتماد.</div>
+  </div>
+
+  <h4>إزالة التكرار</h4>
+  <p>عند توليد FAQs جديدة من المحادثات، يفحص النظام التشابه مع الأسئلة الموجودة:</p>
+  <ul>
+    <li>إذا كانت المسافة الدلالية (Cosine Distance) <strong>أقل من 0.3</strong> ← يعتبرها مكررة ويتجاهلها</li>
+    <li>هذا يمنع تراكم أسئلة متشابهة في قاعدة المعرفة</li>
+  </ul>
+</div>
+
+<!-- ========== 4. GUARDRAILS ========== -->
+<div class="section" id="sec4">
+  <h2>4. الحدود والإرشادات</h2>
+
+  <h3 id="sec4-1">4.1 حدود الأمان (Guardrails)</h3>
+  <p>الحدود هي <strong>قواعد صارمة</strong> يلتزم بها Captain في كل ردوده. تُستخدم لمنع البوت من الخروج عن النطاق المطلوب. تُخزن كمصفوفة JSONB وتُحقن في كل prompt.</p>
+
+  <p><strong>أمثلة على حدود فعّالة:</strong></p>
+  <ul>
+    <li>لا تشارك معلومات الأسعار أو التسعير الداخلي</li>
+    <li>لا تناقش المنافسين أو تقارن بمنتجاتهم</li>
+    <li>لا تعطِ نصائح طبية أو قانونية</li>
+    <li>لا تشارك بيانات عملاء آخرين</li>
+    <li>إذا لم تكن متأكداً من الإجابة، حوّل للوكيل البشري</li>
+    <li>لا تخترع معلومات غير موجودة في قاعدة المعرفة</li>
+    <li>لا تناقش سياسات الشركة الداخلية</li>
+  </ul>
+
+  <h3 id="sec4-2">4.2 إرشادات الردود (Response Guidelines)</h3>
+  <p>الإرشادات تحدد <strong>كيف</strong> يجب أن يكون شكل وأسلوب ردود Captain. تُخزن أيضاً كمصفوفة JSONB.</p>
+
+  <p><strong>أمثلة على إرشادات فعّالة:</strong></p>
+  <ul>
+    <li>اجعل الرد أقل من 3 جمل ما لم يتطلب شرحاً مفصلاً</li>
+    <li>استخدم اللغة العربية الفصحى البسيطة</li>
+    <li>ابدأ كل رد بتحية مختصرة</li>
+    <li>استخدم نقاط (bullets) عند شرح خطوات متعددة</li>
+    <li>اذكر اسم المنتج في الرد الأول فقط</li>
+    <li>كن ودوداً ومحترفاً</li>
+    <li>لا تستخدم المصطلحات التقنية المعقدة</li>
+  </ul>
+
+  <div class="info">
+    <div class="box-title">الفرق بين الحدود والإرشادات</div>
+    <div class="box-body">
+      <strong>الحدود (Guardrails)</strong> = ما يجب ألا يفعله البوت (قيود صارمة)<br>
+      <strong>الإرشادات (Guidelines)</strong> = كيف يجب أن يتصرف البوت (أسلوب وتنسيق)<br>
+      كلاهما يُطبق على المساعد الرئيسي <strong>وجميع السيناريوهات</strong>.
+    </div>
+  </div>
+</div>
+
+<!-- ========== 5. SCENARIOS ========== -->
+<div class="section" id="sec5">
+  <h2>5. السيناريوهات (Scenarios) — نظام V2</h2>
+  <p>السيناريوهات هي ميزة متقدمة في الإصدار V2 تسمح بإنشاء <strong>وكلاء فرعيين متخصصين</strong> يتعامل كل منهم مع نوع معين من الاستفسارات.</p>
+
+  <h3>5.1 المفهوم</h3>
+  <p>يعمل المساعد الرئيسي كـ <strong>منسق (Orchestrator)</strong> يوجه المحادثات للسيناريو المناسب:</p>
+  <table>
+    <thead><tr><th>المكوّن</th><th>الدور</th><th>مثال</th></tr></thead>
+    <tbody>
+      <tr><td>المساعد الرئيسي</td><td>منسق — يحلل ويوجه</td><td>يستقبل "عندي مشكلة في الفاتورة"</td></tr>
+      <tr><td>سيناريو الفوترة</td><td>وكيل متخصص في الفواتير</td><td>يتعامل مع تفاصيل الفاتورة</td></tr>
+      <tr><td>سيناريو التقنية</td><td>وكيل متخصص في الدعم الفني</td><td>يحل المشاكل التقنية</td></tr>
+      <tr><td>سيناريو المبيعات</td><td>وكيل متخصص في المبيعات</td><td>يجيب عن الأسعار والعروض</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.2 إعداد السيناريو</h3>
+  <table>
+    <thead><tr><th>الحقل</th><th>النوع</th><th>الوصف</th><th>مثال</th></tr></thead>
+    <tbody>
+      <tr><td><code>title</code></td><td>نص (مطلوب)</td><td>اسم السيناريو</td><td>دعم الفوترة والمدفوعات</td></tr>
+      <tr><td><code>description</code></td><td>نص (مطلوب)</td><td>وصف يقرأه المنسق للتوجيه</td><td>يتعامل مع استفسارات الفواتير والمدفوعات</td></tr>
+      <tr><td><code>instruction</code></td><td>نص طويل (مطلوب)</td><td>تعليمات مفصلة للوكيل الفرعي</td><td>عند استلام استفسار فوترة...</td></tr>
+      <tr><td><code>enabled</code></td><td>نعم / لا</td><td>هل السيناريو نشط؟</td><td>نعم</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.3 استخدام الأدوات في السيناريوهات</h3>
+  <p>يمكنك ربط الأدوات بالسيناريو عبر إدراج مراجع في نص التعليمات (instruction):</p>
+  <div class="info">
+    <div class="box-title">مثال: سيناريو فوترة مع أدوات</div>
+    <div class="box-body">
+      عند استلام استفسار عن الفاتورة:<br>
+      1. ابحث أولاً في قاعدة المعرفة باستخدام <code>[FAQ Lookup](tool://faq_lookup)</code><br>
+      2. إذا احتاج العميل مساعدة بشرية، استخدم <code>[Handoff](tool://handoff)</code><br>
+      3. وثّق المشكلة باستخدام <code>[Add Private Note](tool://add_private_note)</code><br>
+      4. إذا كانت المشكلة عاجلة، ارفع الأولوية <code>[Update Priority](tool://update_priority)</code>
+    </div>
+  </div>
+
+  <h3>5.4 تدفق التحويل بين السيناريوهات</h3>
+  <ul>
+    <li>المنسق يحلل رسالة العميل ويحدد السيناريو المناسب</li>
+    <li>يتم التحويل عبر أداة <code>handoff_to_{scenario_key}</code> تلقائياً</li>
+    <li>كل سيناريو يمكنه إعادة التحويل للمنسق إذا لزم الأمر</li>
+    <li>يرث من المساعد: الحرارة، الإرشادات، الحدود، اسم المنتج</li>
+    <li>الحد الأقصى: <strong>100 دورة</strong> (turn) لكل محادثة</li>
+  </ul>
+
+  <div class="tip">
+    <div class="box-title">أفضل الممارسات للسيناريوهات</div>
+    <div class="box-body">اجعل وصف كل سيناريو واضحاً ومحدداً حتى يتمكن المنسق من التوجيه بدقة. تجنب التداخل بين أوصاف السيناريوهات المختلفة. الحد الأقصى لمعرف السيناريو (Handoff Key): 60 حرف.</div>
+  </div>
+</div>
+
+<!-- ========== 6. TOOLS ========== -->
+<div class="section" id="sec6">
+  <h2>6. الأدوات المتاحة</h2>
+
+  <h3 id="sec6-1">6.1 الأدوات المدمجة (Built-in Tools)</h3>
+  <p>هذه الأدوات متاحة لـ Captain بشكل افتراضي:</p>
+  <table>
+    <thead><tr><th>الأداة</th><th>الوظيفة</th><th>المعاملات</th></tr></thead>
+    <tbody>
+      <tr><td><code>faq_lookup</code></td><td>بحث دلالي في قاعدة المعرفة (FAQs)</td><td><code>query</code>: نص الاستعلام (مطلوب)</td></tr>
+      <tr><td><code>handoff</code></td><td>تحويل المحادثة لوكيل بشري + نشر السبب كملاحظة خاصة + رسالة خارج العمل</td><td><code>reason</code>: سبب التحويل (اختياري)</td></tr>
+      <tr><td><code>resolve_conversation</code></td><td>حل المحادثة وإغلاقها</td><td><code>reason</code>: سبب الحل (مطلوب)</td></tr>
+      <tr><td><code>add_contact_note</code></td><td>إضافة ملاحظة على ملف جهة الاتصال (CRM)</td><td><code>note</code>: نص الملاحظة (مطلوب)</td></tr>
+      <tr><td><code>add_private_note</code></td><td>نشر ملاحظة داخلية على المحادثة</td><td><code>note</code>: نص الملاحظة (مطلوب)</td></tr>
+      <tr><td><code>update_priority</code></td><td>تعيين أولوية المحادثة</td><td><code>priority</code>: low / medium / high / urgent</td></tr>
+      <tr><td><code>add_label_to_conversation</code></td><td>إضافة تصنيف (label) للمحادثة</td><td><code>label_name</code>: اسم التصنيف (مطلوب)</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="sec6-2">6.2 الأدوات المخصصة (Custom Tools)</h3>
+  <p>تسمح بالتكامل مع أنظمة خارجية عبر HTTP. الحد الأقصى: <strong>15 أداة لكل حساب</strong>. تتطلب ميزة <code>custom_tools</code> أو <code>captain_integration_v2</code>.</p>
+
+  <h4>إعداد أداة مخصصة</h4>
+  <table>
+    <thead><tr><th>الحقل</th><th>الوصف</th><th>مثال</th></tr></thead>
+    <tbody>
+      <tr><td><code>title</code></td><td>اسم الأداة</td><td>التحقق من حالة الطلب</td></tr>
+      <tr><td><code>description</code></td><td>وصف يقرأه AI لتحديد متى يستخدمها</td><td>يتحقق من حالة طلب العميل بناءً على رقم الطلب</td></tr>
+      <tr><td><code>endpoint_url</code></td><td>رابط API (يدعم Liquid templates)</td><td><code>https://api.store.com/orders/{{order_id}}</code></td></tr>
+      <tr><td><code>http_method</code></td><td>طريقة الطلب</td><td>GET أو POST</td></tr>
+      <tr><td><code>param_schema</code></td><td>معاملات الأداة</td><td><code>[{name: "order_id", type: "string", required: true}]</code></td></tr>
+      <tr><td><code>request_template</code></td><td>Liquid template لجسم الطلب</td><td>—</td></tr>
+      <tr><td><code>response_template</code></td><td>Liquid template لتنسيق الرد</td><td><code>حالة الطلب: {{response.status}}</code></td></tr>
+      <tr><td><code>auth_type</code></td><td>نوع المصادقة</td><td>none / bearer / basic / api_key</td></tr>
+    </tbody>
+  </table>
+
+  <h4>أنواع المصادقة</h4>
+  <table>
+    <thead><tr><th>النوع</th><th>المفاتيح المطلوبة</th><th>السلوك</th></tr></thead>
+    <tbody>
+      <tr><td><code>none</code></td><td>لا شيء</td><td>بدون مصادقة</td></tr>
+      <tr><td><code>bearer</code></td><td><code>token</code></td><td><code>Authorization: Bearer {token}</code></td></tr>
+      <tr><td><code>basic</code></td><td><code>username, password</code></td><td>HTTP Basic Authentication</td></tr>
+      <tr><td><code>api_key</code></td><td><code>name, key, location</code></td><td>إذا header: <code>{name}: {key}</code></td></tr>
+    </tbody>
+  </table>
+
+  <h4>Headers تُرسل تلقائياً</h4>
+  <p>Captain يرسل هذه البيانات مع كل طلب HTTP:</p>
+  <ul>
+    <li><code>X-Chatwoot-Account-Id</code> — معرف الحساب</li>
+    <li><code>X-Chatwoot-Assistant-Id</code> — معرف المساعد</li>
+    <li><code>X-Chatwoot-Tool-Slug</code> — معرف الأداة</li>
+    <li><code>X-Chatwoot-Conversation-Id</code> / <code>Display-Id</code> — معرف المحادثة</li>
+    <li><code>X-Chatwoot-Contact-Id</code> / <code>Email</code> / <code>Phone</code> — بيانات جهة الاتصال</li>
+    <li><code>X-Chatwoot-Contact-Inbox-Id</code> / <code>Verified</code></li>
+  </ul>
+
+  <div class="tip">
+    <div class="box-title">نصيحة: اختبر أولاً</div>
+    <div class="box-body">استخدم <code>POST /custom_tools/test</code> لاختبار الأداة المخصصة قبل تفعيلها. الحد الأقصى لحجم رد API: <strong>1 ميجابايت</strong>.</div>
+  </div>
+</div>
+
+<!-- ========== 7. HANDOFF ========== -->
+<div class="section" id="sec7">
+  <h2>7. نظام التحويل (Handoff)</h2>
+  <p>التحويل هو العملية التي ينقل فيها Captain المحادثة من البوت إلى وكيل بشري. يحدث تلقائياً عند تحقق شروط معينة.</p>
+
+  <h3>7.1 متى يحدث التحويل؟</h3>
+  <table>
+    <thead><tr><th>السبب</th><th>الوصف</th></tr></thead>
+    <tbody>
+      <tr><td><code>explicit_human_request</code></td><td>العميل يطلب التحدث مع شخص حقيقي</td></tr>
+      <tr><td><code>human_offer_accepted</code></td><td>Captain عرض المساعدة البشرية والعميل وافق</td></tr>
+      <tr><td><code>missing_docs_bounded_answer</code></td><td>السؤال غير موجود في قاعدة المعرفة</td></tr>
+      <tr><td><code>operational_issue_needs_inspection</code></td><td>مشكلة تقنية تحتاج فحص يدوي</td></tr>
+      <tr><td><code>repeated_frustration_or_loop</code></td><td>العميل يكرر نفس المشكلة أو يظهر إحباطاً</td></tr>
+      <tr><td><code>account_or_transaction_verification</code></td><td>يحتاج تحقق من حساب أو معاملة</td></tr>
+      <tr><td><code>custom_instruction_transfer</code></td><td>قاعدة في التعليمات تطلب التحويل</td></tr>
+      <tr><td>خطأ تقني</td><td>أي خطأ أثناء توليد الرد ← تحويل تلقائي آمن</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.2 تدفق التحويل</h3>
+
+  <h4>في V1:</h4>
+  <ol>
+    <li>LLM يقرر التحويل (عبر response أو action classifier)</li>
+    <li>إرسال رسالة التحويل (<code>handoff_message</code> المخصصة أو الافتراضية)</li>
+    <li>تنفيذ <code>bot_handoff!</code> — تغيير الحالة من pending إلى open + تعيين <code>waiting_since</code></li>
+    <li>إرسال رسالة خارج أوقات العمل (Out of Office) إن وُجدت</li>
+    <li>نظام الإسناد التلقائي (Auto Assignment) يوزع المحادثة على وكيل</li>
+  </ol>
+
+  <h4>في V2:</h4>
+  <ol>
+    <li><code>HandoffTool</code> يُنفَّذ داخل Agent Runner</li>
+    <li>ينشر سبب التحويل كملاحظة خاصة على المحادثة</li>
+    <li>يستدعي <code>bot_handoff!</code> ويرسل رسالة خارج أوقات العمل</li>
+    <li>يرسل رسالة التحويل للعميل</li>
+    <li>نظام الإسناد التلقائي يوزع المحادثة</li>
+  </ol>
+
+  <div class="warn">
+    <div class="box-title">ضمان عدم تعليق العميل</div>
+    <div class="box-body">عند حدوث أي خطأ أثناء توليد الرد (خطأ LLM، مهلة اتصال، إلخ)، يعود Captain تلقائياً لآلية التحويل (Handoff) لضمان تحويل العميل <strong>دائماً</strong> لإنسان بدلاً من تركه معلقاً.</div>
+  </div>
+</div>
+
+<!-- ========== 8. BEST PRACTICES ========== -->
+<div class="section" id="sec8">
+  <h2>8. أفضل ممارسات التدريب</h2>
+
+  <h3>8.1 إعداد الوصف المثالي</h3>
+  <p>وصف المساعد (Description) هو <strong>أهم عنصر في التدريب</strong>. يُحقن مباشرة في system prompt ويحدد شخصية ودور البوت.</p>
+
+  <div class="info">
+    <div class="box-title">مثال على وصف مثالي</div>
+    <div class="box-body">أنت مساعد دعم فني لمنصة "متجري" للتجارة الإلكترونية. متخصص في مساعدة أصحاب المتاجر الإلكترونية في إعداد متاجرهم وحل المشاكل التقنية وشرح كيفية استخدام لوحة التحكم. تتحدث بالعربية الفصحى البسيطة وتكون ودوداً ومحترفاً. لا تقدم نصائح عن المنافسين.</div>
+  </div>
+
+  <h3>8.2 بناء قاعدة معرفة قوية</h3>
+  <p>اتبع هذه الاستراتيجية المرحلية:</p>
+
+  <h4>المرحلة 1: التأسيس (الأسبوع الأول)</h4>
+  <ul>
+    <li>أضف مستندات الويب لموقعك الرسمي وصفحات المساعدة</li>
+    <li>ارفع ملفات PDF لأدلة المستخدم والكتيبات</li>
+    <li>أضف يدوياً أكثر 20–30 سؤالاً شائعاً</li>
+    <li>اختبر عبر <strong>Playground</strong> قبل الربط مع inbox حقيقي</li>
+  </ul>
+
+  <h4>المرحلة 2: التحسين (الأسبوع 2–4)</h4>
+  <ul>
+    <li>فعّل <code>feature_faq</code> ليتعلم من المحادثات المحلولة</li>
+    <li>راجع الأسئلة المعلقة (Pending) يومياً واعتمد المفيد</li>
+    <li>عدّل الأجوبة غير الدقيقة قبل الاعتماد</li>
+    <li>راقب محادثات التحويل (Handoff) لاكتشاف الثغرات</li>
+  </ul>
+
+  <h4>المرحلة 3: التوسع (بعد شهر)</h4>
+  <ul>
+    <li>أضف سيناريوهات متخصصة (V2) للمواضيع المتكررة</li>
+    <li>أنشئ أدوات مخصصة للتكامل مع أنظمتك الداخلية</li>
+    <li>فعّل <code>feature_memory</code> لبناء ملفات عملاء ذكية</li>
+    <li>اضبط الحدود والإرشادات بناءً على الملاحظات الفعلية</li>
+  </ul>
+
+  <h3>8.3 ضبط درجة الحرارة (Temperature)</h3>
+  <table>
+    <thead><tr><th>القيمة</th><th>الوصف</th><th>متى تُستخدم؟</th></tr></thead>
+    <tbody>
+      <tr><td>0.0 – 0.3</td><td>دقيق ومتسق جداً</td><td>دعم تقني، معلومات طبية، بيانات مالية</td></tr>
+      <tr><td>0.4 – 0.7</td><td>متوازن (موصى به)</td><td>معظم حالات الدعم العام</td></tr>
+      <tr><td>0.8 – 1.2</td><td>إبداعي ومتنوع</td><td>مبيعات، تسويق، محادثات عامة</td></tr>
+      <tr><td>1.3 – 2.0</td><td>إبداعي جداً</td><td>نادراً ما يُستخدم — قد ينتج ردوداً غير متسقة</td></tr>
+    </tbody>
+  </table>
+
+  <h3>8.4 صياغة التعليمات المخصصة</h3>
+  <p>حقل <code>instructions</code> يُضاف مباشرة في system prompt (V1). استخدمه لتعليمات محددة:</p>
+  <ul>
+    <li>عند السؤال عن الأسعار، أحِل العميل دائماً لصفحة التسعير</li>
+    <li>إذا ذكر العميل كلمة "إلغاء"، حوّل المحادثة فوراً لفريق الاحتفاظ بالعملاء</li>
+    <li>عند السؤال عن ميزة غير موجودة، اشرح البدائل ثم اسأل إذا كان يريد طلب ميزة</li>
+    <li>لا تذكر أبداً أنك بوت أو ذكاء اصطناعي</li>
+  </ul>
+
+  <div class="warn">
+    <div class="box-title">تنبيه عن التعليمات</div>
+    <div class="box-body">التعليمات في حقل <code>instructions</code> تُستخدم فقط في V1. في V2، استخدم الوصف (description) والسيناريوهات (scenarios) بدلاً منها للحصول على تحكم أفضل.</div>
+  </div>
+</div>
+
+<!-- ========== 9. COPILOT ========== -->
+<div class="section" id="sec9">
+  <h2>9. مساعد الوكلاء (Copilot)</h2>
+  <p>Copilot هو مساعد ذكاء اصطناعي موجه <strong>للوكلاء البشريين</strong> (وليس للعملاء). يساعد الوكلاء في الرد على العملاء بسرعة ودقة أكبر.</p>
+
+  <h3>9.1 قدرات Copilot</h3>
+  <ul>
+    <li><strong>بحث في المستندات/FAQs</strong> — يبحث في قاعدة المعرفة ويقترح إجابات</li>
+    <li><strong>استرجاع تفاصيل المحادثة</strong> — يعرض ملخص المحادثة الحالية</li>
+    <li><strong>بحث في المحادثات السابقة</strong> — يبحث عن محادثات مشابهة</li>
+    <li><strong>استرجاع معلومات جهة الاتصال</strong> — يعرض تاريخ العميل</li>
+    <li><strong>بحث في مقالات مركز المساعدة</strong> — يبحث في Help Center</li>
+    <li><strong>بحث في Linear Issues</strong> — يبحث في تذاكر Linear المرتبطة</li>
+    <li><strong>اقتراح ردود</strong> — يقترح رداً مناسباً يمكن للوكيل تعديله وإرساله</li>
+  </ul>
+
+  <h3>9.2 كيف يعمل Copilot؟</h3>
+  <ul>
+    <li>يعمل عبر <strong>threads مستمرة</strong> — كل محادثة لها thread copilot خاص</li>
+    <li>يحفظ تاريخ الرسائل لكل thread</li>
+    <li>يحقن سياق المحادثة المعروضة حالياً</li>
+    <li>يدعم الاستشهادات (citations) الاختياريّة</li>
+    <li>يرد بصيغة JSON مع: <code>reasoning</code> و <code>content</code> و <code>reply_suggestion</code></li>
+  </ul>
+</div>
+
+<!-- ========== 10. MONITORING ========== -->
+<div class="section" id="sec10">
+  <h2>10. المراقبة والتحسين المستمر</h2>
+
+  <h3>10.1 مقاييس الأداء</h3>
+  <table>
+    <thead><tr><th>المقياس</th><th>الوصف</th><th>الهدف المثالي</th></tr></thead>
+    <tbody>
+      <tr><td>معدل حل البوت (Bot Resolution Rate)</td><td>نسبة المحادثات التي حلها Captain بنفسه</td><td>&gt; 60%</td></tr>
+      <tr><td>معدل التحويل (Bot Handoff Rate)</td><td>نسبة المحادثات المحوّلة لبشري</td><td>&lt; 40%</td></tr>
+      <tr><td>عدد محادثات البوت</td><td>إجمالي المحادثات التي تعامل معها Captain</td><td>للمراقبة فقط</td></tr>
+      <tr><td>الأسئلة المعلقة</td><td>FAQs المُولّدة من المحادثات بانتظار الموافقة</td><td>راجعها أسبوعياً</td></tr>
+    </tbody>
+  </table>
+
+  <h3>10.2 خطة المراجعة الدورية</h3>
+  <table>
+    <thead><tr><th>التكرار</th><th>الإجراء</th></tr></thead>
+    <tbody>
+      <tr><td>يومياً</td><td>راجع الأسئلة المعلقة (Pending FAQs) واعتمد المفيد</td></tr>
+      <tr><td>أسبوعياً</td><td>تحقق من محادثات التحويل لاكتشاف أسئلة متكررة غير مغطاة</td></tr>
+      <tr><td>أسبوعياً</td><td>راجع مقاييس الأداء (حل البوت مقابل التحويل)</td></tr>
+      <tr><td>شهرياً</td><td>حدّث مستندات الويب وتحقق من المزامنة</td></tr>
+      <tr><td>شهرياً</td><td>عدّل الحدود والإرشادات بناءً على الملاحظات</td></tr>
+      <tr><td>ربع سنوياً</td><td>مراجعة شاملة للسيناريوهات والأدوات المخصصة</td></tr>
+    </tbody>
+  </table>
+
+  <h3>10.3 تحليل محادثات التحويل</h3>
+  <p>محادثات التحويل (Handoff) هي أهم مصدر لتحسين Captain:</p>
+  <ul>
+    <li>راجع <strong>أسباب التحويل</strong> (تُنشر كملاحظات خاصة في V2)</li>
+    <li>حدد <strong>الأنماط المتكررة</strong> — أسئلة تتكرر كثيراً</li>
+    <li>أضف FAQs للأسئلة المتكررة التي يُحوَّل بسببها</li>
+    <li>عدّل <strong>التعليمات</strong> إذا كان التحويل يحدث بشكل غير ضروري</li>
+    <li>أنشئ <strong>سيناريو جديد</strong> إذا كان هناك موضوع متكرر يحتاج معالجة متخصصة</li>
+  </ul>
+</div>
+
+<!-- ========== 11. AUTO RESOLVE ========== -->
+<div class="section" id="sec11">
+  <h2>11. الحل التلقائي للمحادثات</h2>
+  <p>Captain يملك نظاماً ذكياً لحل المحادثات تلقائياً عندما يكتمل الهدف منها.</p>
+
+  <h3>11.1 آلية التقييم</h3>
+  <p>بعد مرور <strong>ساعة واحدة</strong> على آخر نشاط في محادثة معلقة:</p>
+  <ol>
+    <li>النظام يفحص المحادثة عبر <code>ConversationCompletionService</code></li>
+    <li>يستخدم LLM لتقييم إذا كانت المحادثة مكتملة</li>
+    <li>إذا <strong>مكتملة</strong> ← يحلها تلقائياً مع ذكر السبب</li>
+    <li>إذا <strong>غير مكتملة</strong> ← يحوّلها لوكيل بشري</li>
+  </ol>
+
+  <h3>11.2 معايير الاكتمال</h3>
+  <table>
+    <thead><tr><th>مكتملة (تُحل)</th><th>غير مكتملة (تُحوَّل)</th></tr></thead>
+    <tbody>
+      <tr><td>كل الأسئلة أُجيب عليها</td><td>المساعد سأل سؤالاً بدون إجابة من العميل</td></tr>
+      <tr><td>لا متابعات معلقة</td><td>العميل لديه أسئلة بلا إجابة</td></tr>
+      <tr><td>إجابة شاملة ومستقلة</td><td>حاجة العميل لم تُلبَّ</td></tr>
+      <tr><td>رسائل قصيرة / عشوائية بلا سؤال حقيقي</td><td>مشاكل متعددة لم تُعالج كلها</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ========== 12. V1 VS V2 ========== -->
+<div class="section" id="sec12">
+  <h2>12. مقارنة الإصدار V1 و V2</h2>
+  <table>
+    <thead><tr><th>الجانب</th><th>V1 (captain_integration)</th><th>V2 (captain_integration_v2)</th></tr></thead>
+    <tbody>
+      <tr><td>البنية</td><td>وكيل واحد</td><td>تنسيق multi-agent (orchestrator + scenarios)</td></tr>
+      <tr><td>نظام Prompt</td><td>Ruby heredoc (SystemPromptsService)</td><td>Liquid templates (PromptRenderer)</td></tr>
+      <tr><td>السيناريوهات</td><td>غير مدعومة</td><td>مدعومة بالكامل — وكلاء فرعيين متخصصين</td></tr>
+      <tr><td>الأدوات المدمجة</td><td><code>faq_lookup</code> فقط</td><td>كل الأدوات السبع + custom tools</td></tr>
+      <tr><td>كشف التحويل</td><td>نص <code>conversation_handoff</code> أو action classifier</td><td>HandoffTool مباشر عبر agent loop</td></tr>
+      <tr><td>التعليمات المخصصة</td><td>حقل <code>instructions</code> في config</td><td>description + scenarios</td></tr>
+      <tr><td>Runner</td><td>AssistantChatService (RubyLLM chat)</td><td>AgentRunnerService (Agents::Runner, max 100 turns)</td></tr>
+      <tr><td>سياق جهة الاتصال</td><td>inline في system prompt</td><td>Liquid snippet منفصل</td></tr>
+      <tr><td>شكل الرد</td><td>JSON: <code>{reasoning, response}</code></td><td>Structured schema: <code>Captain::ResponseSchema</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="info">
+    <div class="box-title">أيهما أختار؟</div>
+    <div class="box-body">
+      <strong>V2</strong> هو المستقبل ويوفر تحكماً أفضل عبر السيناريوهات والأدوات. إذا كانت احتياجاتك بسيطة (ردود من قاعدة معرفة فقط)، V1 كافٍ. إذا كنت تحتاج تكاملات خارجية أو سيناريوهات متعددة، <strong>استخدم V2</strong>.
+    </div>
+  </div>
+</div>
+
+<!-- ========== 13. API REFERENCE ========== -->
+<div class="section" id="sec13">
+  <h2>13. مرجع واجهات API</h2>
+  <p>كل الواجهات تحت المسار: <code>api/v1/accounts/:account_id/captain/</code></p>
+  <table>
+    <thead><tr><th>المورد</th><th>الطرق</th><th>المسار</th><th>ملاحظات</th></tr></thead>
+    <tbody>
+      <tr><td>Preferences</td><td>GET, PATCH</td><td><code>/preferences</code></td><td>تفضيلات models و features</td></tr>
+      <tr><td>Assistants</td><td>CRUD + playground</td><td><code>/assistants</code></td><td><code>POST :id/playground</code> للاختبار</td></tr>
+      <tr><td>Inboxes</td><td>INDEX, CREATE, DELETE</td><td><code>/assistants/:id/inboxes/:inbox_id</code></td><td>ربط / فك inboxes</td></tr>
+      <tr><td>Scenarios</td><td>CRUD</td><td><code>/assistants/:id/scenarios</code></td><td>سيناريوهات متخصصة (V2)</td></tr>
+      <tr><td>Responses</td><td>CRUD</td><td><code>/assistant_responses</code></td><td>إدارة FAQs — فلتر: assistant_id, status, search</td></tr>
+      <tr><td>Documents</td><td>INDEX, SHOW, CREATE, DELETE</td><td><code>/documents</code></td><td><code>POST :id/sync</code> — فلتر: source, filter</td></tr>
+      <tr><td>Custom Tools</td><td>CRUD + test</td><td><code>/custom_tools</code></td><td><code>POST /test</code> للاختبار</td></tr>
+      <tr><td>Bulk Actions</td><td>CREATE</td><td><code>/bulk_actions</code></td><td>approve / delete / sync بالجملة</td></tr>
+      <tr><td>Copilot Threads</td><td>INDEX, CREATE</td><td><code>/copilot_threads</code></td><td>جلسات copilot مستمرة</td></tr>
+      <tr><td>Copilot Messages</td><td>INDEX, CREATE</td><td><code>/copilot_threads/:id/copilot_messages</code></td><td>رسائل داخل thread</td></tr>
+      <tr><td>Tasks</td><td>POST</td><td><code>/tasks/{action}</code></td><td>rewrite, summarize, reply_suggestion, label_suggestion, follow_up</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ========== FEATURE FLAGS ========== -->
+<div class="section">
+  <h2>ملحق: Feature Flags</h2>
+  <table>
+    <thead><tr><th>العلم</th><th>الوصف</th><th>النوع</th></tr></thead>
+    <tbody>
+      <tr><td><code>captain_integration</code></td><td>البوابة الرئيسية لـ Captain (محرك V1)</td><td>Premium</td></tr>
+      <tr><td><code>captain_integration_v2</code></td><td>محرك V2 multi-agent مع scenarios</td><td>Premium</td></tr>
+      <tr><td><code>custom_tools</code></td><td>أدوات HTTP مخصصة</td><td>Premium</td></tr>
+      <tr><td><code>captain_tasks</code></td><td>مهام AI: إعادة صياغة، تلخيص، اقتراح رد</td><td>Standard</td></tr>
+      <tr><td><code>captain_document_auto_sync</code></td><td>مزامنة دورية لمستندات الويب</td><td>Premium</td></tr>
+      <tr><td><code>sentiment_analysis</code></td><td>كشف المشاعر التلقائي</td><td>Premium</td></tr>
+      <tr><td><code>auto_categorization</code></td><td>تصنيف تلقائي بعد 3 رسائل واردة</td><td>Premium</td></tr>
+      <tr><td><code>ai_resolution_tracking</code></td><td>تتبع المحادثات المحلولة بواسطة AI</td><td>Premium</td></tr>
+      <tr><td><code>auto_qa</code></td><td>تقييم QA تلقائي عند الحل</td><td>Premium</td></tr>
+      <tr><td><code>ai_analytics</code></td><td>تحليلات مدعومة بالـ AI</td><td>Premium</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<div style="text-align:center; padding: 40px 0 20px; color: #94a3b8; font-size: 13px;">
+  <p>نهاية الدليل — Captain AI Documentation v2.0</p>
+  <p>للمزيد من المساعدة، تواصل مع فريق الدعم</p>
+</div>
+
+</div>
+</body>
+</html>
