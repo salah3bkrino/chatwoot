@@ -41,6 +41,8 @@ as defined by the routes in the `admin/` namespace
         %>
 
       <% end %>
+      <%= render partial: "nav_item", locals: { icon: 'icon-money-dollar-circle-line', url: super_admin_subscription_plans_path, label: 'Subscription Plans' } %>
+      <%= render partial: "nav_item", locals: { icon: 'icon-bank-card-line', url: super_admin_manual_payments_path, label: 'Manual Payments' } %>
       <%= render 'settings_menu', open: settings_open? %>
     </ul>
   </div>
