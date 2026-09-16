@@ -252,22 +252,27 @@
   display_name: Sentiment Analysis
   enabled: false
   premium: true
+  column: feature_flags_ext_1
 - name: auto_categorization
   display_name: Auto Categorization
   enabled: false
   premium: true
+  column: feature_flags_ext_1
 - name: ai_resolution_tracking
   display_name: AI Resolution Tracking
   enabled: false
   premium: true
+  column: feature_flags_ext_1
 - name: auto_qa
   display_name: Auto QA
   enabled: false
   premium: true
+  column: feature_flags_ext_1
 - name: ai_analytics
   display_name: AI Analytics
   enabled: false
   premium: true
+  column: feature_flags_ext_1
 - name: whatsapp_manual_transfer
   display_name: WhatsApp Manual Transfer
   enabled: false
