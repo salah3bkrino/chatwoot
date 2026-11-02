@@ -36,7 +36,11 @@ class AccountDashboard < Administrate::BaseDashboard
     status: AccountStatusField.with_options(collection: [%w[Active active], %w[Suspended suspended]]),
     suspension_history: SuspensionHistoryField,
     account_users: Field::HasMany,
-    custom_attributes: Field::String
+    custom_attributes: Field::String,
+    subscription_plan: Field::BelongsTo,
+    subscription_status: Field::Select.with_options(collection: Account.subscription_statuses.keys),
+    subscription_end_date: Field::DateTime,
+    trial_started_at: Field::DateTime
   }.merge(enterprise_attribute_types).freeze
 
   # COLLECTION_ATTRIBUTES
@@ -74,6 +78,10 @@ class AccountDashboard < Administrate::BaseDashboard
     suspension_history
     conversations
     account_users
+    subscription_plan
+    subscription_status
+    subscription_end_date
+    trial_started_at
   ] + enterprise_show_page_attributes).freeze
 
   # FORM_ATTRIBUTES
@@ -92,6 +100,10 @@ class AccountDashboard < Administrate::BaseDashboard
     name
     locale
     status
+    subscription_plan
+    subscription_status
+    subscription_end_date
+    trial_started_at
   ] + enterprise_form_attributes).freeze
 
   # COLLECTION_FILTERS

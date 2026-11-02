@@ -1,0 +1,38 @@
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-bold text-slate-800">Subscription Plans</h1>
+  <%= link_to 'New Plan', new_super_admin_subscription_plan_path, class: 'bg-woot-500 hover:bg-woot-600 text-white px-4 py-2 rounded' %>
+</div>
+
+<div class="bg-white rounded-lg shadow overflow-hidden">
+  <table class="min-w-full divide-y divide-slate-200">
+    <thead class="bg-slate-50">
+      <tr>
+        <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">ID</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Name</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Price</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Active</th>
+        <th class="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-slate-200">
+      <% @plans.each do |plan| %>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900"><%= plan.id %></td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900"><%= plan.name %></td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500"><%= plan.price_cents / 100.0 %> <%= plan.currency %></td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+            <% if plan.active? %>
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+            <% else %>
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+            <% end %>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+            <%= link_to 'Edit', edit_super_admin_subscription_plan_path(plan), class: 'text-woot-600 hover:text-woot-900 mr-3' %>
+            <%= link_to 'Suspend', super_admin_subscription_plan_path(plan), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-600 hover:text-red-900' if plan.active? %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
