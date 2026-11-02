@@ -115,7 +115,7 @@ module SuperAdmin::NavigationHelper
   def resource_nav_items
     nav_resources.map do |resource|
       tab_label_key = TAB_LABELS[resource]
-      { label: display_resource_name(resource), tab_label: (t(tab_label_key) if tab_label_key), url: resource_index_route(resource),
+      { label: (resource.to_s == 'manual_payments' ? 'Manual Payments' : (resource.to_s == 'subscription_plans' ? 'Subscription Plans' : display_resource_name(resource))), tab_label: (t(tab_label_key) if tab_label_key), url: resource_index_route(resource),
         icon: NAV_ICONS[resource], active: nav_link_state(resource) == :active,
         pinned: PINNED_RESOURCES.include?(resource), group: t('super_admin.navigation.groups.manage') }
     end
