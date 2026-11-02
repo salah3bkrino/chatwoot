@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useMapGetter, useStore } from 'dashboard/composables/store.js';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { useCaptain } from 'dashboard/composables/useCaptain';
+import { usePaymentStatus } from 'dashboard/composables/usePaymentStatus';
 import { format } from 'date-fns';
 import sessionStorage from 'shared/helpers/sessionStorage';
 
@@ -15,10 +16,12 @@ import AtmtaSubscriptionCard from './components/AtmtaSubscriptionCard.vue';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import ButtonV4 from 'next/button/Button.vue';
+import Banner from 'next/banner/Banner.vue';
 import { getCurrencyConfig } from 'dashboard/constants/billing';
 import { useI18n } from 'vue-i18n';
 
 const { currentAccount, isOnChatwootCloud } = useAccount();
+const { isPastDue } = usePaymentStatus();
 const {
   captainEnabled,
   captainLimits,
@@ -79,6 +82,13 @@ const subscriptionRenewsOn = computed(() => {
   const endDate = new Date(customAttributes.value.subscription_ends_on);
   // return date as 12 Jan, 2034
   return format(endDate, 'dd MMM, yyyy');
+});
+
+// Set only while a cancellation is scheduled; the plan stays active until this date.
+const subscriptionCancelsOn = computed(() => {
+  if (!customAttributes.value.subscription_cancels_on) return '';
+  const cancelDate = new Date(customAttributes.value.subscription_cancels_on);
+  return format(cancelDate, 'dd MMM, yyyy');
 });
 
 /**
@@ -218,6 +228,17 @@ onMounted(handleBillingPageLogic);
         </BillingCard>
       </section>
       <section v-else class="grid gap-4">
+        <Banner
+          v-if="isPastDue"
+          color="ruby"
+          role="alert"
+          class="flex-wrap"
+          :action-label="$t('BILLING_SETTINGS.PAYMENT_RECOVERY.ACTION')"
+          :is-loading="uiFlags.isCheckoutInProcess"
+          @action="onClickBillingPortal"
+        >
+          {{ $t('BILLING_SETTINGS.PAYMENT_RECOVERY.DESCRIPTION') }}
+        </Banner>
         <BillingCard
           :title="$t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.TITLE')"
           :description="$t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.DESCRIPTION')"
@@ -241,7 +262,12 @@ onMounted(handleBillingPageLogic);
               :value="subscribedQuantity"
             />
             <DetailItem
-              v-if="subscriptionRenewsOn"
+              v-if="subscriptionCancelsOn"
+              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.CANCELS_ON')"
+              :value="subscriptionCancelsOn"
+            />
+            <DetailItem
+              v-else-if="subscriptionRenewsOn && !isPastDue"
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.RENEWS_ON')"
               :value="subscriptionRenewsOn"
             />

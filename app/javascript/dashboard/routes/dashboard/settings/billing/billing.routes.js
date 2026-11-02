@@ -1,7 +1,7 @@
 import { frontendURL } from '../../../../helper/URLHelper';
 import { INSTALLATION_TYPES } from 'dashboard/constants/installationTypes';
 import SettingsWrapper from '../SettingsWrapper.vue';
-import Index from './Index.vue';
+import ProviderIndex from './ProviderIndex.vue';
 
 export default {
   routes: [
@@ -20,7 +20,7 @@ export default {
         {
           path: '',
           name: 'billing_settings_index',
-          component: Index,
+          component: ProviderIndex,
           meta: {
             permissions: ['administrator'],
           },
