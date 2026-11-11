@@ -43,6 +43,8 @@ import CSATBubble from './bubbles/CSAT.vue';
 import FormBubble from './bubbles/Form.vue';
 import VoiceCallBubble from './bubbles/VoiceCall.vue';
 import WhatsappFlowResponseBubble from './bubbles/WhatsappFlowResponse.vue';
+import WhatsappOrderBubble from './bubbles/WhatsappOrder.vue';
+import WhatsappInteractiveBubble from './bubbles/WhatsappInteractive.vue';
 import WhatsappReferral from './bubbles/Text/WhatsappReferral.vue';
 
 import MessageError from './MessageError.vue';
@@ -331,6 +333,20 @@ const componentToRender = computed(() => {
     return WhatsappFlowResponseBubble;
   }
 
+  if (
+    props.contentAttributes?.whatsappOrder ||
+    props.contentAttributes?.whatsapp_order
+  ) {
+    return WhatsappOrderBubble;
+  }
+
+  if (
+    props.contentAttributes?.whatsappInteractive ||
+    props.contentAttributes?.whatsapp_interactive
+  ) {
+    return WhatsappInteractiveBubble;
+  }
+
   if (props.contentType === CONTENT_TYPES.INPUT_CSAT) {
     return CSATBubble;
   }
@@ -465,6 +481,14 @@ const shouldRenderMessage = computed(() => {
     props.contentType === CONTENT_TYPES.INTEGRATIONS;
   const hasWhatsappFlowResponse =
     !!props.contentAttributes?.whatsappFlowResponse;
+  const hasWhatsappOrder = !!(
+    props.contentAttributes?.whatsappOrder ||
+    props.contentAttributes?.whatsapp_order
+  );
+  const hasWhatsappInteractive = !!(
+    props.contentAttributes?.whatsappInteractive ||
+    props.contentAttributes?.whatsapp_interactive
+  );
   const isFailedMessage = props.status === MESSAGE_STATUS.FAILED;
   const hasExternalError = !!props.contentAttributes?.externalError;
 
@@ -475,6 +499,8 @@ const shouldRenderMessage = computed(() => {
     isUnsupported ||
     isAnIntegrationMessage ||
     hasWhatsappFlowResponse ||
+    hasWhatsappOrder ||
+    hasWhatsappInteractive ||
     shouldShowWhatsappReferral.value ||
     isFailedMessage ||
     hasExternalError

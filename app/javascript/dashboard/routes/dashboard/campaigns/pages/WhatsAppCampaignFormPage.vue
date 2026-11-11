@@ -31,11 +31,14 @@ import TemplateFields from 'dashboard/components-next/Campaigns/WhatsAppCampaign
 import AccountInformationCard from 'dashboard/components-next/Campaigns/WhatsAppCampaign/AccountInformationCard.vue';
 import MessagePreviewCard from 'dashboard/components-next/Campaigns/WhatsAppCampaign/MessagePreviewCard.vue';
 import SchedulePopover from 'dashboard/components-next/Campaigns/WhatsAppCampaign/SchedulePopover.vue';
+import Switch from 'dashboard/components-next/switch/Switch.vue';
+import Input from 'dashboard/components-next/input/Input.vue';
 
 const SECTION_FIELDS = {
   basic: ['title', 'inboxId'],
   audience: ['audienceIds'],
   template: ['templateId', 'processedParams'],
+  antiBan: ['antiBan'],
 };
 
 const { t, te, locale } = useI18n();
@@ -49,6 +52,15 @@ const whatsAppInboxes = useMapGetter('inboxes/getWhatsAppInboxes');
 const whatsAppTemplates = useMapGetter('inboxes/getFilteredWhatsAppTemplates');
 const uiFlags = useMapGetter('campaigns/getUIFlags');
 
+const defaultAntiBan = () => ({
+  enabled: true,
+  batch_size: 25,
+  min_delay_seconds: 15,
+  max_delay_seconds: 45,
+  per_message_jitter_ms: 400,
+  pause_on_risky_health: true,
+});
+
 const buildState = () => ({
   title: '',
   inboxId: null,
@@ -56,6 +68,7 @@ const buildState = () => ({
   processedParams: {},
   audienceIds: [],
   scheduledAt: '',
+  antiBan: defaultAntiBan(),
 });
 
 const snapshot = value => JSON.parse(JSON.stringify(value));
@@ -94,6 +107,7 @@ const applyCampaign = record => {
     name,
     language,
     processed_params: params,
+    anti_ban: antiBan,
   } = record.template_params ?? {};
   const template = templatesFor(record.inbox.id).find(
     item => item.name === name && item.language === language
@@ -111,6 +125,12 @@ const applyCampaign = record => {
       .filter(item => item.type === 'Label')
       .map(item => item.id),
     scheduledAt: toDateTimeInput(record.scheduled_at),
+    antiBan: {
+      ...defaultAntiBan(),
+      ...(antiBan && typeof antiBan === 'object'
+        ? antiBan
+        : { enabled: false }),
+    },
   });
   savedState.value = snapshot(state);
 };
@@ -212,7 +232,7 @@ const isTemplateComplete = computed(
     !!selectedTemplate.value &&
     isWhatsAppComplete(selectedTemplate.value, state.processedParams) &&
     (state.processedParams.buttons ?? []).every(
-      button => !button || !!button.parameter
+      button => !button || button.type === 'flow' || !!button.parameter
     ) &&
     isValidTemplateMediaUrl(state.processedParams.header?.media_url)
 );
@@ -256,6 +276,14 @@ const templatePayload = computed(() => {
       category: template.category ?? DEFAULT_CATEGORY,
       language: template.language ?? DEFAULT_LANGUAGE,
       processed_params: state.processedParams,
+      anti_ban: {
+        enabled: Boolean(state.antiBan.enabled),
+        batch_size: Number(state.antiBan.batch_size) || 25,
+        min_delay_seconds: Number(state.antiBan.min_delay_seconds) || 0,
+        max_delay_seconds: Number(state.antiBan.max_delay_seconds) || 0,
+        per_message_jitter_ms: Number(state.antiBan.per_message_jitter_ms) || 0,
+        pause_on_risky_health: Boolean(state.antiBan.pause_on_risky_health),
+      },
     },
   };
 });
@@ -264,6 +292,7 @@ const sectionPayloads = {
   basic: () => ({ title: state.title, inbox_id: state.inboxId }),
   audience: () => ({ audience: audiencePayload.value }),
   template: () => templatePayload.value,
+  antiBan: () => templatePayload.value,
 };
 
 const scheduleButtonLabel = computed(() => {
@@ -459,6 +488,64 @@ const handleReschedule = async () => {
             :templates="templates"
             :has-inbox="!!state.inboxId"
           />
+        </SectionCard>
+
+        <SectionCard
+          :title="t('CAMPAIGN.WHATSAPP.FORM.ANTI_BAN.TITLE')"
+          :is-dirty="isSectionDirty('antiBan')"
+          :is-saving="uiFlags.isUpdating"
+          :is-save-disabled="!isTemplateComplete"
+          @discard="handleDiscard('antiBan')"
+          @save="handleSectionSave('antiBan')"
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-1">
+              <span class="text-heading-3 text-n-slate-12">
+                {{ t('CAMPAIGN.WHATSAPP.FORM.ANTI_BAN.ENABLE_LABEL') }}
+              </span>
+              <span class="text-body-main text-n-slate-11">
+                {{ t('CAMPAIGN.WHATSAPP.FORM.ANTI_BAN.ENABLE_DESCRIPTION') }}
+              </span>
+            </div>
+            <Switch v-model="state.antiBan.enabled" />
+          </div>
+
+          <div
+            v-if="state.antiBan.enabled"
+            class="grid grid-cols-1 gap-3 pt-2 border-t border-n-weak sm:grid-cols-3"
+          >
+            <Input
+              v-model.number="state.antiBan.batch_size"
+              type="number"
+              min="5"
+              max="100"
+              :label="t('CAMPAIGN.WHATSAPP.FORM.ANTI_BAN.BATCH_SIZE_LABEL')"
+            />
+            <Input
+              v-model.number="state.antiBan.min_delay_seconds"
+              type="number"
+              min="0"
+              max="300"
+              :label="t('CAMPAIGN.WHATSAPP.FORM.ANTI_BAN.MIN_DELAY_LABEL')"
+            />
+            <Input
+              v-model.number="state.antiBan.max_delay_seconds"
+              type="number"
+              min="0"
+              max="300"
+              :label="t('CAMPAIGN.WHATSAPP.FORM.ANTI_BAN.MAX_DELAY_LABEL')"
+            />
+          </div>
+
+          <div
+            v-if="state.antiBan.enabled"
+            class="flex items-center justify-between gap-4 pt-1"
+          >
+            <span class="text-body-main text-n-slate-12">
+              {{ t('CAMPAIGN.WHATSAPP.FORM.ANTI_BAN.PAUSE_HEALTH_LABEL') }}
+            </span>
+            <Switch v-model="state.antiBan.pause_on_risky_health" />
+          </div>
         </SectionCard>
       </div>
 

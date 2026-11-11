@@ -15,11 +15,28 @@ class Campaigns::SendWhatsappBatchJob < ApplicationJob
   def send_batch(campaign, cursor)
     return if campaign.completed?
 
-    next_cursor = Whatsapp::OneoffCampaignService.new(campaign: campaign).perform_batch(cursor)
+    service = Whatsapp::OneoffCampaignService.new(campaign: campaign)
+    return log_health_pause(campaign) if service.try(:channel_health_risky?)
+
+    next_cursor = service.perform_batch(cursor)
+    return log_health_pause(campaign) if service.try(:channel_health_risky?)
+
     if next_cursor
-      self.class.perform_later(campaign, next_cursor)
+      enqueue_next_batch(campaign, next_cursor, service.try(:next_batch_delay_seconds).to_i)
     else
       campaign.with_lock { campaign.completed! unless campaign.completed? }
     end
+  end
+
+  def enqueue_next_batch(campaign, next_cursor, delay_seconds)
+    if delay_seconds.positive?
+      self.class.set(wait: delay_seconds.seconds).perform_later(campaign, next_cursor)
+    else
+      self.class.perform_later(campaign, next_cursor)
+    end
+  end
+
+  def log_health_pause(campaign)
+    Rails.logger.warn "[ANTI-BAN] Pausing campaign #{campaign.id}: risky WhatsApp channel health"
   end
 end

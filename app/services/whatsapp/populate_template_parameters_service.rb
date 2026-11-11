@@ -13,16 +13,16 @@ class Whatsapp::PopulateTemplateParametersService
   def build_button_parameter(button)
     return { type: 'text', text: '' } if button.blank?
 
+    button = button.with_indifferent_access
     case button['type']
     when 'copy_code'
       coupon_code = button['parameter'].to_s.strip
       raise ArgumentError, 'Coupon code cannot be empty' if coupon_code.blank?
       raise ArgumentError, 'Coupon code cannot exceed 15 characters' if coupon_code.length > 15
 
-      {
-        type: 'coupon_code',
-        coupon_code: coupon_code
-      }
+      { type: 'coupon_code', coupon_code: coupon_code }
+    when 'flow'
+      build_flow_button_parameter(button)
     else
       # For URL buttons and other button types, treat parameter as text
       # If parameter is blank, use empty string (required for URL buttons)
@@ -45,6 +45,15 @@ class Whatsapp::PopulateTemplateParametersService
   end
 
   private
+
+  def build_flow_button_parameter(button)
+    action_params = {}
+    action_params[:flow_token] = button['flow_token'].to_s if button['flow_token'].present?
+    flow_data = button['flow_action_data']
+    action_params[:flow_action_data] = flow_data if flow_data.is_a?(Hash) && flow_data.present?
+
+    { type: 'action', action: action_params }
+  end
 
   def build_string_parameter(value)
     sanitized_value = sanitize_parameter(value)

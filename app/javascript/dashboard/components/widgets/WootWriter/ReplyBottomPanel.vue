@@ -94,6 +94,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    enableWhatsappInteractive: {
+      type: Boolean,
+      default: false,
+    },
     enableContentTemplates: {
       type: Boolean,
       default: false,
@@ -129,6 +133,7 @@ export default {
     'selectWhatsappTemplate',
     'selectContentTemplate',
     'requestContactInfoTemplate',
+    'openWhatsappInteractive',
   ],
   setup(props) {
     const { setSignatureFlagForInbox, fetchSignatureFlagFromUISettings } =
@@ -340,6 +345,17 @@ export default {
         faded
         sm
         @click="$emit('selectWhatsappTemplate')"
+      />
+      <NextButton
+        v-if="enableWhatsappInteractive"
+        v-tooltip.top-end="
+          $t('CONVERSATION.FOOTER.WHATSAPP_INTERACTIVE', 'Interactive Message')
+        "
+        icon="i-ph-lightning"
+        slate
+        faded
+        sm
+        @click="$emit('openWhatsappInteractive')"
       />
       <RequestContactInfoButton
         v-if="!isOnPrivateNote"

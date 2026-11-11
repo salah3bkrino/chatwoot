@@ -2,6 +2,7 @@ class Webhooks::WhatsappController < ActionController::API
   include MetaTokenVerifyConcern
 
   before_action :verify_meta_signature!, only: :process_payload
+  before_action :verify_evolution_webhook!, only: :process_payload
 
   def process_payload
     if inactive_whatsapp_number?
@@ -26,7 +27,7 @@ class Webhooks::WhatsappController < ActionController::API
   end
 
   def valid_token?(token)
-    channel = Channel::Whatsapp.find_by(phone_number: params[:phone_number])
+    channel = find_channel_by_phone_number
     whatsapp_webhook_verify_token = channel.provider_config['webhook_verify_token'] if channel.present?
     token == whatsapp_webhook_verify_token if whatsapp_webhook_verify_token.present?
   end
@@ -39,7 +40,35 @@ class Webhooks::WhatsappController < ActionController::API
   end
 
   def whatsapp_channel
-    @whatsapp_channel ||= whatsapp_business_payload_channel || Channel::Whatsapp.find_by(phone_number: params[:phone_number])
+    @whatsapp_channel ||= whatsapp_business_payload_channel || find_channel_by_phone_number
+  end
+
+  def find_channel_by_phone_number
+    phone = params[:phone_number].to_s.strip
+    return if phone.blank?
+
+    normalized = "+#{phone.delete_prefix('+')}"
+    Channel::Whatsapp.find_by(phone_number: [phone, normalized].uniq)
+  end
+
+  def verify_evolution_webhook!
+    return unless whatsapp_channel&.provider == 'evolution'
+
+    expected_token = whatsapp_channel.provider_config['webhook_verify_token'].to_s
+    return if expected_token.blank? || valid_evolution_token?(expected_token) || valid_evolution_apikey?
+
+    head :unauthorized
+  end
+
+  def valid_evolution_token?(expected_token)
+    provided_token = params[:token].to_s
+    provided_token.present? && ActiveSupport::SecurityUtils.secure_compare(provided_token, expected_token)
+  end
+
+  def valid_evolution_apikey?
+    header_apikey = (request.headers['apikey'] || params[:apikey]).to_s
+    expected_apikey = whatsapp_channel.provider_service.api_key.to_s
+    header_apikey.present? && expected_apikey.present? && ActiveSupport::SecurityUtils.secure_compare(header_apikey, expected_apikey)
   end
 
   def meta_signature_verification_required?
@@ -70,6 +99,7 @@ class Webhooks::WhatsappController < ActionController::API
     return false if inactive_numbers.blank?
 
     inactive_numbers_array = inactive_numbers.split(',').map(&:strip)
-    inactive_numbers_array.include?(phone_number)
+    normalized = "+#{phone_number.delete_prefix('+')}"
+    inactive_numbers_array.include?(phone_number) || inactive_numbers_array.include?(normalized)
   end
 end

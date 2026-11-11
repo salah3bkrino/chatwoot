@@ -166,8 +166,11 @@ export default {
     healthErrorMessage() {
       return this.healthError?.message || '';
     },
+    isEvolutionWhatsAppChannel() {
+      return this.isAWhatsAppChannel && this.inbox.provider === 'evolution';
+    },
     shouldShowWhatsAppConfiguration() {
-      return this.isAWhatsAppCloudChannel;
+      return this.isAWhatsAppCloudChannel || this.isEvolutionWhatsAppChannel;
     },
     shouldShowTwilioHealth() {
       return this.isATwilioChannel && this.inbox.medium === 'sms';
@@ -175,6 +178,9 @@ export default {
     whatsAppAPIProviderName() {
       if (this.isAWhatsAppCloudChannel) {
         return this.$t('INBOX_MGMT.ADD.WHATSAPP.PROVIDERS.WHATSAPP_CLOUD');
+      }
+      if (this.isEvolutionWhatsAppChannel) {
+        return this.$t('INBOX_MGMT.ADD.WHATSAPP.PROVIDERS.EVOLUTION');
       }
       if (this.is360DialogWhatsAppChannel) {
         return this.$t('INBOX_MGMT.ADD.WHATSAPP.PROVIDERS.360_DIALOG');
@@ -246,7 +252,7 @@ export default {
           },
         ];
       }
-      if (this.shouldShowWhatsAppConfiguration) {
+      if (this.isAWhatsAppCloudChannel) {
         visibleToAllChannelTabs = [
           ...visibleToAllChannelTabs,
           {

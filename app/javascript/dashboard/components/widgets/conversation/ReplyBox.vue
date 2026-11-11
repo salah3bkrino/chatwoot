@@ -25,6 +25,7 @@ import { BUS_EVENTS } from 'shared/constants/busEvents';
 import { CMD_AI_ASSIST } from 'dashboard/helper/commandbar/events';
 import { getUndefinedVariablesInMessage } from '@chatwoot/utils';
 import WhatsappTemplates from './WhatsappTemplates/Modal.vue';
+import WhatsappInteractiveModal from './WhatsappInteractiveModal.vue';
 import ContentTemplates from './ContentTemplates/ContentTemplatesModal.vue';
 import { MESSAGE_MAX_LENGTH } from 'shared/helpers/MessageTypeHelper';
 import { isComposing } from 'shared/helpers/KeyboardHelpers';
@@ -78,6 +79,7 @@ export default {
     ReplyToMessage,
     ReplyTopPanel,
     ContentTemplates,
+    WhatsappInteractiveModal,
     WhatsappTemplates,
     WootMessageEditor,
     QuotedEmailPreview,
@@ -181,6 +183,7 @@ export default {
       subject: '',
       doAutoSaveDraft: () => {},
       showWhatsAppTemplatesModal: false,
+      showWhatsappInteractiveModal: false,
       requestContactInfoTemplatesOnly: false,
       showContentTemplatesModal: false,
       updateEditorSelectionWith: '',
@@ -235,6 +238,11 @@ export default {
         this.inboxId
       );
       return !!(templates && templates.length) && !this.isPrivate;
+    },
+    showWhatsappInteractive() {
+      return (
+        this.isAWhatsAppChannel && !this.isPrivate && !this.isEditorDisabled
+      );
     },
     showContentTemplates() {
       return this.isATwilioWhatsAppChannel && !this.isPrivate;
@@ -598,6 +606,9 @@ export default {
     showWhatsappTemplates(isAvailable) {
       if (!isAvailable) this.hideWhatsappTemplatesModal();
     },
+    showWhatsappInteractive(isAvailable) {
+      if (!isAvailable) this.hideWhatsappInteractiveModal();
+    },
     showContentTemplates(isAvailable) {
       if (!isAvailable) this.hideContentTemplatesModal();
     },
@@ -862,6 +873,12 @@ export default {
       this.showWhatsAppTemplatesModal = false;
       this.requestContactInfoTemplatesOnly = false;
     },
+    openWhatsappInteractiveModal() {
+      this.showWhatsappInteractiveModal = true;
+    },
+    hideWhatsappInteractiveModal() {
+      this.showWhatsappInteractiveModal = false;
+    },
     openContentTemplateModal() {
       this.showContentTemplatesModal = true;
     },
@@ -1016,6 +1033,15 @@ export default {
         ...messagePayload,
       });
       this.hideWhatsappTemplatesModal();
+    },
+    async onSendWhatsappInteractive(messagePayload) {
+      this.sendMessage({
+        conversationId: this.currentChat.id,
+        private: false,
+        sender: this.sender,
+        ...messagePayload,
+      });
+      this.hideWhatsappInteractiveModal();
     },
     async onSendContentTemplateReply(messagePayload) {
       this.sendMessage({
@@ -1517,6 +1543,7 @@ export default {
         :conversation-id="conversationId"
         :enable-multiple-file-upload="enableMultipleFileUpload"
         :enable-whats-app-templates="showWhatsappTemplates"
+        :enable-whatsapp-interactive="showWhatsappInteractive"
         :enable-content-templates="showContentTemplates"
         :inbox="inbox"
         :is-on-private-note="isOnPrivateNote"
@@ -1540,6 +1567,7 @@ export default {
         :portal-slug="connectedPortalSlug"
         :new-conversation-modal-active="newConversationModalActive"
         @select-whatsapp-template="openWhatsappTemplateModal"
+        @open-whatsapp-interactive="openWhatsappInteractiveModal"
         @select-content-template="openContentTemplateModal"
         @toggle-insert-article="toggleInsertArticle"
         @request-contact-info-template="openContactInfoTemplateModal"
@@ -1554,6 +1582,12 @@ export default {
       @close="hideWhatsappTemplatesModal"
       @on-send="onSendWhatsAppReply"
       @cancel="hideWhatsappTemplatesModal"
+    />
+
+    <WhatsappInteractiveModal
+      :show="showWhatsappInteractiveModal"
+      @send="onSendWhatsappInteractive"
+      @close="hideWhatsappInteractiveModal"
     />
 
     <ContentTemplates

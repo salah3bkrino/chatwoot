@@ -13,6 +13,8 @@ module Enterprise::Whatsapp::OneoffCampaignService
 
   def process_contacts(contacts)
     contacts.each do |contact|
+      return pause_for_risky_health if channel_health_risky?
+
       recipient = recipient_for(contact)
       unless recipient.previously_new_record?
         recipient.update!(error_message: 'Send outcome unknown after interruption; review before retrying') if recipient.queued?
@@ -21,6 +23,7 @@ module Enterprise::Whatsapp::OneoffCampaignService
 
       campaign.update!(updated_at: Time.current) if campaign.whatsapp_cursor.present?
       process_recipient(recipient)
+      apply_per_message_jitter
     end
   end
 

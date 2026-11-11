@@ -129,7 +129,7 @@ class Whatsapp::IncomingMessageBaseService
   end
 
   def attach_files
-    return if %w[text button interactive location contacts].include?(message_type)
+    return if %w[text button interactive location contacts order].include?(message_type)
 
     attachment_payload = messages_data.first[message_type.to_sym]
     @message.content ||= attachment_payload[:caption]
@@ -181,17 +181,37 @@ class Whatsapp::IncomingMessageBaseService
     content_attrs[:in_reply_to_external_id] = @in_reply_to_external_id if @in_reply_to_external_id.present?
     referral_content_attrs = referral_attributes(message)
     content_attrs[:referral] = referral_content_attrs if referral_content_attrs.present?
-
-    flow_response = message.dig(:interactive, :nfm_reply)
-    if flow_response.present?
-      content_attrs[:whatsapp_flow_response] = {
-        name: flow_response[:name],
-        body: flow_response[:body],
-        response_json: parse_flow_response_json(flow_response[:response_json])
-      }.compact
-    end
-
+    merge_interactive_and_order_attributes(content_attrs, message)
     content_attrs
+  end
+
+  def merge_interactive_and_order_attributes(content_attrs, message)
+    flow_response = message.dig(:interactive, :nfm_reply)
+    content_attrs[:whatsapp_flow_response] = flow_response_attributes(flow_response) if flow_response.present?
+
+    reply_attrs = interactive_reply_attributes(message)
+    content_attrs[:whatsapp_interactive_reply] = reply_attrs if reply_attrs.present?
+
+    content_attrs[:whatsapp_order] = build_order_attributes(message[:order]) if message[:order].present?
+  end
+
+  def flow_response_attributes(flow_response)
+    {
+      name: flow_response[:name],
+      body: flow_response[:body],
+      response_json: parse_flow_response_json(flow_response[:response_json])
+    }.compact
+  end
+
+  def interactive_reply_attributes(message)
+    interactive = message[:interactive]
+    return unless interactive.is_a?(Hash)
+
+    normalized = interactive.with_indifferent_access
+    reply = normalized[:button_reply] || normalized[:list_reply]
+    return if reply.blank?
+
+    { id: reply[:id], title: reply[:title], description: reply[:description] }.compact
   end
 
   def update_contact_with_profile_name(contact_params)

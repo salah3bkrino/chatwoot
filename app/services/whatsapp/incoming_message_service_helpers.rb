@@ -4,12 +4,7 @@ module Whatsapp::IncomingMessageServiceHelpers
   end
 
   def conversation_params
-    {
-      account_id: @inbox.account_id,
-      inbox_id: @inbox.id,
-      contact_id: @contact.id,
-      contact_inbox_id: @contact_inbox.id
-    }
+    { account_id: @inbox.account_id, inbox_id: @inbox.id, contact_id: @contact.id, contact_inbox_id: @contact_inbox.id }
   end
 
   def processed_params
@@ -26,6 +21,7 @@ module Whatsapp::IncomingMessageServiceHelpers
 
   def message_content(message)
     return I18n.t('conversations.messages.whatsapp.flow_response') if message.dig(:interactive, :nfm_reply).present?
+    return order_summary_text(message[:order]) if message[:type] == 'order' || message[:order].present?
 
     # TODO: map interactive messages back to button messages in chatwoot
     message.dig(:text, :body) ||
@@ -33,6 +29,31 @@ module Whatsapp::IncomingMessageServiceHelpers
       message.dig(:interactive, :button_reply, :title) ||
       message.dig(:interactive, :list_reply, :title) ||
       message.dig(:name, :formatted_name)
+  end
+
+  def order_summary_text(order)
+    label = I18n.t('conversations.messages.whatsapp.order_received', default: 'WhatsApp Catalog Order')
+    return label unless order.is_a?(Hash)
+
+    normalized_order = order.with_indifferent_access
+    return normalized_order[:text] if normalized_order[:text].present?
+    return label if normalized_order[:product_items].blank?
+
+    attrs = build_order_attributes(normalized_order)
+    summary = [attrs[:currency], format('%.2f', attrs[:total_amount])].compact.join(' ')
+    "#{label} (#{attrs[:product_items].size} #{'item'.pluralize(attrs[:product_items].size)} - #{summary})"
+  end
+
+  def build_order_attributes(order)
+    normalized_order = order.with_indifferent_access
+    items = Array(normalized_order[:product_items]).map do |raw_item|
+      item = raw_item.with_indifferent_access
+      { product_retailer_id: item[:product_retailer_id], quantity: item[:quantity].to_i,
+        item_price: item[:item_price].to_f, currency: item[:currency] }.compact
+    end
+    total = items.sum { |item| item[:quantity] * item[:item_price] }.round(2)
+    { catalog_id: normalized_order[:catalog_id], text: normalized_order[:text], product_items: items,
+      total_amount: total, currency: items.first&.dig(:currency) }.compact
   end
 
   def parse_flow_response_json(response_json)
@@ -85,8 +106,7 @@ module Whatsapp::IncomingMessageServiceHelpers
     return if @in_reply_to_external_id.blank?
 
     @in_reply_to_message_id = Whatsapp::InReplyToMessageFinder.new(
-      conversation: @conversation,
-      source_id: @in_reply_to_external_id
+      conversation: @conversation, source_id: @in_reply_to_external_id
     ).perform&.id
   end
 

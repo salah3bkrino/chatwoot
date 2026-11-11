@@ -16,6 +16,7 @@ import TextArea from 'next/textarea/TextArea.vue';
 import { sanitizeAllowedDomains } from 'dashboard/helper/URLHelper';
 import WhatsappBusinessManagementToken from './WhatsappBusinessManagementToken.vue';
 import HmacSecretKey from './components/HmacSecretKey.vue';
+import EvolutionQrPanel from '../components/EvolutionQrPanel.vue';
 
 export default {
   components: {
@@ -28,6 +29,7 @@ export default {
     TextArea,
     WhatsappBusinessManagementToken,
     HmacSecretKey,
+    EvolutionQrPanel,
   },
   mixins: [inboxMixin],
   props: {
@@ -61,6 +63,9 @@ export default {
     }),
     isEmbeddedSignupWhatsApp() {
       return this.inbox.provider_config?.source === 'embedded_signup';
+    },
+    isEvolutionWhatsApp() {
+      return this.isAWhatsAppChannel && this.inbox.provider === 'evolution';
     },
     showWhatsAppReconfigure() {
       return this.isEmbeddedSignupWhatsApp;
@@ -384,7 +389,8 @@ export default {
     <SmtpSettings :inbox="inbox" />
   </div>
   <div v-else-if="isAWhatsAppChannel && !isATwilioChannel">
-    <div v-if="inbox.provider_config">
+    <EvolutionQrPanel v-if="isEvolutionWhatsApp" :inbox="inbox" />
+    <div v-else-if="inbox.provider_config">
       <!-- Embedded Signup Section -->
       <template v-if="isEmbeddedSignupWhatsApp">
         <SettingsFieldSection

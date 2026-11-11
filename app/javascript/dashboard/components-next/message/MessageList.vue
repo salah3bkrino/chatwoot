@@ -52,6 +52,7 @@ const allMessages = computed(() => {
     stopPaths: [
       'content_attributes.translations',
       'content_attributes.whatsapp_flow_response.response_json',
+      'content_attributes.whatsapp_interactive.data',
     ],
   });
 });

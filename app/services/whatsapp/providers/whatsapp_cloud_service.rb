@@ -1,34 +1,24 @@
 class Whatsapp::Providers::WhatsappCloudService < Whatsapp::Providers::BaseService
   def send_message(phone_number, message)
     @message = message
+    return send_attachment_message(phone_number, message) if message.attachments.present?
+    return send_rich_interactive_message(phone_number, message) if rich_interactive_message?(message)
+    return send_interactive_text_message(phone_number, message) if message.content_type == 'input_select'
 
-    if message.attachments.present?
-      send_attachment_message(phone_number, message)
-    elsif message.content_type == 'input_select'
-      send_interactive_text_message(phone_number, message)
-    else
-      send_text_message(phone_number, message)
-    end
+    send_text_message(phone_number, message)
   end
 
   def send_template(phone_number, template_info, message)
-    template_body = template_body_parameters(template_info)
-
     request_body = {
       messaging_product: 'whatsapp',
       recipient_type: 'individual', # Only individual messages supported (not group messages)
       # BSUID -> `recipient`; phone number -> `to` (see recipient_params in the base provider).
       **recipient_params(phone_number),
       type: 'template',
-      template: template_body
+      template: template_body_parameters(template_info)
     }
 
-    response = HTTParty.post(
-      "#{phone_id_path}/messages",
-      headers: api_headers,
-      body: request_body.to_json
-    )
-
+    response = HTTParty.post("#{phone_id_path}/messages", headers: api_headers, body: request_body.to_json)
     process_response(response, message)
   end
 
@@ -195,14 +185,6 @@ class Whatsapp::Providers::WhatsappCloudService < Whatsapp::Providers::BaseServi
   end
 
   def template_body_parameters(template_info)
-    template_body = {
-      name: template_info[:name],
-      language: {
-        policy: 'deterministic',
-        code: template_info[:lang_code]
-      }
-    }
-
     # Enhanced template parameters structure
     # Note: Legacy format support (simple parameter arrays) has been removed
     # in favor of the enhanced component-based structure that supports
@@ -226,34 +208,44 @@ class Whatsapp::Providers::WhatsappCloudService < Whatsapp::Providers::BaseServi
     #   { type: 'header', parameters: [...] },
     #   { type: 'button', sub_type: 'url', parameters: [...] }
     # ]
-    template_body[:components] = template_info[:parameters] || []
-
-    template_body
+    {
+      name: template_info[:name],
+      language: { policy: 'deterministic', code: template_info[:lang_code] },
+      components: template_info[:parameters] || []
+    }
   end
 
   def whatsapp_reply_context(message)
     reply_to = message.content_attributes[:in_reply_to_external_id]
     return nil if reply_to.blank?
 
-    {
-      message_id: reply_to
-    }
+    { message_id: reply_to }
+  end
+
+  def rich_interactive_message?(message)
+    attrs = message.content_attributes
+    attrs.present? && (attrs['whatsapp_interactive'].present? || attrs[:whatsapp_interactive].present?)
+  end
+
+  def send_rich_interactive_message(phone_number, message)
+    interactive = Whatsapp::InteractivePayloadBuilder.new(message).build
+    body = {
+      messaging_product: 'whatsapp', recipient_type: 'individual', **recipient_params(phone_number),
+      type: 'interactive', interactive: interactive, context: whatsapp_reply_context(message)
+    }.compact
+    response = HTTParty.post("#{phone_id_path('v22.0')}/messages", headers: api_headers, body: body.to_json)
+    process_response(response, message)
+  rescue ArgumentError => e
+    message.update!(status: :failed, external_error: e.message)
+    nil
   end
 
   def send_interactive_text_message(phone_number, message)
-    payload = create_payload_based_on_items(message)
-
-    response = HTTParty.post(
-      "#{phone_id_path}/messages",
-      headers: api_headers,
-      body: {
-        messaging_product: 'whatsapp',
-        **recipient_params(phone_number),
-        interactive: payload,
-        type: 'interactive'
-      }.to_json
-    )
-
+    body = {
+      messaging_product: 'whatsapp', **recipient_params(phone_number),
+      interactive: create_payload_based_on_items(message), type: 'interactive'
+    }
+    response = HTTParty.post("#{phone_id_path}/messages", headers: api_headers, body: body.to_json)
     process_response(response, message)
   end
 end

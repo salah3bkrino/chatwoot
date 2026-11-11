@@ -45,6 +45,18 @@ const formValues = computed(() => {
 
   return [];
 });
+
+const selectOptions = computed(() => {
+  if (contentType.value !== CONTENT_TYPES.INPUT_SELECT) return [];
+  if (formValues.value.length) return [];
+
+  const items = contentAttributes.value?.items;
+  return Array.isArray(items) ? items : [];
+});
+
+const hasOptionDescriptions = computed(() =>
+  selectOptions.value.some(item => Boolean(item?.description))
+);
 </script>
 
 <template>
@@ -58,6 +70,27 @@ const formValues = computed(() => {
         <dd>{{ item.title }}</dd>
       </template>
     </dl>
+    <div
+      v-else-if="selectOptions.length"
+      class="mt-3 flex gap-1.5"
+      :class="hasOptionDescriptions ? 'flex-col' : 'flex-wrap'"
+    >
+      <div
+        v-for="(option, index) in selectOptions"
+        :key="option.value || option.title || index"
+        class="px-2.5 py-1.5 rounded-lg bg-n-alpha-black1 border border-n-container text-xs text-start"
+      >
+        <div class="font-medium text-n-slate-12">
+          {{ option.title }}
+        </div>
+        <div
+          v-if="option.description"
+          class="text-n-slate-11 mt-0.5 break-words"
+        >
+          {{ option.description }}
+        </div>
+      </div>
+    </div>
     <div v-else-if="isAWebWidgetInbox" class="my-2 font-medium">
       {{ t('CONVERSATION.NO_RESPONSE') }}
     </div>

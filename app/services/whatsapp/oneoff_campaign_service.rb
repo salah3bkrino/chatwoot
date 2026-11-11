@@ -2,6 +2,8 @@ class Whatsapp::OneoffCampaignService
   pattr_initialize [:campaign!]
 
   BATCH_SIZE = 100
+  MAX_BATCH_DELAY_SECONDS = 300
+  MAX_MESSAGE_JITTER_MS = 2000
 
   def perform
     validate_campaign!
@@ -9,9 +11,38 @@ class Whatsapp::OneoffCampaignService
   end
 
   def perform_batch(cursor)
-    contacts = audience_contacts.where('contacts.id > ?', cursor).order(:id).limit(BATCH_SIZE).to_a
+    return pause_for_risky_health if channel_health_risky?
+
+    limit = effective_batch_size
+    contacts = audience_contacts.where('contacts.id > ?', cursor).order(:id).limit(limit).to_a
     process_contacts(contacts)
-    contacts.last.id if contacts.size == BATCH_SIZE
+    contacts.last.id if contacts.size == limit && !channel_health_risky?
+  end
+
+  def anti_ban_config
+    config = campaign.template_params&.then { |tp| tp.is_a?(Hash) ? (tp['anti_ban'] || tp[:anti_ban]) : nil }
+    config.is_a?(Hash) ? config.stringify_keys : {}
+  end
+
+  def effective_batch_size = anti_ban_enabled? ? anti_ban_int('batch_size', 25).clamp(5, BATCH_SIZE) : BATCH_SIZE
+
+  def per_message_jitter_ms = anti_ban_enabled? ? anti_ban_int('per_message_jitter_ms', 400).clamp(0, MAX_MESSAGE_JITTER_MS) : 0
+
+  def next_batch_delay_seconds
+    return 0 unless anti_ban_enabled?
+
+    min_delay = anti_ban_int('min_delay_seconds', 15).clamp(0, MAX_BATCH_DELAY_SECONDS)
+    max_delay = anti_ban_int('max_delay_seconds', 45).clamp(min_delay, MAX_BATCH_DELAY_SECONDS)
+    rand(min_delay..max_delay)
+  end
+
+  def channel_health_risky?
+    return false unless pause_on_risky_health?
+
+    health = channel&.phone_number_health.to_h.stringify_keys
+    return false if health.empty?
+
+    Whatsapp::HealthService::RISKY_STATUSES.include?(health['status']) || health['quality_rating'] == 'RED'
   end
 
   private
@@ -76,7 +107,35 @@ class Whatsapp::OneoffCampaignService
   end
 
   def process_contacts(contacts)
-    contacts.each { |contact| process_contact(contact) }
+    contacts.each do |contact|
+      return pause_for_risky_health if channel_health_risky?
+
+      process_contact(contact)
+      apply_per_message_jitter
+    end
+  end
+
+  def anti_ban_bool(key, default: false)
+    anti_ban_config.key?(key) ? ActiveModel::Type::Boolean.new.cast(anti_ban_config[key]) == true : default
+  end
+
+  def anti_ban_enabled? = anti_ban_bool('enabled')
+
+  def pause_on_risky_health? = anti_ban_bool('pause_on_risky_health', default: anti_ban_enabled?)
+
+  def anti_ban_int(key, default) = anti_ban_config[key].presence&.to_i || default
+
+  def apply_per_message_jitter
+    jitter_ms = per_message_jitter_ms
+    return unless jitter_ms.positive?
+
+    delay = [rand(0..jitter_ms) / 1000.0, 2.0].min
+    sleep(delay) if delay.positive?
+  end
+
+  def pause_for_risky_health
+    Rails.logger.warn "[ANTI-BAN] Pausing campaign #{campaign.id}: risky WhatsApp channel health"
+    nil
   end
 
   def process_liquid_template_params(contact)

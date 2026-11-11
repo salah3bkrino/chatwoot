@@ -213,6 +213,15 @@
           "VARIABLE_PLACEHOLDER": "Enter variable {variable}",
           "BUTTON_PLACEHOLDER": "Enter parameter for button {index}"
         },
+        "ANTI_BAN": {
+          "TITLE": "Anti-Ban Protection",
+          "ENABLE_LABEL": "Enable smart pacing and safety guard",
+          "ENABLE_DESCRIPTION": "Stagger batches with random intervals and auto-pause if number quality drops to RED or flagged.",
+          "BATCH_SIZE_LABEL": "Batch size (5–100 contacts)",
+          "MIN_DELAY_LABEL": "Min batch delay (sec)",
+          "MAX_DELAY_LABEL": "Max batch delay (sec)",
+          "PAUSE_HEALTH_LABEL": "Auto-pause when WhatsApp health is risky"
+        },
         "ACCOUNT_INFORMATION": {
           "TITLE": "Account information",
           "MESSAGING_TIER": "Messaging tier",

@@ -31,17 +31,19 @@ class Channel::Whatsapp < ApplicationRecord
   encrypts :business_management_token if Chatwoot.encryption_configured?
 
   # default at the moment is 360dialog lets change later.
-  PROVIDERS = %w[default whatsapp_cloud].freeze
+  PROVIDERS = %w[default whatsapp_cloud evolution].freeze
   before_validation :ensure_webhook_verify_token
+  before_validation :prepare_evolution_defaults, if: -> { provider == 'evolution' }
 
   validates :provider, inclusion: { in: PROVIDERS }
   validates :phone_number, presence: true, uniqueness: true
   validate :validate_provider_config
 
-  after_create :sync_templates
+  after_create :sync_templates, unless: -> { provider == 'evolution' }
   after_update_commit :log_credentials_transfer, if: :saved_change_to_provider_config?
   before_destroy :teardown_webhooks
   after_commit :setup_webhooks, on: :create, if: :should_auto_setup_webhooks?
+  after_commit :provision_evolution_instance, on: :create, if: -> { provider == 'evolution' }
 
   def name
     'Whatsapp'
@@ -69,8 +71,11 @@ class Channel::Whatsapp < ApplicationRecord
   end
 
   def provider_service
-    if provider == 'whatsapp_cloud'
+    case provider
+    when 'whatsapp_cloud'
       Whatsapp::Providers::WhatsappCloudService.new(whatsapp_channel: self)
+    when 'evolution'
+      Whatsapp::Providers::EvolutionService.new(whatsapp_channel: self)
     else
       Whatsapp::Providers::Whatsapp360DialogService.new(whatsapp_channel: self)
     end
@@ -152,7 +157,21 @@ class Channel::Whatsapp < ApplicationRecord
   private
 
   def ensure_webhook_verify_token
-    provider_config['webhook_verify_token'] ||= SecureRandom.hex(16) if provider == 'whatsapp_cloud'
+    provider_config['webhook_verify_token'] ||= SecureRandom.hex(16) if %w[whatsapp_cloud evolution].include?(provider)
+  end
+
+  def prepare_evolution_defaults
+    self.provider_config = (provider_config || {}).compact_blank
+    digits = phone_number.to_s.delete('^0-9')
+    provider_config['instance_name'] ||= "atmta_#{account_id}_#{digits}" if digits.present?
+    provider_config['source'] ||= 'evolution'
+    provider_config['api_url'] = provider_config['api_url'].to_s.strip.chomp('/') if provider_config['api_url'].present?
+  end
+
+  def provision_evolution_instance
+    provider_service.setup_instance
+  rescue StandardError => e
+    Rails.logger.warn "[WHATSAPP] Evolution instance provisioning deferred: #{e.message}"
   end
 
   def validate_provider_config
@@ -178,6 +197,8 @@ class Channel::Whatsapp < ApplicationRecord
   end
 
   def teardown_webhooks
+    return provider_service.delete_instance if provider == 'evolution'
+
     Whatsapp::WebhookTeardownService.new(self).perform
   end
 

@@ -112,20 +112,17 @@ class Whatsapp::TemplateProcessorService
   def process_button_components(processed_params)
     return [] if processed_params['buttons'].blank?
 
-    button_params = processed_params['buttons'].filter_map.with_index do |button, index|
+    processed_params['buttons'].filter_map.with_index do |button, index|
       next if button.blank?
+      next unless %w[url flow].include?(button['type']) || button['parameter'].present?
 
-      if button['type'] == 'url' || button['parameter'].present?
-        {
-          type: 'button',
-          sub_type: button['type'] || 'url',
-          index: index,
-          parameters: [parameter_builder.build_button_parameter(button)]
-        }
-      end
+      {
+        type: 'button',
+        sub_type: button['type'] || 'url',
+        index: index,
+        parameters: [parameter_builder.build_button_parameter(button)]
+      }
     end
-
-    button_params.compact
   end
 
   def parameter_builder

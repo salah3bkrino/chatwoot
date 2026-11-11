@@ -6,6 +6,7 @@ class Webhooks::WhatsappEventsJob < MutexApplicationJob
   retry_on LockAcquisitionError, wait: 2.seconds, attempts: 20
 
   def perform(params = {})
+    params = params.with_indifferent_access if params.is_a?(Hash)
     channel = find_channel_from_whatsapp_business_payload(params)
 
     if channel_is_inactive?(channel)
@@ -91,6 +92,8 @@ class Webhooks::WhatsappEventsJob < MutexApplicationJob
       service_params = { inbox: channel.inbox, params: params }
       service_params[:locked_sender_id] = locked_sender_id if locked_sender_id.present?
       Whatsapp::IncomingMessageWhatsappCloudService.new(**service_params).perform
+    when 'evolution'
+      Whatsapp::IncomingMessageEvolutionService.new(inbox: channel.inbox, params: params).perform
     else
       Whatsapp::IncomingMessageService.new(inbox: channel.inbox, params: params).perform
     end
@@ -101,10 +104,29 @@ class Webhooks::WhatsappEventsJob < MutexApplicationJob
   # Echo payloads reverse the fields — `from` is the business number and `to` is the contact.
   # Returns nil for status-only webhooks so they bypass the lock.
   def contact_sender_id(params)
+    evolution_sender = evolution_contact_sender_id(params)
+    return evolution_sender if evolution_sender.present?
+
     value = params.dig(:entry, 0, :changes, 0, :value) || params
     return contact_sender_id_from_message_echoes(value[:message_echoes]) if value[:message_echoes].present?
 
     contact_sender_id_from_messages(value[:messages], value[:contacts])
+  end
+
+  def evolution_contact_sender_id(params)
+    return if params[:object] == 'whatsapp_business_account'
+
+    item = evolution_first_data_item(params[:data])
+    return unless item.is_a?(Hash)
+
+    item.dig(:key, :remoteJidAlt).presence || item.dig(:key, :remoteJid).presence
+  end
+
+  def evolution_first_data_item(data)
+    return data.first if data.is_a?(Array)
+    return data[:messages].first if data.is_a?(Hash) && data[:messages].is_a?(Array)
+
+    data
   end
 
   # Echo payloads are outbound messages from the WhatsApp Business app, so `to`
@@ -159,9 +181,11 @@ class Webhooks::WhatsappEventsJob < MutexApplicationJob
   end
 
   def find_channel_by_url_param(params)
-    return unless params[:phone_number]
+    phone = params[:phone_number].to_s.strip
+    return if phone.blank?
 
-    Channel::Whatsapp.find_by(phone_number: params[:phone_number])
+    normalized = "+#{phone.delete_prefix('+')}"
+    Channel::Whatsapp.find_by(phone_number: [phone, normalized].uniq)
   end
 
   def find_channel_from_whatsapp_business_payload(params)
