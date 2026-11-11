@@ -350,10 +350,6 @@ Rails.application.routes.draw do
             post :register_webhook, on: :member
             post :reset_secret, on: :member
             post :rotate_hmac_token, on: :member
-            get :evolution_qr, on: :member
-            get :evolution_status, on: :member
-            post :evolution_reconnect, on: :member
-            post :evolution_disconnect, on: :member
             if ChatwootApp.enterprise?
               resource :conference, only: %i[create destroy], controller: 'conference' do
                 get :token, on: :member

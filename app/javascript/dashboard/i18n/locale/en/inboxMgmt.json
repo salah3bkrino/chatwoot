@@ -253,9 +253,7 @@
           "WHATSAPP_CLOUD_DESC": "Quick setup through Meta",
           "WHATSAPP_CLOUD_MANUAL_SETUP_DESC": "Manual setup with Cloud API credentials",
           "TWILIO_DESC": "Connect via Twilio credentials",
-          "360_DIALOG": "360Dialog",
-          "EVOLUTION": "WhatsApp QR",
-          "EVOLUTION_DESC": "Connect any WhatsApp number via QR scan with no Meta fees"
+          "360_DIALOG": "360Dialog"
         },
         "SELECT_PROVIDER": {
           "TITLE": "Select your API provider",
@@ -443,30 +441,6 @@
           "ERROR_MESSAGE": "We were not able to save the WhatsApp channel",
           "MANUAL_RESTRICTION_WARNING": "WhatsApp Embedded Signup is temporarily unavailable due to an API-level issue on Meta’s side, not a problem with Chatwoot. Manual setup works only for numbers already connected to WhatsApp Cloud API. Numbers using WhatsApp Business app coexistence are not supported in this flow yet. We’re working closely with Meta to resolve the issue as quickly as possible. Thanks for your patience.",
           "STATUS_LINK": "View status updates"
-        },
-        "EVOLUTION": {
-          "TITLE": "Connect WhatsApp via QR Code",
-          "DESCRIPTION": "Link your existing WhatsApp or WhatsApp Business mobile app by scanning a QR code.",
-          "INBOX_NAME_LABEL": "Inbox Name",
-          "INBOX_NAME_PLACEHOLDER": "e.g. Sales WhatsApp",
-          "INBOX_NAME_ERROR": "Please enter an inbox name",
-          "PHONE_LABEL": "WhatsApp Phone Number",
-          "PHONE_PLACEHOLDER": "e.g. +201001234567",
-          "PHONE_ERROR": "Please enter a valid phone number in E.164 format (e.g. +201001234567)",
-          "ADVANCED_TOGGLE": "Advanced Custom Server",
-          "ADVANCED_HELP": "Leave blank to use the built-in Evolution API server.",
-          "API_URL_LABEL": "Custom Evolution API URL (Optional)",
-          "API_URL_PLACEHOLDER": "https://evolution.example.com",
-          "API_URL_ERROR": "Please enter a valid URL starting with http:// or https://",
-          "API_KEY_LABEL": "Custom Evolution API Key (Optional)",
-          "API_KEY_PLACEHOLDER": "Enter API key",
-          "BACK_BUTTON": "Back",
-          "SUBMIT_BUTTON": "Create & Generate QR Code",
-          "SCAN_STEP_TITLE": "Scan QR Code to Connect",
-          "SCAN_STEP_DESCRIPTION": "Open WhatsApp on your phone, go to Linked Devices, and scan the QR code below.",
-          "FINISH_BUTTON": "Add Agents & Finish",
-          "SKIP_TO_AGENTS_BUTTON": "Continue to Add Agents",
-          "CREATE_ERROR": "Failed to create WhatsApp QR inbox. Please check your configuration."
         }
       },
       "VOICE": {
@@ -1307,32 +1281,7 @@
         "LABEL": "Enable voice calling",
         "DESCRIPTION": "Allow agents to start and receive WhatsApp voice calls on this inbox. Available only on embedded-signup WhatsApp Cloud channels with calling permission granted by Meta."
       },
-      "UPDATE_PRE_CHAT_FORM_SETTINGS": "Update Pre Chat Form Settings",
-      "EVOLUTION": {
-        "TITLE": "WhatsApp QR Connection",
-        "DESCRIPTION": "Manage your WhatsApp QR session, check connection status, or pair a new device.",
-        "STATUS_OPEN": "Connected",
-        "STATUS_CONNECTING": "Awaiting QR Scan",
-        "STATUS_CLOSE": "Disconnected",
-        "STATUS_UNKNOWN": "Checking...",
-        "PHONE_LABEL": "Phone Number",
-        "INSTANCE_LABEL": "Instance",
-        "CONNECTED_BANNER": "WhatsApp is connected and ready to send and receive messages.",
-        "QR_ALT": "WhatsApp QR Code",
-        "PAIRING_CODE_LABEL": "Pairing Code",
-        "QR_INSTRUCTIONS": "Open WhatsApp -> Settings -> Linked Devices -> Link a Device, then scan this code.",
-        "AUTO_REFRESH_HINT": "QR refreshes automatically in {seconds}s",
-        "GENERATE_QR_BUTTON": "Generate QR Code",
-        "REFRESH_QR_BUTTON": "Refresh QR Code",
-        "RESTART_BUTTON": "Restart Connection",
-        "DISCONNECT_BUTTON": "Disconnect WhatsApp",
-        "QR_ERROR": "Unable to fetch QR code. Please try again.",
-        "STATUS_ERROR": "Unable to check connection status.",
-        "RESTART_SUCCESS": "Connection restart initiated.",
-        "RESTART_ERROR": "Failed to restart connection.",
-        "DISCONNECT_SUCCESS": "WhatsApp disconnected successfully.",
-        "DISCONNECT_ERROR": "Failed to disconnect WhatsApp."
-      }
+      "UPDATE_PRE_CHAT_FORM_SETTINGS": "Update Pre Chat Form Settings"
     },
     "HELP_CENTER": {
       "LABEL": "Help Center",

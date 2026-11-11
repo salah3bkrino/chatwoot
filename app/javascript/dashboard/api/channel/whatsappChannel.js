@@ -42,26 +42,6 @@ class WhatsappChannel extends ApiClient {
       `${this.baseUrl()}/whatsapp/manual/${inboxId}/setup_webhook`
     );
   }
-
-  getEvolutionQR(inboxId) {
-    return axios.get(`${this.baseUrl()}/inboxes/${inboxId}/evolution_qr`);
-  }
-
-  getEvolutionStatus(inboxId) {
-    return axios.get(`${this.baseUrl()}/inboxes/${inboxId}/evolution_status`);
-  }
-
-  reconnectEvolution(inboxId) {
-    return axios.post(
-      `${this.baseUrl()}/inboxes/${inboxId}/evolution_reconnect`
-    );
-  }
-
-  disconnectEvolution(inboxId) {
-    return axios.post(
-      `${this.baseUrl()}/inboxes/${inboxId}/evolution_disconnect`
-    );
-  }
 }
 
 export default new WhatsappChannel();
