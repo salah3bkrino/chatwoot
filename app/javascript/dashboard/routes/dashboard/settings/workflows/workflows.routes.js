@@ -1,6 +1,6 @@
 import { frontendURL } from '../../../../helper/URLHelper';
+import SettingsWrapper from '../SettingsWrapper.vue';
 
-const SettingsContent = () => import('../Wrapper.vue');
 const WorkflowsIndex = () => import('./Index.vue');
 const WorkflowBuilder = () => import('./Builder.vue');
 
@@ -8,12 +8,7 @@ export default {
   routes: [
     {
       path: frontendURL('accounts/:accountId/settings/workflows'),
-      component: SettingsContent,
-      props: {
-        headerTitle: 'WORKFLOWS.HEADER',
-        icon: 'share-network',
-        showNewButton: false,
-      },
+      component: SettingsWrapper,
       children: [
         {
           path: '',
@@ -28,23 +23,25 @@ export default {
             permissions: ['administrator'],
           },
         },
-        {
-          path: 'new',
-          name: 'workflows_new',
-          component: WorkflowBuilder,
-          meta: {
-            permissions: ['administrator'],
-          },
-        },
-        {
-          path: ':workflowId/edit',
-          name: 'workflows_edit',
-          component: WorkflowBuilder,
-          meta: {
-            permissions: ['administrator'],
-          },
-        },
       ],
+    },
+    {
+      path: frontendURL('accounts/:accountId/settings/workflows/new'),
+      name: 'workflows_new',
+      component: WorkflowBuilder,
+      meta: {
+        permissions: ['administrator'],
+      },
+    },
+    {
+      path: frontendURL(
+        'accounts/:accountId/settings/workflows/:workflowId/edit'
+      ),
+      name: 'workflows_edit',
+      component: WorkflowBuilder,
+      meta: {
+        permissions: ['administrator'],
+      },
     },
   ],
 };

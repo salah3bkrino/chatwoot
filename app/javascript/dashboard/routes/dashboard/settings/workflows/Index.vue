@@ -15,8 +15,8 @@ const { t } = useI18n();
 const router = useRouter();
 const { isAdmin } = useAdmin();
 
-const records = computed(() => getters['workflows/getWorkflows'].value);
-const uiFlags = computed(() => getters['workflows/getUIFlags'].value);
+const records = computed(() => getters['workflows/getWorkflows']?.value || []);
+const uiFlags = computed(() => getters['workflows/getUIFlags']?.value || {});
 
 onMounted(() => {
   store.dispatch('workflows/get');

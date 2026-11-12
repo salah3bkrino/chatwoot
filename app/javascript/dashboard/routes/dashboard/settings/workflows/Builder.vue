@@ -459,7 +459,7 @@ const addNode = type => {
 </script>
 
 <template>
-  <div class="flex flex-col h-full bg-n-surface-1">
+  <div class="flex flex-col h-full w-full min-h-[600px] bg-n-surface-1">
     <div
       class="flex flex-wrap items-center justify-between gap-3 p-4 bg-n-solid-2 border-b border-n-weak"
     >
@@ -516,7 +516,7 @@ const addNode = type => {
     </div>
 
     <div class="flex flex-1 min-h-0">
-      <div class="relative flex-1 w-full h-full">
+      <div class="relative flex-1 w-full h-full min-h-[500px]">
         <VueFlow
           v-model:nodes="nodes"
           v-model:edges="edges"
