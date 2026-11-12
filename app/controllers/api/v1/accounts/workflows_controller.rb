@@ -37,8 +37,12 @@ class Api::V1::Accounts::WorkflowsController < Api::V1::Accounts::BaseController
 
   def workflow_params
     params.require(:workflow).permit(:name, :description, :trigger_event, :active).tap do |whitelisted|
-      whitelisted[:nodes] = params[:workflow][:nodes] if params[:workflow][:nodes].is_a?(Array)
-      whitelisted[:edges] = params[:workflow][:edges] if params[:workflow][:edges].is_a?(Array)
+      whitelisted[:nodes] = normalize_hash_array(params[:workflow][:nodes]) if params[:workflow][:nodes].is_a?(Array)
+      whitelisted[:edges] = normalize_hash_array(params[:workflow][:edges]) if params[:workflow][:edges].is_a?(Array)
     end
+  end
+
+  def normalize_hash_array(items)
+    items.map { |item| item.respond_to?(:to_unsafe_h) ? item.to_unsafe_h : item }
   end
 end

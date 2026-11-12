@@ -2,7 +2,7 @@ import ApiClient from './ApiClient';
 
 class WorkflowsAPI extends ApiClient {
   constructor() {
-    super('workflows');
+    super('workflows', { accountScoped: true });
   }
 }
 

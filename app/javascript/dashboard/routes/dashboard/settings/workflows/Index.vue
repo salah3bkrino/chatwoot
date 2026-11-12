@@ -55,7 +55,7 @@ const deleteWorkflow = async id => {
         <template #actions>
           <Button
             v-if="isAdmin"
-            icon="plus"
+            icon="i-lucide-plus"
             :label="$t('WORKFLOWS.CREATE')"
             @click="openNewWorkflow"
           />
@@ -94,13 +94,13 @@ const deleteWorkflow = async id => {
           <div class="flex gap-2">
             <Button
               variant="ghost"
-              icon="edit"
+              icon="i-lucide-pencil"
               @click="editWorkflow(workflow.id)"
             />
             <Button
               variant="ghost"
-              color="red"
-              icon="delete"
+              color="ruby"
+              icon="i-lucide-trash-2"
               @click="deleteWorkflow(workflow.id)"
             />
           </div>

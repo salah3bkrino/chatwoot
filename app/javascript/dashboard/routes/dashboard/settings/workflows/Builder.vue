@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'dashboard/composables/store';
@@ -284,6 +284,33 @@ const deleteSelectedEdge = () => {
   selectedEdgeId.value = null;
 };
 
+watch(triggerEvent, value => {
+  const triggerNode = nodes.value.find(
+    n => (n.data?.type || n.type) === 'trigger'
+  );
+  if (triggerNode) {
+    triggerNode.label = `${t('WORKFLOWS.BUILDER.TRIGGER_EVENT_LABEL', 'Trigger Event')}: ${value}`;
+  }
+});
+
+const normalizeLoadedNode = node => {
+  const data = { ...(node.data || {}) };
+  const role = data.type || (node.type === 'input' ? 'trigger' : node.type);
+  data.type = role;
+  if (
+    role === 'condition' &&
+    String(data.attribute || '').startsWith('flow_field:')
+  ) {
+    data.flow_field = String(data.attribute).slice('flow_field:'.length);
+    data.attribute = 'flow_field';
+  }
+  return {
+    ...node,
+    type: role === 'trigger' ? 'input' : 'default',
+    data,
+  };
+};
+
 onMounted(async () => {
   if (route.params.workflowId) {
     isEditing.value = true;
@@ -295,7 +322,7 @@ onMounted(async () => {
     if (workflow) {
       workflowName.value = workflow.name;
       triggerEvent.value = workflow.trigger_event;
-      nodes.value = workflow.nodes || [];
+      nodes.value = (workflow.nodes || []).map(normalizeLoadedNode);
       edges.value = workflow.edges || [];
     }
   }
@@ -317,35 +344,58 @@ onEdgeClick(({ edge }) => {
 
 const serializeActionParams = data => {
   const params = { ...(data.action_params || {}) };
-  if (
-    data.attribute === 'flow_field' &&
-    !data.flow_field &&
-    params.whatsapp_interactive
-  ) {
-    return params;
+  if (data.action_name === 'assign_team' && params.team_id) {
+    return { team_id: Number(params.team_id) || params.team_id };
+  }
+  if (data.action_name === 'add_label') {
+    return { label: params.label || '' };
+  }
+  if (data.action_name === 'trigger_webhook') {
+    return {
+      url: params.url || '',
+      ...(params.headers ? { headers: params.headers } : {}),
+    };
+  }
+  if (data.action_name === 'resolve_conversation') {
+    return {};
   }
   return params;
 };
 
 const saveWorkflow = async () => {
+  if (!workflowName.value.trim()) {
+    useAlert(t('WORKFLOWS.SAVE.ERROR'));
+    return;
+  }
+
   const flowObject = toObject();
   const normalizedNodes = flowObject.nodes.map(node => {
     const data = { ...(node.data || {}) };
-    if (data.type === 'condition' && data.attribute === 'flow_field') {
-      data.attribute = `flow_field:${(data.flow_field || '').trim()}`;
+    const role = data.type || (node.type === 'input' ? 'trigger' : node.type);
+    data.type = role;
+    if (
+      role === 'condition' &&
+      (data.attribute === 'flow_field' ||
+        String(data.attribute || '').startsWith('flow_field:'))
+    ) {
+      const key = (
+        data.flow_field ||
+        String(data.attribute || '').replace(/^flow_field:/, '')
+      ).trim();
+      data.attribute = key ? `flow_field:${key}` : 'has_flow_response';
     }
-    if (data.type === 'action') {
+    if (role === 'action') {
       data.action_params = serializeActionParams(data);
     }
     return {
       ...node,
-      type: data.type || node.type,
+      type: role === 'trigger' ? 'input' : 'default',
       data,
     };
   });
 
   const data = {
-    name: workflowName.value,
+    name: workflowName.value.trim(),
     trigger_event: triggerEvent.value,
     nodes: normalizedNodes,
     edges: flowObject.edges,
@@ -394,7 +444,7 @@ const addNode = type => {
   addNodes([
     {
       id,
-      type,
+      type: type === 'trigger' ? 'input' : 'default',
       label: labelMap[type] || type,
       position: {
         x: Math.random() * 320 + 80,
@@ -416,7 +466,7 @@ const addNode = type => {
       <div class="flex flex-wrap items-center gap-3">
         <Button
           variant="ghost"
-          icon="arrow-left"
+          icon="i-lucide-arrow-left"
           @click="router.push({ name: 'workflows_list' })"
         />
         <input
@@ -442,24 +492,24 @@ const addNode = type => {
         <Button
           variant="outline"
           :label="$t('WORKFLOWS.BUILDER.ADD_CONDITION')"
-          icon="split"
+          icon="i-lucide-git-branch"
           @click="addNode('condition')"
         />
         <Button
           variant="outline"
           :label="$t('WORKFLOWS.BUILDER.ADD_ACTION')"
-          icon="chat"
+          icon="i-lucide-message-square"
           @click="addNode('action')"
         />
         <Button
           variant="outline"
           :label="$t('WORKFLOWS.BUILDER.ADD_AI')"
-          icon="sparkle"
+          icon="i-lucide-sparkles"
           @click="addNode('ai_prompt')"
         />
         <Button
           :label="$t('WORKFLOWS.BUILDER.SAVE')"
-          icon="save"
+          icon="i-lucide-save"
           @click="saveWorkflow"
         />
       </div>
