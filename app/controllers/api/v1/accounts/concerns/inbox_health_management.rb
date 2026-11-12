@@ -30,6 +30,11 @@ module Api::V1::Accounts::Concerns::InboxHealthManagement
     }
   end
 
+  def whatsapp_flows
+    flows = whatsapp_cloud_channel? ? Whatsapp::FlowsService.new(@inbox.channel).list : []
+    render json: { payload: flows }
+  end
+
   def health
     render json: fetch_health_data
   rescue Whatsapp::HealthService::ApiError => e

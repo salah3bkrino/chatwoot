@@ -40,6 +40,10 @@ class Inboxes extends CacheEnabledApiClient {
     });
   }
 
+  getWhatsAppFlows(inboxId) {
+    return axios.get(`${this.url}/${inboxId}/whatsapp_flows`);
+  }
+
   updateWhatsappBusinessManagementToken(inboxId, businessManagementToken) {
     return axios.put(
       `${this.url}/${inboxId}/whatsapp_business_management_token`,

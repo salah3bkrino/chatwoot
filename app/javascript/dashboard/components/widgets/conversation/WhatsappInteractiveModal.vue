@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import InboxesAPI from 'dashboard/api/inboxes';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import Input from 'dashboard/components-next/input/Input.vue';
 import TextArea from 'dashboard/components-next/textarea/TextArea.vue';
@@ -8,6 +9,14 @@ import Icon from 'dashboard/components-next/icon/Icon.vue';
 
 const props = defineProps({
   show: {
+    type: Boolean,
+    default: false,
+  },
+  inboxId: {
+    type: Number,
+    default: null,
+  },
+  isWhatsAppCloud: {
     type: Boolean,
     default: false,
   },
@@ -21,6 +30,7 @@ const INTERACTIVE_TYPES = {
   LOCATION_REQUEST: 'location_request_message',
   CTA_URL: 'cta_url',
   FLOW: 'flow',
+  PRODUCT: 'product',
 };
 
 const MAX_BUTTONS = 3;
@@ -48,6 +58,11 @@ const flowId = ref('');
 const flowCta = ref('');
 const flowScreen = ref('');
 const flowDataJson = ref('');
+const catalogId = ref('');
+const productRetailerId = ref('');
+const publishedFlows = ref([]);
+const isLoadingFlows = ref(false);
+const loadedFlowsInboxId = ref(null);
 
 const localShow = computed({
   get: () => props.show,
@@ -97,10 +112,23 @@ const modeTabs = computed(() => [
     icon: 'i-ph-flow-arrow',
     label: t('CONVERSATION.WHATSAPP_INTERACTIVE.TABS.FLOW', 'Flow'),
   },
+  {
+    id: INTERACTIVE_TYPES.PRODUCT,
+    icon: 'i-ph-shopping-bag',
+    label: t('CONVERSATION.WHATSAPP_INTERACTIVE.TABS.PRODUCT', 'Product'),
+  },
 ]);
 
-const supportsHeaderAndFooter = computed(() =>
+const supportsHeader = computed(() =>
   [INTERACTIVE_TYPES.CTA_URL, INTERACTIVE_TYPES.FLOW].includes(activeType.value)
+);
+
+const supportsFooter = computed(() =>
+  [
+    INTERACTIVE_TYPES.CTA_URL,
+    INTERACTIVE_TYPES.FLOW,
+    INTERACTIVE_TYPES.PRODUCT,
+  ].includes(activeType.value)
 );
 
 const isValidHttpUrl = value => {
@@ -160,6 +188,13 @@ const isListValid = computed(
 );
 
 const isFormValid = computed(() => {
+  if (activeType.value === INTERACTIVE_TYPES.PRODUCT) {
+    return (
+      catalogId.value.trim().length > 0 &&
+      productRetailerId.value.trim().length > 0
+    );
+  }
+
   if (!trimmedBody.value) return false;
 
   switch (activeType.value) {
@@ -201,9 +236,39 @@ const buildSlug = (title, index, usedSlugs) => {
   return candidate;
 };
 
+const loadPublishedFlows = async (force = false) => {
+  if (!props.isWhatsAppCloud || !props.inboxId) return;
+  if (!force && loadedFlowsInboxId.value === props.inboxId) return;
+
+  isLoadingFlows.value = true;
+  try {
+    const { data } = await InboxesAPI.getWhatsAppFlows(props.inboxId);
+    publishedFlows.value = Array.isArray(data?.payload) ? data.payload : [];
+    loadedFlowsInboxId.value = props.inboxId;
+  } catch {
+    publishedFlows.value = [];
+  } finally {
+    isLoadingFlows.value = false;
+  }
+};
+
+const handleSelectPublishedFlow = event => {
+  const selectedId = event.target.value;
+  if (!selectedId) return;
+  flowId.value = selectedId;
+  const match = publishedFlows.value.find(item => item.id === selectedId);
+  if (match && !flowCta.value.trim()) {
+    flowCta.value = match.name.slice(0, 30);
+  }
+};
+
 const selectMode = modeId => {
   const previousType = activeType.value;
   activeType.value = modeId;
+
+  if (modeId === INTERACTIVE_TYPES.FLOW) {
+    loadPublishedFlows();
+  }
 
   if (modeId === INTERACTIVE_TYPES.LOCATION_REQUEST && !bodyText.value.trim()) {
     bodyText.value = defaultLocationBody.value;
@@ -249,6 +314,8 @@ const resetForm = () => {
   flowCta.value = '';
   flowScreen.value = '';
   flowDataJson.value = '';
+  catalogId.value = '';
+  productRetailerId.value = '';
 };
 
 const handleClose = () => {
@@ -326,6 +393,26 @@ const buildSubmitPayload = () => {
     };
   }
 
+  if (activeType.value === INTERACTIVE_TYPES.PRODUCT) {
+    const interactive = {
+      type: 'product',
+      catalog_id: catalogId.value.trim(),
+      product_retailer_id: productRetailerId.value.trim(),
+    };
+    if (trimmedBody.value) {
+      interactive.body = trimmedBody.value;
+    }
+    if (footerText.value.trim()) {
+      interactive.footer = footerText.value.trim();
+    }
+    return {
+      message: trimmedBody.value || productRetailerId.value.trim(),
+      contentAttributes: {
+        whatsapp_interactive: interactive,
+      },
+    };
+  }
+
   const interactive = {
     type: 'flow',
     body: trimmedBody.value,
@@ -367,7 +454,17 @@ watch(
   newValue => {
     if (!newValue) {
       resetForm();
+    } else if (activeType.value === INTERACTIVE_TYPES.FLOW) {
+      loadPublishedFlows();
     }
+  }
+);
+
+watch(
+  () => props.inboxId,
+  () => {
+    loadedFlowsInboxId.value = null;
+    publishedFlows.value = [];
   }
 );
 </script>
@@ -429,7 +526,7 @@ watch(
         </div>
 
         <Input
-          v-if="supportsHeaderAndFooter"
+          v-if="supportsHeader"
           v-model="headerText"
           :label="
             t(
@@ -688,6 +785,69 @@ watch(
           v-if="activeType === INTERACTIVE_TYPES.FLOW"
           class="flex flex-col gap-3"
         >
+          <div v-if="isWhatsAppCloud" class="flex flex-col gap-1">
+            <div class="flex items-center justify-between gap-2">
+              <label
+                for="whatsapp-published-flow-select"
+                class="text-heading-3 text-n-slate-12"
+              >
+                {{
+                  t(
+                    'CONVERSATION.WHATSAPP_INTERACTIVE.FIELDS.PUBLISHED_FLOW_SELECT',
+                    'Published Meta Flow (optional)'
+                  )
+                }}
+              </label>
+              <NextButton
+                type="button"
+                size="xs"
+                variant="ghost"
+                color="slate"
+                icon="i-ph-arrows-clockwise"
+                :is-loading="isLoadingFlows"
+                :label="
+                  t(
+                    'CONVERSATION.WHATSAPP_INTERACTIVE.FIELDS.REFRESH_FLOWS',
+                    'Refresh'
+                  )
+                "
+                @click="loadPublishedFlows(true)"
+              />
+            </div>
+            <select
+              id="whatsapp-published-flow-select"
+              :value="flowId"
+              :disabled="isLoadingFlows"
+              class="w-full px-3 py-2 text-sm rounded-lg bg-n-alpha-black2 text-n-slate-12 border border-n-weak focus:outline-none focus:border-n-brand"
+              @change="handleSelectPublishedFlow"
+            >
+              <option value="">
+                {{
+                  isLoadingFlows
+                    ? t(
+                        'CONVERSATION.WHATSAPP_INTERACTIVE.FIELDS.PUBLISHED_FLOW_LOADING',
+                        'Loading flows from Meta...'
+                      )
+                    : publishedFlows.length
+                      ? t(
+                          'CONVERSATION.WHATSAPP_INTERACTIVE.FIELDS.PUBLISHED_FLOW_PLACEHOLDER',
+                          'Choose a published Flow to auto-fill ID'
+                        )
+                      : t(
+                          'CONVERSATION.WHATSAPP_INTERACTIVE.FIELDS.PUBLISHED_FLOW_EMPTY',
+                          'No Meta Flows fetched yet (enter Flow ID below or refresh)'
+                        )
+                }}
+              </option>
+              <option
+                v-for="flow in publishedFlows"
+                :key="flow.id"
+                :value="flow.id"
+              >
+                {{ flow.name }} ({{ flow.status }}) — {{ flow.id }}
+              </option>
+            </select>
+          </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Input
               v-model="flowId"
@@ -770,8 +930,44 @@ watch(
           </div>
         </div>
 
+        <div
+          v-if="activeType === INTERACTIVE_TYPES.PRODUCT"
+          class="grid grid-cols-1 sm:grid-cols-2 gap-3"
+        >
+          <Input
+            v-model="catalogId"
+            :label="
+              t(
+                'CONVERSATION.WHATSAPP_INTERACTIVE.FIELDS.CATALOG_ID',
+                'Meta Catalog ID'
+              )
+            "
+            :placeholder="
+              t(
+                'CONVERSATION.WHATSAPP_INTERACTIVE.FIELDS.CATALOG_ID_PLACEHOLDER',
+                'e.g. 987654321098765'
+              )
+            "
+          />
+          <Input
+            v-model="productRetailerId"
+            :label="
+              t(
+                'CONVERSATION.WHATSAPP_INTERACTIVE.FIELDS.PRODUCT_RETAILER_ID',
+                'Product Retailer / SKU ID'
+              )
+            "
+            :placeholder="
+              t(
+                'CONVERSATION.WHATSAPP_INTERACTIVE.FIELDS.PRODUCT_RETAILER_ID_PLACEHOLDER',
+                'e.g. SKU-101'
+              )
+            "
+          />
+        </div>
+
         <Input
-          v-if="supportsHeaderAndFooter"
+          v-if="supportsFooter"
           v-model="footerText"
           :label="
             t(

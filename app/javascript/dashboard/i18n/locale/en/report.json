@@ -883,6 +883,28 @@
         "CONDITION": "Condition",
         "ACTION": "Send Message",
         "AI_PROMPT": "AI Prompt"
+      },
+      "TRIGGER_EVENT_LABEL": "Trigger Event",
+      "INSPECTOR": {
+        "EMPTY": "Click any Condition, Action, or Edge on the canvas to configure it.",
+        "NODE_TITLE": "Node Settings",
+        "EDGE_TITLE": "Connection Branch",
+        "DELETE_NODE": "Remove Node",
+        "DELETE_EDGE": "Remove Connection",
+        "EDGE_BRANCH_LABEL": "Run branch when condition is",
+        "CONDITION_ATTR": "Attribute",
+        "CONDITION_FLOW_FIELD": "Flow Field Key (from response_json)",
+        "CONDITION_OPERATOR": "Operator",
+        "CONDITION_VALUE": "Expected Value",
+        "ACTION_TYPE": "Action Type",
+        "ACTION_CONTENT": "Message Text",
+        "ACTION_CONTENT_TYPE": "Message Mode",
+        "ACTION_BUTTONS_JSON": "Buttons / Items (one per line or Title|description)",
+        "ACTION_FLOW_ID": "WhatsApp Flow ID",
+        "ACTION_FLOW_CTA": "Flow Button Label",
+        "ACTION_WEBHOOK_URL": "n8n / Webhook URL",
+        "ACTION_LABEL": "Conversation Label",
+        "ACTION_TEAM_ID": "Team ID"
       }
     },
     "DELETE": {

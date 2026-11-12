@@ -1586,6 +1586,8 @@ export default {
 
     <WhatsappInteractiveModal
       :show="showWhatsappInteractiveModal"
+      :inbox-id="inbox.id"
+      :is-whats-app-cloud="isAWhatsAppCloudChannel"
       @send="onSendWhatsappInteractive"
       @close="hideWhatsappInteractiveModal"
     />

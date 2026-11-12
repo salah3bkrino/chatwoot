@@ -57,8 +57,17 @@ class Workflows::ExecutionService
   end
 
   def follow_edges(node_id, source_handle = nil)
-    edges = workflow.edges.select { |e| e['source'] == node_id && (source_handle.nil? || e['sourceHandle'] == source_handle) }
-    edges.each { |edge| execute_node(workflow.nodes.find { |n| n['id'] == edge['target'] }) }
+    node_edges = workflow.edges.select { |e| e['source'] == node_id }
+    matched = source_handle.nil? ? node_edges : matching_condition_edges(node_edges, source_handle)
+    matched.each { |edge| execute_node(workflow.nodes.find { |n| n['id'] == edge['target'] }) }
+  end
+
+  def matching_condition_edges(node_edges, source_handle)
+    explicit = node_edges.select { |e| e['sourceHandle'].to_s == source_handle }
+    has_branches = node_edges.any? { |e| %w[true false].include?(e['sourceHandle'].to_s) }
+    return explicit if explicit.present? || has_branches || source_handle != 'true'
+
+    node_edges.select { |e| e['sourceHandle'].blank? }
   end
 
   def evaluate_condition(data)

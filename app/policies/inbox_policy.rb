@@ -38,6 +38,10 @@ class InboxPolicy < ApplicationPolicy
     true
   end
 
+  def whatsapp_flows?
+    true
+  end
+
   def campaigns?
     @account_user.administrator?
   end

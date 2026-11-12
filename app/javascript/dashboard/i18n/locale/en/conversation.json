@@ -114,7 +114,8 @@
         "LIST": "Menu List",
         "LOCATION_REQUEST": "Location",
         "CTA_URL": "Action Link",
-        "FLOW": "Flow"
+        "FLOW": "Flow",
+        "PRODUCT": "Product"
       },
       "FIELDS": {
         "HEADER": "Header (optional)",
@@ -138,6 +139,11 @@
         "CTA_URL": "Destination URL",
         "CTA_URL_PLACEHOLDER": "https://example.com/...",
         "CTA_URL_ERROR": "Please enter a valid http:// or https:// URL",
+        "PUBLISHED_FLOW_SELECT": "Published Meta Flow (optional)",
+        "PUBLISHED_FLOW_LOADING": "Loading flows from Meta...",
+        "PUBLISHED_FLOW_PLACEHOLDER": "Choose a published Flow to auto-fill ID",
+        "PUBLISHED_FLOW_EMPTY": "No Meta Flows fetched yet (enter Flow ID below or refresh)",
+        "REFRESH_FLOWS": "Refresh",
         "FLOW_ID": "Meta Flow ID",
         "FLOW_ID_PLACEHOLDER": "e.g. 123456789012345",
         "FLOW_CTA": "Button CTA Label",
@@ -147,6 +153,10 @@
         "FLOW_DATA": "Initial JSON Data (optional)",
         "FLOW_DATA_PLACEHOLDER": "{\"customer_tier\": \"vip\"}",
         "FLOW_DATA_ERROR": "Enter a valid JSON object",
+        "CATALOG_ID": "Meta Catalog ID",
+        "CATALOG_ID_PLACEHOLDER": "e.g. 987654321098765",
+        "PRODUCT_RETAILER_ID": "Product Retailer / SKU ID",
+        "PRODUCT_RETAILER_ID_PLACEHOLDER": "e.g. SKU-101",
         "REMOVE_OPTION": "Remove option",
         "CHAR_COUNT": "{count}/{max}"
       },
