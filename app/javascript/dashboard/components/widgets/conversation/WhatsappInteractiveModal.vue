@@ -330,6 +330,7 @@ const buildSubmitPayload = () => {
   if (activeType.value === INTERACTIVE_TYPES.BUTTONS) {
     return {
       message: trimmedBody.value,
+      content: trimmedBody.value,
       contentType: 'input_select',
       contentAttributes: {
         items: buttons.value.map((btn, index) => ({
@@ -343,6 +344,7 @@ const buildSubmitPayload = () => {
   if (activeType.value === INTERACTIVE_TYPES.LIST) {
     return {
       message: trimmedBody.value,
+      content: trimmedBody.value,
       contentType: 'input_select',
       contentAttributes: {
         items: listItems.value.map((item, index) => {
@@ -363,6 +365,7 @@ const buildSubmitPayload = () => {
   if (activeType.value === INTERACTIVE_TYPES.LOCATION_REQUEST) {
     return {
       message: trimmedBody.value,
+      content: trimmedBody.value,
       contentAttributes: {
         whatsapp_interactive: {
           type: 'location_request_message',
@@ -387,6 +390,7 @@ const buildSubmitPayload = () => {
     }
     return {
       message: trimmedBody.value,
+      content: trimmedBody.value,
       contentAttributes: {
         whatsapp_interactive: interactive,
       },
@@ -405,8 +409,11 @@ const buildSubmitPayload = () => {
     if (footerText.value.trim()) {
       interactive.footer = footerText.value.trim();
     }
+    const productContent =
+      trimmedBody.value || productRetailerId.value.trim();
     return {
-      message: trimmedBody.value || productRetailerId.value.trim(),
+      message: productContent,
+      content: productContent,
       contentAttributes: {
         whatsapp_interactive: interactive,
       },
@@ -434,6 +441,7 @@ const buildSubmitPayload = () => {
 
   return {
     message: trimmedBody.value,
+    content: trimmedBody.value,
     contentAttributes: {
       whatsapp_interactive: interactive,
     },

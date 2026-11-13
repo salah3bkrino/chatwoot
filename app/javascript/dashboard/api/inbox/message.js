@@ -4,6 +4,7 @@ import ApiClient from '../ApiClient';
 
 export const buildCreatePayload = ({
   message,
+  content,
   isPrivate,
   contentAttributes,
   contentType,
@@ -18,11 +19,12 @@ export const buildCreatePayload = ({
   emailHtmlContent,
   forwardedAttachmentIds,
 }) => {
+  const messageText = message ?? content;
   let payload;
   if (files && files.length !== 0) {
     payload = new FormData();
-    if (message) {
-      payload.append('content', message);
+    if (messageText) {
+      payload.append('content', messageText);
     }
     files.forEach(file => {
       payload.append('attachments[]', file);
@@ -55,7 +57,7 @@ export const buildCreatePayload = ({
     });
   } else {
     payload = {
-      content: message,
+      content: messageText,
       private: isPrivate,
       echo_id: echoId,
       content_attributes: contentAttributes,
@@ -80,6 +82,7 @@ class MessageApi extends ApiClient {
   create({
     conversationId,
     message,
+    content,
     private: isPrivate,
     contentAttributes,
     contentType,
@@ -98,7 +101,7 @@ class MessageApi extends ApiClient {
       method: 'post',
       url: `${this.url}/${conversationId}/messages`,
       data: buildCreatePayload({
-        message,
+        message: message ?? content,
         isPrivate,
         contentAttributes,
         contentType,

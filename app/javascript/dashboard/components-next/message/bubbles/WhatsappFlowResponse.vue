@@ -9,8 +9,15 @@ const { content, contentAttributes } = useMessageContext();
 const { t } = useI18n();
 
 const responseEntries = computed(() => {
+  const flow =
+    contentAttributes.value?.whatsappFlowResponse ||
+    contentAttributes.value?.whatsapp_flow_response ||
+    {};
   const response =
-    contentAttributes.value?.whatsappFlowResponse?.responseJson ?? {};
+    flow.responseJson ??
+    flow.response_json ??
+    flow.response ??
+    {};
 
   return buildFlowResponseEntries(response);
 });

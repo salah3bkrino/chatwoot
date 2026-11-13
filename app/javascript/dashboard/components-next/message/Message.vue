@@ -329,7 +329,10 @@ const componentToRender = computed(() => {
     if (emailInboxTypes.includes(props.messageType)) return EmailBubble;
   }
 
-  if (props.contentAttributes?.whatsappFlowResponse) {
+  if (
+    props.contentAttributes?.whatsappFlowResponse ||
+    props.contentAttributes?.whatsapp_flow_response
+  ) {
     return WhatsappFlowResponseBubble;
   }
 
@@ -479,8 +482,10 @@ const shouldRenderMessage = computed(() => {
   const isUnsupported = props.contentAttributes?.isUnsupported;
   const isAnIntegrationMessage =
     props.contentType === CONTENT_TYPES.INTEGRATIONS;
-  const hasWhatsappFlowResponse =
-    !!props.contentAttributes?.whatsappFlowResponse;
+  const hasWhatsappFlowResponse = !!(
+    props.contentAttributes?.whatsappFlowResponse ||
+    props.contentAttributes?.whatsapp_flow_response
+  );
   const hasWhatsappOrder = !!(
     props.contentAttributes?.whatsappOrder ||
     props.contentAttributes?.whatsapp_order
