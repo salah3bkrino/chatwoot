@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'dashboard/composables/store';
 import { useAlert } from 'dashboard/composables';
+import { useAccount } from 'dashboard/composables/useAccount';
 import Button from 'dashboard/components-next/button/Button.vue';
 import { VueFlow, useVueFlow } from '@vue-flow/core';
 import { Background } from '@vue-flow/background';
@@ -49,6 +50,11 @@ const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
+const { accountScopedRoute } = useAccount();
+
+const goBack = () => {
+  router.push(accountScopedRoute('workflows_list'));
+};
 const {
   onConnect,
   onNodeClick,
@@ -412,7 +418,7 @@ const saveWorkflow = async () => {
       await store.dispatch('workflows/create', data);
     }
     useAlert(t('WORKFLOWS.SAVE.SUCCESS'));
-    router.push({ name: 'workflows_list' });
+    router.push(accountScopedRoute('workflows_list'));
   } catch {
     useAlert(t('WORKFLOWS.SAVE.ERROR'));
   }
@@ -459,7 +465,7 @@ const addNode = type => {
 </script>
 
 <template>
-  <div class="flex flex-col h-full w-full min-h-[600px] bg-n-surface-1">
+  <div class="flex flex-col flex-1 h-full w-full min-h-0 bg-n-surface-1">
     <div
       class="flex flex-wrap items-center justify-between gap-3 p-4 bg-n-solid-2 border-b border-n-weak"
     >
@@ -467,7 +473,7 @@ const addNode = type => {
         <Button
           variant="ghost"
           icon="i-lucide-arrow-left"
-          @click="router.push({ name: 'workflows_list' })"
+          @click="goBack"
         />
         <input
           v-model="workflowName"
@@ -516,10 +522,11 @@ const addNode = type => {
     </div>
 
     <div class="flex flex-1 min-h-0">
-      <div class="relative flex-1 w-full h-full min-h-[500px]">
+      <div class="relative flex-1 w-full h-full min-h-0">
         <VueFlow
           v-model:nodes="nodes"
           v-model:edges="edges"
+          class="w-full h-full min-h-[400px]"
           :default-viewport="{ zoom: 1.2, x: 0, y: 0 }"
           :min-zoom="0.2"
           :max-zoom="4"

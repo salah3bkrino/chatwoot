@@ -240,9 +240,7 @@ export default {
       return !!(templates && templates.length) && !this.isPrivate;
     },
     showWhatsappInteractive() {
-      return (
-        this.isAWhatsAppChannel && !this.isPrivate && !this.isEditorDisabled
-      );
+      return this.isAWhatsAppChannel && !this.isPrivate;
     },
     showContentTemplates() {
       return this.isATwilioWhatsAppChannel && !this.isPrivate;

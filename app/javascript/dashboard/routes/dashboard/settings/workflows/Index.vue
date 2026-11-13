@@ -8,12 +8,14 @@ import SettingsLayout from '../SettingsLayout.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import { useRouter } from 'vue-router';
 import { useAdmin } from 'dashboard/composables/useAdmin';
+import { useAccount } from 'dashboard/composables/useAccount';
 
 const getters = useStoreGetters();
 const store = useStore();
 const { t } = useI18n();
 const router = useRouter();
 const { isAdmin } = useAdmin();
+const { accountScopedRoute } = useAccount();
 
 const records = computed(() => getters['workflows/getWorkflows']?.value || []);
 const uiFlags = computed(() => getters['workflows/getUIFlags']?.value || {});
@@ -23,11 +25,11 @@ onMounted(() => {
 });
 
 const openNewWorkflow = () => {
-  router.push({ name: 'workflows_new' });
+  router.push(accountScopedRoute('workflows_new'));
 };
 
 const editWorkflow = id => {
-  router.push({ name: 'workflows_edit', params: { workflowId: id } });
+  router.push(accountScopedRoute('workflows_edit', { workflowId: id }));
 };
 
 const deleteWorkflow = async id => {
