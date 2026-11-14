@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   else
     root to: 'dashboard#index'
 
+    get '/landing', to: redirect('/landing.html')
+    get '/promo', to: redirect('/landing.html')
+
     get '/app', to: 'dashboard#index'
     # Shareable install link for the Captain tools catalog; the dashboard picks the account and assistant
     get '/captain/toolsets/install', to: redirect(status: 302) { |_params, request|

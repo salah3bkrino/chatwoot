@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atmta Automation Service | منصة أتمتة مبيعات وخدمة عملاء واتساب الرسمي</title>
+  <meta name="description" content="حوّل واتساب شركتك إلى ماكينة مبيعات متكاملة بذكاء اصطناعي وردود تفاعلية رسمية: أزرار تفاعلية، استمارات Meta Flows، كتالوج، مسارات عمل ذكية، وحملات مانعة للحظر.">
+  <link rel="icon" type="image/svg+xml" href="/brand-assets/logo_thumbnail.svg">
+  
+  <!-- Fonts: Cairo from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857'
+            },
+            wa: {
+              DEFAULT: '#25D366',
+              dark: '#128C7E',
+              deep: '#075E54'
+            },
+            dark: {
+              bg: '#0B0F19',
+              card: '#111827',
+              border: '#1F2937'
+            }
+          },
+          fontFamily: {
+            sans: ['Cairo', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #070B14;
+      color: #E2E8F0;
+    }
+    .gradient-glow {
+      background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.18) 0%, rgba(7, 11, 20, 0) 70%);
+    }
+    .glass-card {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card:hover {
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+  </style>
+</head>
+<body class="selection:bg-brand-500 selection:text-white overflow-x-hidden">
+
+  <!-- Background Glow -->
+  <div class="fixed top-0 left-0 w-full h-[600px] gradient-glow pointer-events-none -z-10"></div>
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 glass-card border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-wa flex items-center justify-center text-white shadow-lg shadow-brand-500/20">
+          <i class="ph-bold ph-whatsapp-logo text-2xl"></i>
+        </div>
+        <div>
+          <span class="text-xl font-black tracking-tight text-white">Atmta</span>
+          <span class="text-xs block text-brand-400 font-semibold -mt-1">Automation Service</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
+        <a href="#features" class="hover:text-brand-400 transition">الميزات الرسمية</a>
+        <a href="#interactive" class="hover:text-brand-400 transition">الرسائل التفاعلية</a>
+        <a href="#workflows" class="hover:text-brand-400 transition">مسارات العمل</a>
+        <a href="#pricing" class="hover:text-brand-400 transition">الباقات والأسعار</a>
+        <a href="#faq" class="hover:text-brand-400 transition">الأسئلة الشائعة</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/app/login" class="px-5 py-2.5 rounded-xl text-sm font-bold text-slate-200 hover:text-white hover:bg-slate-800 transition">
+          تسجيل الدخول
+        </a>
+        <a href="https://wa.me/201000000000?text=أريد%20تجربة%20منصة%20Atmta%20لواتساب" target="_blank" class="px-5 py-2.5 rounded-xl text-sm font-bold bg-gradient-to-r from-brand-600 to-wa text-white hover:opacity-95 shadow-lg shadow-brand-500/25 flex items-center gap-2 transition">
+          <i class="ph-bold ph-chat-teardrop-dots text-lg"></i>
+          <span>تواصل واتساب</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative pt-16 pb-24 lg:pt-28 lg:pb-32 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      
+      <!-- Announcement Tag -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card border border-brand-500/30 text-brand-300 text-xs sm:text-sm font-semibold mb-8 animate-pulse">
+        <span class="w-2 h-2 rounded-full bg-brand-400"></span>
+        <span>متوافق 100% مع Meta WhatsApp Cloud API الرسمي v22.0</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-tight sm:leading-tight mb-8">
+        حوّل واتساب شركتك إلى <br/>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-wa to-emerald-300">
+          ماكينة مبيعات ذكية متكاملة
+        </span>
+      </h1>
+
+      <p class="max-w-3xl mx-auto text-lg sm:text-xl text-slate-300 leading-relaxed mb-10">
+        المنصة السحابية الأولى المخصصة بالكامل لواتساب الرسمي: أرسل أزرار تفاعلية ⚡، استمارات Meta Flows، كتالوج المنتجات، صمم مسارات عمل آلية، وأرسل حملات تسويقية آمنة ضد الحظر بدون وسطاء أجانب.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+        <a href="/app/login" class="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-extrabold bg-gradient-to-r from-brand-500 to-wa hover:from-brand-600 hover:to-wa-dark text-white shadow-xl shadow-brand-500/20 flex items-center justify-center gap-3 transition">
+          <span>ابدأ تجربتك المجانية الآن</span>
+          <i class="ph-bold ph-arrow-left text-lg"></i>
+        </a>
+        <a href="#interactive" class="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-bold glass-card text-slate-200 hover:text-white hover:bg-slate-800/80 transition flex items-center justify-center gap-2">
+          <i class="ph-bold ph-play-circle text-xl text-brand-400"></i>
+          <span>شاهد الميزات التفاعلية</span>
+        </a>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto pt-8 border-t border-slate-800/80 text-slate-400 text-sm font-semibold">
+        <div class="flex items-center justify-center gap-2">
+          <i class="ph-fill ph-shield-check text-brand-400 text-xl"></i>
+          <span>حماية تامة من حظر الأرقام</span>
+        </div>
+        <div class="flex items-center justify-center gap-2">
+          <i class="ph-fill ph-credit-card text-brand-400 text-xl"></i>
+          <span>دفع محلي: إنستاباي وفودافون كاش</span>
+        </div>
+        <div class="flex items-center justify-center gap-2">
+          <i class="ph-fill ph-users-three text-brand-400 text-xl"></i>
+          <span>تعدد الموظفين على نفس الرقم</span>
+        </div>
+        <div class="flex items-center justify-center gap-2">
+          <i class="ph-fill ph-lightning text-brand-400 text-xl"></i>
+          <span>رد فوري في أقل من ثانيتين</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive WhatsApp Demo Section -->
+  <section id="interactive" class="py-20 bg-slate-900/40 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs uppercase tracking-widest text-brand-400 font-extrabold mb-3">تجربة العميل الاستثنائية</h2>
+        <h3 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">وداعاً للنصوص الطويلة.. أهلاً بالرسائل التفاعلية</h3>
+        <p class="text-slate-400 text-base">امنح عملاءك تجربة شبيهة بتطبيقات الموبايل من داخل محادثة واتساب الرسمية مباشرة بنقرة زر واحدة.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- Card 1: Interactive Buttons & Lists -->
+        <div class="glass-card p-6 sm:p-8 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-2xl mb-6">
+              <i class="ph-bold ph-hand-pointing"></i>
+            </div>
+            <h4 class="text-xl font-bold text-white mb-3">أزرار الرد السريع والقوائم</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              بدلاً من إجبار العميل على كتابة "1 للتأكيد" أو كتابة فقرات طويلة، أرسل أزراراً رسمية وقوائم خيارات (حتى 10 بنود) يضغط عليها العميل فوراً لتأكيد طلبه أو استفساره.
+            </p>
+          </div>
+          <!-- Visual Snippet -->
+          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs">
+            <p class="text-slate-300 mb-3">مرحباً بك! يرجى اختيار الخدمة المطلوبة:</p>
+            <div class="space-y-1.5">
+              <div class="py-2 px-3 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 text-center font-bold">🛒 تتبع شحنة طلبك</div>
+              <div class="py-2 px-3 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 text-center font-bold">💬 التحدث مع خبير مبيعات</div>
+              <div class="py-2 px-3 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 text-center font-bold">📍 أقرب فرع لموقعك</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Meta Flows Forms -->
+        <div class="glass-card p-6 sm:p-8 rounded-3xl flex flex-col justify-between border-brand-500/40 relative">
+          <div class="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-brand-500 text-slate-950 text-xs font-black">
+            الميزة الأقوى لعام 2026
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-wa/10 text-wa flex items-center justify-center text-2xl mb-6">
+              <i class="ph-bold ph-article"></i>
+            </div>
+            <h4 class="text-xl font-bold text-white mb-3">استمارات Meta Flows الرسمية</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              اجمع بيانات عملائك واستقبل حجوزات العيادات والمراكز وطلبات الشراء في استمارة تفاعلية أنيقة تفتح داخل واتساب دون إرسال روابط خارجية قد تؤدي لهروب العميل.
+            </p>
+          </div>
+          <!-- Visual Snippet -->
+          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs">
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+              <span class="font-bold text-white">استمارة حجز موعد كشف</span>
+              <span class="text-brand-400 font-semibold">Meta Flow</span>
+            </div>
+            <p class="text-slate-400 mb-3 text-[11px]">يرجى تعبئة التخصص والموعد المناسب:</p>
+            <div class="py-2.5 px-4 rounded-xl bg-gradient-to-r from-brand-600 to-wa text-white text-center font-extrabold flex items-center justify-center gap-2 shadow">
+              <i class="ph-bold ph-note-pencil"></i>
+              <span>فتح استمارة الحجز الآن</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Location & Catalog Orders -->
+        <div class="glass-card p-6 sm:p-8 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-2xl mb-6">
+              <i class="ph-bold ph-map-pin-line"></i>
+            </div>
+            <h4 class="text-xl font-bold text-white mb-3">مشاركة الموقع وكتالوج الطلبات</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              اطلب الموقع الجغرافي الحي لعميل التوصيل بنقرة واحدة، واستقبل سلة مشتريات كتالوج واتساب بحساب إجمالي وتفاصيل المنتجات في بطاقة طلب مباشرة للوكيل.
+            </p>
+          </div>
+          <!-- Visual Snippet -->
+          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs">
+            <div class="flex items-center gap-2 text-slate-300 mb-2">
+              <i class="ph-fill ph-shopping-bag text-brand-400 text-base"></i>
+              <span class="font-bold">طلب جديد من الكتالوج (3 منتجات)</span>
+            </div>
+            <div class="space-y-1 text-slate-400 text-[11px] mb-3">
+              <div>• عطر رجالي فاخر × 1 (650 ج.م)</div>
+              <div>• عطر نسائي زهري × 2 (900 ج.م)</div>
+            </div>
+            <div class="pt-2 border-t border-slate-800 flex justify-between font-bold text-white">
+              <span>الإجمالي:</span>
+              <span class="text-brand-400">1,550 ج.م</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Workflows Section -->
+  <section id="workflows" class="py-24 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-xs uppercase tracking-widest text-brand-400 font-extrabold mb-3">الأتمتة المرئية الذكية</h2>
+          <h3 class="text-3xl sm:text-5xl font-black text-white leading-tight mb-6">
+            ابنِ مسارات مبيعاتك وخدمتك بالسحب والإفلات
+          </h3>
+          <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8">
+            وداعاً للبوتات المعقدة ذات الأكواد. مع محرر مسارات العمل المرئي (Visual Workflows)، يمكنك ربط شاشات متصلة تحدد بدقة ماذا يحدث عندما يرسل العميل رسالة، أو يملأ استمارة فلو، أو يضغط على إعلان فيسبوك.
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-start gap-4 p-4 rounded-2xl glass-card">
+              <div class="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center shrink-0 text-xl font-bold">1</div>
+              <div>
+                <h4 class="font-bold text-white mb-1">المشغلات الذكية (Triggers)</h4>
+                <p class="text-slate-400 text-sm">بدء التشغيل عند استقبال رسالة، فتح محادثة، أو تغيير حالتها تلقائياً.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 p-4 rounded-2xl glass-card">
+              <div class="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center shrink-0 text-xl font-bold">2</div>
+              <div>
+                <h4 class="font-bold text-white mb-1">قراءة بيانات استمارات Meta Flows (Conditions)</h4>
+                <p class="text-slate-400 text-sm">التحقق من إجابات محددة داخل استمارة العميل وتوجيه المحادثة بناءً عليها.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 p-4 rounded-2xl glass-card">
+              <div class="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center shrink-0 text-xl font-bold">3</div>
+              <div>
+                <h4 class="font-bold text-white mb-1">تكامل فوري مع Webhooks و n8n</h4>
+                <p class="text-slate-400 text-sm">إرسال بيانات العميل والطلبات فورياً لـ Google Sheets و CRM وأنظمة المحاسبة.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual Canvas Mockup -->
+        <div class="glass-card p-6 rounded-3xl border border-slate-700/60 shadow-2xl relative">
+          <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-800 text-xs">
+            <span class="font-bold text-slate-300">محرر مسارات العمل - Workflows Builder</span>
+            <span class="px-2.5 py-1 rounded-full bg-brand-500/20 text-brand-400 font-semibold">مفعل ونشط</span>
+          </div>
+
+          <div class="space-y-4 text-xs font-semibold">
+            <!-- Node 1 -->
+            <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i class="ph-bold ph-broadcast text-brand-400"></i>
+                <span>المشغل: وصول رسالة جديدة من العميل</span>
+              </div>
+              <span class="text-[10px] text-slate-500">Trigger</span>
+            </div>
+            
+            <div class="flex justify-center text-slate-600">
+              <i class="ph-bold ph-arrow-down text-base"></i>
+            </div>
+
+            <!-- Node 2 -->
+            <div class="p-3.5 rounded-xl bg-slate-900 border border-brand-500/40 text-brand-300 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i class="ph-bold ph-git-branch text-brand-400"></i>
+                <span>الشرط: هل أرسل العميل استمارة Meta Flow؟</span>
+              </div>
+              <span class="text-[10px] text-brand-400">Condition</span>
+            </div>
+
+            <div class="flex justify-around text-slate-600 px-8">
+              <span class="text-[10px] text-brand-400 font-bold">نعم (True) ↓</span>
+              <span class="text-[10px] text-slate-500 font-bold">لا (False) ↓</span>
+            </div>
+
+            <!-- Node 3 -->
+            <div class="grid grid-cols-2 gap-3">
+              <div class="p-3 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-200">
+                <div class="font-bold mb-1">إرسال لـ n8n + شيت</div>
+                <div class="text-[10px] text-slate-400">تسجيل الطلب وإرسال رسالة شكر</div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-400">
+                <div class="font-bold mb-1">إرسال قائمة الخدمات</div>
+                <div class="text-[10px] text-slate-500">عرض أزرار الاختيار للعميل</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Anti-Ban Feature Section -->
+  <section class="py-20 bg-gradient-to-b from-slate-900/40 to-slate-950 border-y border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        <div class="order-2 lg:order-1">
+          <div class="p-6 rounded-3xl glass-card border border-emerald-500/20 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+              <span class="font-bold text-white text-sm">حالة حماية الخط ضد الحظر</span>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xs flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span>محمي بنسبة 100%</span>
+              </span>
+            </div>
+            <div class="space-y-3 text-xs text-slate-300">
+              <div class="flex justify-between p-2.5 rounded-xl bg-slate-900/80">
+                <span>تجزئة الدفعات (Batch Pacing):</span>
+                <span class="font-bold text-white">25 جهة اتصال / دفعة</span>
+              </div>
+              <div class="flex justify-between p-2.5 rounded-xl bg-slate-900/80">
+                <span>فواصل زمنية عشوائية (Random Jitter):</span>
+                <span class="font-bold text-white">400 - 1,200 ملي ثانية</span>
+              </div>
+              <div class="flex justify-between p-2.5 rounded-xl bg-slate-900/80">
+                <span>فترات راحة بين الدفعات:</span>
+                <span class="font-bold text-white">15 - 45 ثانية عشوائي</span>
+              </div>
+              <div class="flex justify-between p-2.5 rounded-xl bg-slate-900/80">
+                <span>الإيقاف التلقائي الذكي:</span>
+                <span class="font-bold text-emerald-400">مفعل عند هبوط جودة الرقم</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-1 lg:order-2">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold mb-4">
+            <i class="ph-bold ph-shield-check"></i>
+            <span>حماية الأرقام الذكية</span>
+          </div>
+          <h3 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-5">
+            أرسل حملاتك التسويقية بقلب مطمئن.. رقمك في أمان تام
+          </h3>
+          <p class="text-slate-300 text-base leading-relaxed mb-6">
+            أكبر كابوس لأي شركة هو حظر رقم واتساب الذي تعبوا في الترويج له. نظامنا الذكي لا يرسل الرسائل دفعة واحدة كبرامج السبام؛ بل يقسمها لدفعات صغيرة، ويحاكي السلوك البشري بتأخيرات زمنية متغيرة، ويوقف الإرسال تلقائياً إذا انخفضت جودة الرقم في Meta.
+          </p>
+          <ul class="space-y-2.5 text-sm text-slate-300 font-semibold">
+            <li class="flex items-center gap-2">
+              <i class="ph-fill ph-check-circle text-brand-400 text-lg"></i>
+              <span>معدل تسليم واستلام رسمي 100% عبر Meta Cloud API</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="ph-fill ph-check-circle text-brand-400 text-lg"></i>
+              <span>إحصائيات تفصيلية لعدد الرسائل المقروءة والمستلمة</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="ph-fill ph-check-circle text-brand-400 text-lg"></i>
+              <span>استهداف شرائح العملاء بالوسوم (Labels) بدقة</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs uppercase tracking-widest text-brand-400 font-extrabold mb-3">أسعار وباقات واضحة</h2>
+        <h3 class="text-3xl sm:text-5xl font-black text-white mb-4">استثمر في ماكينة مبيعات حقيقية</h3>
+        <p class="text-slate-400 text-base">بدون اشتراكات دولية معقدة.. الدفع محلي بالجنيه المصري أو الريال السعودي عبر وسائل الدفع السريعة.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- Plan 1: Starter -->
+        <div class="glass-card p-8 rounded-3xl flex flex-col justify-between">
+          <div>
+            <h4 class="text-xl font-bold text-white mb-2">WhatsApp Starter</h4>
+            <p class="text-slate-400 text-xs mb-6">مناسب للمتاجر الصغيرة والشركات الناشئة.</p>
+            <div class="flex items-baseline gap-1 mb-6">
+              <span class="text-4xl font-black text-white">750</span>
+              <span class="text-slate-400 text-sm font-semibold">ج.م / شهرياً</span>
+            </div>
+            <ul class="space-y-3.5 text-sm text-slate-300 mb-8">
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>رقم واتساب رسمي Cloud API</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>حتى 2 موظفين على نفس الرقم</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>أزرار وقوائم تفاعلية ⚡</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>حفظ بيانات وجهات اتصال العملاء</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>تطبيق موبايل ولوحة تحكم متكاملة</span>
+              </li>
+            </ul>
+          </div>
+          <a href="https://wa.me/201000000000?text=أريد%20الاشتراك%20في%20باقة%20WhatsApp%20Starter" target="_blank" class="w-full py-3.5 rounded-xl font-bold glass-card text-center text-white hover:bg-slate-800 transition">
+            اشترك عبر فودافون كاش / إنستاباي
+          </a>
+        </div>
+
+        <!-- Plan 2: Growth (Featured) -->
+        <div class="glass-card p-8 rounded-3xl flex flex-col justify-between border-2 border-brand-500 relative shadow-2xl shadow-brand-500/10">
+          <div class="absolute -top-4 right-1/2 translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-brand-500 to-wa text-slate-950 text-xs font-black shadow-lg">
+            الباقة الأكثر طلباً للمبيعات
+          </div>
+          <div>
+            <h4 class="text-xl font-bold text-white mb-2">WhatsApp Growth</h4>
+            <p class="text-slate-400 text-xs mb-6">للشركات والمتاجر التي تتلقى طلبات يومية.</p>
+            <div class="flex items-baseline gap-1 mb-6">
+              <span class="text-4xl font-black text-brand-400">1,500</span>
+              <span class="text-slate-400 text-sm font-semibold">ج.م / شهرياً</span>
+            </div>
+            <ul class="space-y-3.5 text-sm text-slate-200 mb-8">
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span class="font-bold">كل ميزات باقة Starter</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>حتى 5 موظفين على نفس الرقم</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span class="font-bold text-white">استمارات Meta Flows التفاعلية</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>عرض منتجات الكتالوج وسلة الطلبات</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span class="font-bold text-white">محرك الحملات الآمن المانع للحظر</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>أتمتة مسارات العمل المرئية (Workflows)</span>
+              </li>
+            </ul>
+          </div>
+          <a href="https://wa.me/201000000000?text=أريد%20الاشتراك%20في%20باقة%20WhatsApp%20Growth" target="_blank" class="w-full py-3.5 rounded-xl font-extrabold bg-gradient-to-r from-brand-500 to-wa hover:from-brand-600 hover:to-wa-dark text-white text-center shadow-lg transition">
+            ابدأ الآن بهذه الباقة
+          </a>
+        </div>
+
+        <!-- Plan 3: Pro Enterprise -->
+        <div class="glass-card p-8 rounded-3xl flex flex-col justify-between">
+          <div>
+            <h4 class="text-xl font-bold text-white mb-2">WhatsApp Business Pro</h4>
+            <p class="text-slate-400 text-xs mb-6">للمؤسسات والشركات الكبرى وسلاسل الفروع.</p>
+            <div class="flex items-baseline gap-1 mb-6">
+              <span class="text-4xl font-black text-white">2,800</span>
+              <span class="text-slate-400 text-sm font-semibold">ج.م / شهرياً</span>
+            </div>
+            <ul class="space-y-3.5 text-sm text-slate-300 mb-8">
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span class="font-bold">كل ميزات باقة Growth</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>عدد موظفين وأرقام إضافية</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>كابتن الذكاء الاصطناعي مدرب على بياناتك</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>ربط مخصص مع n8n وسيناريوهات Webhooks</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>تقارير متقدمة ومتابعة أداء الوكلاء</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="ph-bold ph-check text-brand-400"></i>
+                <span>مدير حساب ودعم فني مخصص 24/7</span>
+              </li>
+            </ul>
+          </div>
+          <a href="https://wa.me/201000000000?text=أريد%20الاشتراك%20في%20باقة%20WhatsApp%20Business%20Pro" target="_blank" class="w-full py-3.5 rounded-xl font-bold glass-card text-center text-white hover:bg-slate-800 transition">
+            تواصل لتخصيص الباقة
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Payment Methods Note -->
+      <div class="mt-12 text-center text-slate-400 text-xs font-semibold flex items-center justify-center gap-6">
+        <span>طرق الدفع المحلية المدعومة:</span>
+        <span class="text-white font-bold">InstaPay (إنستاباي)</span>
+        <span>•</span>
+        <span class="text-white font-bold">Vodafone Cash (فودافون كاش)</span>
+        <span>•</span>
+        <span class="text-white font-bold">تحويل بنكي مباشر</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-20 bg-slate-900/30">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-16">
+        <h2 class="text-xs uppercase tracking-widest text-brand-400 font-extrabold mb-3">إجابات شفافة</h2>
+        <h3 class="text-3xl font-extrabold text-white">الأسئلة الشائعة</h3>
+      </div>
+
+      <div class="space-y-4">
+        
+        <div class="p-6 rounded-2xl glass-card">
+          <h4 class="font-bold text-white text-base mb-2">هل الرقم معرض للحظر بأي شكل؟</h4>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            اطمئن تماماً. منصة Atmta متصلة بـ WhatsApp Cloud API الرسمي التابع لشركة Meta مباشرة، ومحمية بنظام أمان داخلي يضبط معدلات الإرسال ويمنع الحظر 100%. لا نستخدم أي برامج أو سكربتات غير رسمية.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl glass-card">
+          <h4 class="font-bold text-white text-base mb-2">هل أحتاج لبطاقة فيزا دولية بالدولار؟</h4>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            لا، نظام الفوترة في المنصة مصمم ومخصص للسوق العربي والمصري؛ يمكنك دفع اشتراكك الشهري مباشرة عبر إنستاباي أو فودافون كاش أو التحويل البنكي بالجنيه المصري أو الريال السعودي.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl glass-card">
+          <h4 class="font-bold text-white text-base mb-2">هل يمكن لأكثر من موظف الرد على نفس رقم الواتساب في نفس الوقت؟</h4>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            نعم! هذا هو الهدف الأساسي من المنصة. كل موظفي فريقك يمكنهم تسجيل الدخول من أجهزتهم المستقلة (كمبيوتر أو موبايل) والرد على عملاء نفس الرقم، مع إمكانية تحويل المحادثات بينهم ومعرفة من رد على أي رسالة.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl glass-card">
+          <h4 class="font-bold text-white text-base mb-2">ما هي استمارات Meta Flows التفاعلية؟</h4>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            هي ميزة حديثة رسمية من شركة Meta تتيح لك تصميم استمارات ملء بيانات تفتح داخل شات الواتساب نفسه كأنها نافذة تطبيق سريع. بمجرد أن يرسلها العميل تظهر بياناته فوراً في شاشة المحادثة ويتم حفظها في نظامك.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Final CTA Section -->
+  <section class="py-20 relative text-center">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass-card p-10 sm:p-16 rounded-3xl border-brand-500/30 relative overflow-hidden">
+        <div class="w-20 h-20 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center text-4xl mx-auto mb-6">
+          <i class="ph-bold ph-rocket-launch"></i>
+        </div>
+        <h3 class="text-3xl sm:text-5xl font-black text-white mb-6">جاهز لمضاعفة مبيعاتك عبر واتساب؟</h3>
+        <p class="text-slate-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
+          انضم لعشرات الشركات والمتاجر التي أتمتت خدمة عملائها ومبيعاتها اليوم. فريقنا مستعد لتجهيز حسابك وتشغيله معك خطوة بخطوة.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="/app/login" class="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-extrabold bg-gradient-to-r from-brand-500 to-wa text-white shadow-xl shadow-brand-500/25 transition">
+            سجل دخولك الآن
+          </a>
+          <a href="https://wa.me/201000000000?text=أريد%20استشارة%20مجانية%20عن%20واتساب%20Atmta" target="_blank" class="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-bold glass-card text-white hover:bg-slate-800 transition flex items-center justify-center gap-2">
+            <i class="ph-bold ph-whatsapp-logo text-xl text-brand-400"></i>
+            <span>تحدث مع فريق المبيعات</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/80 py-12 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-7 h-7 rounded-lg bg-brand-600 flex items-center justify-center text-white">
+          <i class="ph-bold ph-whatsapp-logo text-base"></i>
+        </div>
+        <span class="text-slate-300 font-bold text-sm">Atmta Automation Service</span>
+      </div>
+      <div>
+        جميع الحقوق محفوظة © 2026 منصة أتمتة (Atmta). متوافق مع WhatsApp Cloud API من Meta.
+      </div>
+      <div class="flex items-center gap-6 text-slate-400 font-semibold">
+        <a href="/app/login" class="hover:text-white transition">دخول المنصة</a>
+        <a href="#pricing" class="hover:text-white transition">الباقات</a>
+        <a href="/privacy.html" class="hover:text-white transition">الخصوصية</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp CTA Button -->
+  <a href="https://wa.me/201000000000?text=مرحباً،%20أريد%20معلومات%20عن%20منصة%20Atmta" target="_blank" class="fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full bg-wa hover:bg-wa-dark text-white flex items-center justify-center text-3xl shadow-2xl shadow-wa/50 hover:scale-110 transition-transform" title="تحدث معنا على واتساب">
+    <i class="ph-bold ph-whatsapp-logo"></i>
+  </a>
+
+</body>
+</html>
